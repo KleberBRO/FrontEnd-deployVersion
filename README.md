@@ -1,5 +1,5 @@
 # FrontEnd
-Repositorio do código do frontEnd do projeto.
+Repositorio do código frontEnd do projeto.
 
 ## Integrantes da equipe
 * Kleber Barbosa de Fraga - kleber.fraga@ufrpe.br
