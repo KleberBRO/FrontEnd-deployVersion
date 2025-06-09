@@ -2,6 +2,7 @@ html, body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    overflow: hidden;
 }
 
 .conteudo {
@@ -10,13 +11,14 @@ html, body {
     width: 100%;
     box-sizing: border-box;
     display: flex;
+    overflow: hidden;
 }
 
 .barra-lateral {
     width: 24vh;
     height: 100%;
     background-color: white;
-
+    border-right: 2px solid blue;
 }
 
 .barra-lateral h1 {
@@ -37,7 +39,7 @@ html, body {
 
 .search-bar {
     border-radius: 10px 0 0 10px;
-    border: none;
+    border: none;;
     background-color: #dddddd;
     width: 60%;
     margin-left: 10px;
@@ -46,11 +48,104 @@ html, body {
 .search-button {
     height: 2rem;
     background-color: white;
-    border: blue 1px solid;
+    border: blue 2px solid;
     border-radius: 0px 10px 10px 0px;
     cursor: pointer;
 }
 
 .search-button:hover {
-    background-color: #eaefff;
+    border: black 2px solid;
+}
+
+.busca-por {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+}
+
+.busca-por select {
+    padding: 4px;
+    border-radius: 5px;
+    min-width: 8rem;
+    border: 1px solid #ddd;
+    margin-left: 10px;
+}
+
+.filtro-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.filtro-item input[type="checkbox"] {
+    margin-right: 5px;
+    min-width: 1.5rem;
+    min-height: 1.5rem;
+}
+
+.filtro-item input[type="checkbox"]:hover {
+    cursor: pointer;
+}
+
+.filtro-item select {
+    padding: 5px;
+    border-radius: 5px;
+    min-width: 8rem;
+    border: 1px solid #ddd;
+}
+
+.tabela-container {
+    flex-grow: 1; 
+    height: 100vh;
+    width: 100vh;
+    overflow-y: auto; /* Adiciona rolagem vertical apenas quando necessário */
+    box-sizing: border-box; 
+}
+
+.tabela-propriedades {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tabela-propriedades th {
+    background-color: #2828FF;
+    padding: 10px;
+    text-align: left;
+    color: white;
+    border-left: 1px solid #ddd;
+}
+
+.tabela-propriedades td {
+    padding: 5px;
+    border-bottom: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+}
+
+.tabela-propriedades td button {
+    background-color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.tabela-propriedades td button:hover {
+    background-color: #a7a7a7;
+}
+
+.tipo-software {
+    background-color: #0B003F;
+    color: white;
+    font-weight: bold;
+}
+.tipo-cultivar {
+    background-color: #078E00;
+    color: white;
+    font-weight: bold;
+}
+.tipo-marca {
+    background-color: #D4D400;
+    color: white;
+    font-weight: bold;
 }

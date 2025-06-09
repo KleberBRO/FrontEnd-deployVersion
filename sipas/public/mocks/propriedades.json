@@ -1,0 +1,29 @@
+[
+  {
+    "id": 1,
+    "tipo": "Software",
+    "titulo": "Propriedade A",
+    "inventor": "joão pedro da silva",
+    "departamento": "Concluído",
+    "status": "Pendente",
+    "dataVencimento": "2025-12-31"
+  },
+  {
+    "id": 2,
+    "tipo": "Cultivar",
+    "titulo": "Propriedade B",
+    "inventor": "fulando de tal",
+    "departamento": "Andamento",
+    "status": "Em andamento",
+    "dataVencimento": "2025-11-15"
+  },
+  {
+    "id": 3,
+    "tipo": "Marca",
+    "titulo": "Propriedade C",
+    "inventor": "ciclano",
+    "departamento": "Pendente",
+    "status": "Pendente",
+    "dataVencimento": "2026-01-20"
+  }
+]
