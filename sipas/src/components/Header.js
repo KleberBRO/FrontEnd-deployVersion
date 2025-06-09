@@ -14,6 +14,7 @@ const styles = {
         backgroundColor: '#2828FF',
         color: 'white',
         padding: '0px',
+        paddingLeft: '20px',
         fontSize: '12px',
         fontFamily: 'Roboto, sans-serif',
         marginTop: 0,
