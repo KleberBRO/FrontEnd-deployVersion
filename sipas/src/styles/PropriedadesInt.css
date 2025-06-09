@@ -1,0 +1,56 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.conteudo {
+    margin: 0;
+    height: 100vh;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+}
+
+.barra-lateral {
+    width: 24vh;
+    height: 100%;
+    background-color: white;
+
+}
+
+.barra-lateral h1 {
+    font-size: 1.5rem;
+    color: #333;
+}
+
+.busca {
+    display: flex;
+}
+
+.search-bar,
+.search-button {
+    height: 2rem;
+    box-sizing: border-box;
+    padding: 0 10px;
+}
+
+.search-bar {
+    border-radius: 10px 0 0 10px;
+    border: none;
+    background-color: #dddddd;
+    width: 60%;
+    margin-left: 10px;
+}
+
+.search-button {
+    height: 2rem;
+    background-color: white;
+    border: blue 1px solid;
+    border-radius: 0px 10px 10px 0px;
+    cursor: pointer;
+}
+
+.search-button:hover {
+    background-color: #eaefff;
+}
