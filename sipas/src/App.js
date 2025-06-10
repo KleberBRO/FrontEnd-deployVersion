@@ -9,6 +9,7 @@ function App() {
   return (
     <Router>
       <Routes>
+        <Route path="/" element={<Home />} />
         <Route path="/home" element={<Home />} />
         <Route path="/escolher-pi" element={<EscolherPI />} />
         <Route path="/propriedades-registradas" element={<PropriedadesInt/>} />

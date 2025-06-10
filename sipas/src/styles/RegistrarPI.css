@@ -20,6 +20,19 @@
     overflow-y: auto;
 }
 
+.form-container h1 {
+    margin-bottom: 20px;
+    color: #007bff;
+    font-size: 24px;
+    text-align: left;
+}
+
+.form-container h2 {
+    margin-bottom: 20px;
+    font-size: 20px;
+    text-align: left;
+}
+
 .form-group {
   display: flex;
   flex-direction: column;
