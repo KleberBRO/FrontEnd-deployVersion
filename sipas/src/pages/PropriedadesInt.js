@@ -16,13 +16,19 @@ function PropriedadesInt() {
       return 'tipo-cultivar';
     case 'marca':
       return 'tipo-marca';
+    case 'desenho industrial':
+      return 'tipo-desenho-industrial';
+    case 'indicação geográfica':
+      return 'tipo-indicacao-geografica';
+    case 'patente':
+      return 'tipo-patente';
     default:
       return '';
     }
   };
 
   useEffect(() => {
-      fetch('/mocks/propriedades.json') // Caminho corrigido
+      fetch('http://localhost:3001/propriedades')
         .then(response => {
           if (!response.ok) {
             throw new Error('Erro ao carregar propriedades');
@@ -32,11 +38,15 @@ function PropriedadesInt() {
         .then(data => {
           if (Array.isArray(data)) {
             setPropriedades(data);
+          } else if (Array.isArray(data.propriedades)) {
+            setPropriedades(data.propriedades);
           } else {
-            setErro('Dados inválidos no arquivo JSON');
+            setErro('Dados inválidos no endpoint');
           }
         })
-        .catch(() => setErro('Não foi possível carregar os dados.'));
+        .catch((e) => {
+          setErro('Não foi possível carregar os dados.');
+        });
   }, []);
 
   return (
@@ -44,6 +54,7 @@ function PropriedadesInt() {
     <Header />
     <div className="conteudo">
       <Sidebar />
+      {erro && <div style={{color: 'red'}}>{erro}</div>}
       <Tabela propriedades={propriedades} getTipoClass={getTipoClass} />
       </div>
     </>

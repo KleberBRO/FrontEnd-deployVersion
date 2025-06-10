@@ -1,0 +1,157 @@
+{
+  "propriedades": [
+    {
+      "id": "1",
+      "tipo": "Software",
+      "titulo": "Propriedade A",
+      "inventor": "joão pedro da silva",
+      "departamento": "Concluído",
+      "status": "Pendente",
+      "dataVencimento": "2025-12-31"
+    },
+    {
+      "id": "2",
+      "tipo": "Software",
+      "titulo": "Propriedade B",
+      "inventor": "maria da silva",
+      "departamento": "Em Andamento",
+      "status": "Pendente",
+      "dataVencimento": "2024-06-30"
+    },
+    {
+      "id": "3",
+      "tipo": "Software",
+      "titulo": "Propriedade C",
+      "inventor": "joão pedro da silva",
+      "departamento": "Concluído",
+      "status": "Pendente",
+      "dataVencimento": "2023-11-15"
+    },
+    {
+      "id": "f099",
+      "titulo": "rfdsfsdfs",
+      "descricao": "fwesfsfdfse",
+      "departamento": "engenharia",
+      "dataCriacao": "32432-04-05",
+      "status": "pendente",
+      "nomeInventor": "dawdasd",
+      "emailInventor": "kleberfraga9@gmail.com",
+      "cpfInventor": "2478583",
+      "tipo": "patente",
+      "patente": {
+        "tipoPatente": "jhgjhgjhg",
+        "classificacao": "jtyfdgh"
+      },
+      "marca": {},
+      "software": {},
+      "indicacaoGeografica": {},
+      "desenhoIndustrial": {},
+      "cultivar": {}
+    },
+    {
+      "id": "4346",
+      "titulo": "rfdsfsdfs",
+      "descricao": "fwesfsfdfse",
+      "departamento": "engenharia",
+      "dataCriacao": "32432-04-05",
+      "status": "pendente",
+      "nomeInventor": "dawdasd",
+      "emailInventor": "kleberfraga9@gmail.com",
+      "cpfInventor": "2478583",
+      "tipo": "patente",
+      "patente": {
+        "tipoPatente": "jhgjhgjhg",
+        "classificacao": "jtyfdgh"
+      },
+      "marca": {},
+      "software": {},
+      "indicacaoGeografica": {},
+      "desenhoIndustrial": {},
+      "cultivar": {}
+    },
+    {
+      "id": "7c09",
+      "titulo": "rfdsfsdfs",
+      "descricao": "fwesfsfdfse",
+      "departamento": "engenharia",
+      "dataCriacao": "32432-04-05",
+      "status": "pendente",
+      "nomeInventor": "dawdasd",
+      "emailInventor": "kleberfraga9@gmail.com",
+      "cpfInventor": "2478583",
+      "tipo": "patente",
+      "patente": {
+        "tipoPatente": "jhgjhgjhg",
+        "classificacao": "jtyfdgh"
+      },
+      "marca": {},
+      "software": {},
+      "indicacaoGeografica": {},
+      "desenhoIndustrial": {},
+      "cultivar": {}
+    },
+    {
+      "id": "effe",
+      "titulo": "rfdsfsdfs",
+      "descricao": "fwesfsfdfse",
+      "departamento": "engenharia",
+      "dataCriacao": "32432-04-05",
+      "status": "pendente",
+      "nomeInventor": "dawdasd",
+      "emailInventor": "kleberfraga9@gmail.com",
+      "cpfInventor": "2478583",
+      "tipo": "patente",
+      "patente": {
+        "tipoPatente": "jhgjhgjhg",
+        "classificacao": "jtyfdgh"
+      },
+      "marca": {},
+      "software": {},
+      "indicacaoGeografica": {},
+      "desenhoIndustrial": {},
+      "cultivar": {}
+    },
+    {
+      "id": "ee3d",
+      "titulo": "rfdsfsdfs",
+      "descricao": "wadawdsdaw",
+      "departamento": "artes",
+      "dataCriacao": "4453-07-25",
+      "status": "pendente",
+      "nomeInventor": "dawdasdaw",
+      "emailInventor": "kleberfraga9@gmail.com",
+      "cpfInventor": "2478583",
+      "tipo": "patente",
+      "patente": {
+        "tipoPatente": "daddada",
+        "classificacao": "dwasdaw"
+      },
+      "marca": {},
+      "software": {},
+      "indicacaoGeografica": {},
+      "desenhoIndustrial": {},
+      "cultivar": {}
+    },
+    {
+      "id": "b9b0",
+      "titulo": "dawdasdawd",
+      "descricao": "dawdawwdasda",
+      "departamento": "artes",
+      "dataCriacao": "0468-05-14",
+      "status": "aprovado",
+      "nomeInventor": "jydrj",
+      "emailInventor": "kleberfraga9@gmail.com",
+      "cpfInventor": "2478583",
+      "tipo": "Patente",
+      "patente": {
+        "tipoPatente": "hfghfhhts",
+        "classificacao": "hvbcbvcbc"
+      },
+      "marca": {},
+      "software": {},
+      "indicacaoGeografica": {},
+      "desenhoIndustrial": {},
+      "cultivar": {}
+    }
+  ]
+}

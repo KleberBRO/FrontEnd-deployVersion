@@ -149,6 +149,21 @@ html, body {
     color: white;
     font-weight: bold;
 }
+.tipo-patente {
+    background-color: #ff5b20;
+    color: white;
+    font-weight: bold;
+}
+.tipo-desenho-industrial {
+    background-color: #8A2BE2;
+    color: white;
+    font-weight: bold;
+}
+.tipo-indicacao-geografica {
+    background-color: #009999;
+    color: white;
+    font-weight: bold;
+}
 
 .btn-voltar-sidebar {
     width: 100%;

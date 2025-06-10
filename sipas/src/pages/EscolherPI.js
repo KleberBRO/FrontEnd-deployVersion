@@ -15,7 +15,7 @@ function EscolherPI() {
             <div className="escolher-content">
 
               <div className="registrar-patente" onClick={() => navigate('/registrar-pi', { state: { tipo: 'Patente' } })}>
-                  <h1>Registrar PI</h1>
+                  <h1>Registrar Patente</h1>
                   <p>Protege invenções que oferecem soluções novas e úteis para problemas técnicos, garantindo exclusividade ao inventor por um período.</p>
               </div>
               <div className="registrar-marca" onClick={() => navigate('/registrar-pi', { state: { tipo: 'marca' } })}>

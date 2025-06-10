@@ -7,36 +7,28 @@ import DesenhoInd from './detalhes/DesenhoInd';
 import Cultivar from './detalhes/Cultivar';
 
 function StepDetalhesEspecificos({ tipo, formData, handleChange }) {
+    const tipoNormalizado = (tipo || '').toLowerCase();
+
     return (
         <>
-            {/* ============================ patente ===========================*/}
-            {tipo === 'patente' && (
-                <Patente formData={formData} handleChange={handleChange} />
+            {tipoNormalizado === 'patente' && (
+                <Patente formData={formData.patente} handleChange={e => handleChange(e, 'patente')} />
             )}
 
-            {/* ============================ marca ===========================*/}
-            {tipo === 'marca' && (
-                <Marca formData={formData} handleChange={handleChange} />
+            {tipoNormalizado === 'marca' && (
+                <Marca formData={formData.marca} handleChange={e => handleChange(e, 'marca')} />
             )}
-
-            {/* ============================ software ===========================*/}
-            {tipo === 'software' && (
-                <Software formData={formData} handleChange={handleChange} />
+            {tipoNormalizado === 'software' && (
+                <Software formData={formData.software} handleChange={e => handleChange(e, 'software')} />
             )}
-
-            {/* ============================ indicação geográfica ===========================*/}
-            {tipo === 'indicacao-geografica' && (
-                <Indicacao formData={formData} handleChange={handleChange} />
+            {tipoNormalizado === 'indicacao-geografica' && (
+                <Indicacao formData={formData.indicacaoGeografica} handleChange={e => handleChange(e, 'indicacaoGeografica')} />
             )}
-
-            {/* ============================ desenho industrial ===========================*/}
-            {tipo === 'desenho-industrial' && (
-                <DesenhoInd formData={formData} handleChange={handleChange} />
+            {tipoNormalizado === 'desenho-industrial' && (
+                <DesenhoInd formData={formData.desenhoIndustrial} handleChange={e => handleChange(e, 'desenhoIndustrial')} />
             )}
-
-            {/* ============================ Cultivar ===========================*/}
-            {tipo === 'cultivar' && (
-                <Cultivar formData={formData} handleChange={handleChange} />
+            {tipoNormalizado === 'cultivar' && (
+                <Cultivar formData={formData.cultivar} handleChange={e => handleChange(e, 'cultivar')} />
             )}
         </>
     );
