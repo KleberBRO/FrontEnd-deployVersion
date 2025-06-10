@@ -1,7 +1,10 @@
 import React from 'react';
 import '../../styles/PropriedadesInt.css';
+import { useNavigate } from 'react-router-dom';
 
 function Sidebar() {
+  const navigate = useNavigate();
+
   return (
     <div className="barra-lateral">
       <h1>Buscar</h1>
@@ -49,6 +52,7 @@ function Sidebar() {
             </select>
           </div>
         </div>
+        <button className="btn-voltar-sidebar" onClick={() => navigate('/home')}>Voltar</button>
     </div>
   );
 }

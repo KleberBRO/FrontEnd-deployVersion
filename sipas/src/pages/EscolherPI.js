@@ -14,30 +14,30 @@ function EscolherPI() {
 
             <div className="escolher-content">
 
-              <div className="registrar-patente">
+              <div className="registrar-patente" onClick={() => navigate('/registrar-pi', { state: { tipo: 'Patente' } })}>
                   <h1>Registrar PI</h1>
                   <p>Protege invenções que oferecem soluções novas e úteis para problemas técnicos, garantindo exclusividade ao inventor por um período.</p>
               </div>
-              <div className="registrar-marca">
+              <div className="registrar-marca" onClick={() => navigate('/registrar-pi', { state: { tipo: 'marca' } })}>
                 <h1>Registrar Marca</h1>
                 <p>Identifica produtos ou serviços e os distingue de concorrentes. Pode ser um nome, símbolo ou logotipo.</p>
               </div>
 
-              <div className="registrar-software"> 
+              <div className="registrar-software" onClick={() => navigate('/registrar-pi', { state: { tipo: 'software' } })}> 
                 <h1>Registrar Software</h1>
                 <p>Protege programas de computador, garantindo direitos autorais sobre o código-fonte e a interface do usuário.</p>
               </div>
 
-              <div className="registrar-desenho-industrial">
+              <div className="registrar-desenho-industrial" onClick={() => navigate('/registrar-pi', { state: { tipo: 'desenho-industrial' } })}>
                 <h1>Registrar Desenho Industrial</h1>
                 <p>Protege a forma estética de um produto, como seu design, cor e textura, garantindo exclusividade ao criador.</p>
               </div>
 
-              <div className="registrar-indicacao-geografica">
+              <div className="registrar-indicacao-geografica" onClick={() => navigate('/registrar-pi', { state: { tipo: 'indicação-geográfica' } })}>
                 <h1>Registrar Indicação Geográfica</h1>
                 <p>Identifica produtos originários de uma localidade específica, conferindo características únicas devido ao ambiente geográfico.</p>
                 </div>
-              <div className="registrar-cultivar">
+              <div className="registrar-cultivar" onClick={() => navigate('/registrar-pi', { state: { tipo: 'Cultivar' } })}>
                 <h1>Registrar Cultivar</h1>
                 <p>Protege variedades de plantas, garantindo direitos sobre novas cultivares desenvolvidas por melhoristas.</p>
               </div>

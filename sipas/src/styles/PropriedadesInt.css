@@ -149,3 +149,19 @@ html, body {
     color: white;
     font-weight: bold;
 }
+
+.btn-voltar-sidebar {
+    width: 100%;
+    background-color: #007bff;
+    color: white;
+    font-size: large;
+    font-weight: bold;
+    border: none;
+    margin-top: 1rem;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.btn-voltar-sidebar:hover {
+    background-color: #0056b3;
+}
