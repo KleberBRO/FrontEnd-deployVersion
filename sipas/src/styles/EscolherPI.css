@@ -1,0 +1,88 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+.escolher-content {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+.escolher-content div {
+    display: flex;
+    flex-direction: column;
+    max-width: 35em;
+    padding: 1rem;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+.escolher-content div:hover {
+    box-shadow: inset 0 0 0 2px #000;
+}
+
+.escolher-content h1 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.registrar-patente {
+    background-color: rgb(250, 255, 120);
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.registrar-marca {
+    background-color: rgb(255, 120, 120);
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.registrar-software {
+    background-color: rgb(120, 255, 120);
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.registrar-desenho-industrial {
+    background-color: rgb(120, 120, 255);
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.registrar-indicacao-geografica {
+    background-color: rgb(255, 120, 255);
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.registrar-cultivar {
+    background-color: rgb(255, 200, 120);
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn-voltar {
+    margin-top: 1rem;
+    width: 10em;
+    height: 3rem;
+    font-size: 1.2rem;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-voltar:hover {
+    box-shadow: inset 0 0 0 2px #000;
+}
