@@ -1,69 +1,42 @@
 {
   "propriedades": [
     {
-      "id": "1",
-      "tipo": "Software",
-      "titulo": "Propriedade A",
-      "inventor": "joão pedro da silva",
-      "departamento": "Concluído",
-      "status": "Pendente",
-      "dataVencimento": "2025-12-31"
-    },
-    {
-      "id": "2",
-      "tipo": "Software",
-      "titulo": "Propriedade B",
-      "inventor": "maria da silva",
-      "departamento": "Em Andamento",
-      "status": "Pendente",
-      "dataVencimento": "2024-06-30"
-    },
-    {
-      "id": "3",
-      "tipo": "Software",
-      "titulo": "Propriedade C",
-      "inventor": "joão pedro da silva",
-      "departamento": "Concluído",
-      "status": "Pendente",
-      "dataVencimento": "2023-11-15"
-    },
-    {
       "id": "f099",
-      "titulo": "rfdsfsdfs",
-      "descricao": "fwesfsfdfse",
-      "departamento": "engenharia",
-      "dataCriacao": "32432-04-05",
+      "titulo": "Sistema de Diagnóstico Veterinário",
+      "descricao": "Software para análise de exames laboratoriais em animais de pequeno porte.",
+      "departamento": "Veterinária",
+      "dataCriacao": "2023-04-05",
       "status": "pendente",
-      "nomeInventor": "dawdasd",
-      "emailInventor": "kleberfraga9@gmail.com",
-      "cpfInventor": "2478583",
-      "tipo": "patente",
-      "patente": {
-        "tipoPatente": "jhgjhgjhg",
-        "classificacao": "jtyfdgh"
-      },
+      "nomeInventor": "Carlos Silva",
+      "emailInventor": "carlos.silva@universidade.edu",
+      "cpfInventor": "12345678901",
+      "tipo": "software",
+      "patente": {},
       "marca": {},
-      "software": {},
+      "software": {
+        "linguagem": "Python",
+        "registroINPI": "BR512023000001-0"
+      },
       "indicacaoGeografica": {},
       "desenhoIndustrial": {},
       "cultivar": {}
     },
     {
       "id": "4346",
-      "titulo": "rfdsfsdfs",
-      "descricao": "fwesfsfdfse",
-      "departamento": "engenharia",
-      "dataCriacao": "32432-04-05",
+      "titulo": "Marca de Café Orgânico Florestal",
+      "descricao": "Marca registrada para café orgânico produzido em sistemas agroflorestais.",
+      "departamento": "Engenharia Florestal",
+      "dataCriacao": "2022-11-15",
       "status": "pendente",
-      "nomeInventor": "dawdasd",
-      "emailInventor": "kleberfraga9@gmail.com",
-      "cpfInventor": "2478583",
-      "tipo": "patente",
-      "patente": {
-        "tipoPatente": "jhgjhgjhg",
-        "classificacao": "jtyfdgh"
+      "nomeInventor": "Mariana Souza",
+      "emailInventor": "mariana.souza@universidade.edu",
+      "cpfInventor": "98765432100",
+      "tipo": "marca",
+      "patente": {},
+      "marca": {
+        "nomeMarca": "Café VerdeSul",
+        "registroINPI": "91728364"
       },
-      "marca": {},
       "software": {},
       "indicacaoGeografica": {},
       "desenhoIndustrial": {},
@@ -71,18 +44,18 @@
     },
     {
       "id": "7c09",
-      "titulo": "rfdsfsdfs",
-      "descricao": "fwesfsfdfse",
-      "departamento": "engenharia",
-      "dataCriacao": "32432-04-05",
+      "titulo": "Sistema de Irrigação Automatizado",
+      "descricao": "Dispositivo patenteado para irrigação eficiente em plantações florestais.",
+      "departamento": "Engenharia Florestal",
+      "dataCriacao": "2021-08-30",
       "status": "pendente",
-      "nomeInventor": "dawdasd",
-      "emailInventor": "kleberfraga9@gmail.com",
-      "cpfInventor": "2478583",
+      "nomeInventor": "Fernanda Lima",
+      "emailInventor": "fernanda.lima@universidade.edu",
+      "cpfInventor": "32165498712",
       "tipo": "patente",
       "patente": {
-        "tipoPatente": "jhgjhgjhg",
-        "classificacao": "jtyfdgh"
+        "tipoPatente": "Invenção",
+        "classificacao": "A01G 25/16"
       },
       "marca": {},
       "software": {},
@@ -92,63 +65,63 @@
     },
     {
       "id": "effe",
-      "titulo": "rfdsfsdfs",
-      "descricao": "fwesfsfdfse",
-      "departamento": "engenharia",
-      "dataCriacao": "32432-04-05",
+      "titulo": "Coleção de Ilustrações para Ensino de Algoritmos",
+      "descricao": "Desenhos industriais para livros didáticos de computação.",
+      "departamento": "Computação",
+      "dataCriacao": "2023-01-12",
       "status": "pendente",
-      "nomeInventor": "dawdasd",
-      "emailInventor": "kleberfraga9@gmail.com",
-      "cpfInventor": "2478583",
-      "tipo": "patente",
-      "patente": {
-        "tipoPatente": "jhgjhgjhg",
-        "classificacao": "jtyfdgh"
-      },
+      "nomeInventor": "Lucas Pereira",
+      "emailInventor": "lucas.pereira@universidade.edu",
+      "cpfInventor": "45612378909",
+      "tipo": "desenhoIndustrial",
+      "patente": {},
       "marca": {},
       "software": {},
       "indicacaoGeografica": {},
-      "desenhoIndustrial": {},
+      "desenhoIndustrial": {
+        "registroINPI": "DI9001234-5",
+        "descricao": "Conjunto de ilustrações para livros didáticos"
+      },
       "cultivar": {}
     },
     {
       "id": "ee3d",
-      "titulo": "rfdsfsdfs",
-      "descricao": "wadawdsdaw",
-      "departamento": "artes",
-      "dataCriacao": "4453-07-25",
+      "titulo": "Variedade de Eucalipto Resistente",
+      "descricao": "Nova cultivar de eucalipto resistente a pragas.",
+      "departamento": "Engenharia Florestal",
+      "dataCriacao": "2022-07-25",
       "status": "pendente",
-      "nomeInventor": "dawdasdaw",
-      "emailInventor": "kleberfraga9@gmail.com",
-      "cpfInventor": "2478583",
-      "tipo": "patente",
-      "patente": {
-        "tipoPatente": "daddada",
-        "classificacao": "dwasdaw"
-      },
+      "nomeInventor": "Ana Beatriz Ramos",
+      "emailInventor": "ana.ramos@universidade.edu",
+      "cpfInventor": "85296374122",
+      "tipo": "cultivar",
+      "patente": {},
       "marca": {},
       "software": {},
       "indicacaoGeografica": {},
       "desenhoIndustrial": {},
-      "cultivar": {}
+      "cultivar": {
+        "nomeCultivar": "EucaPraga",
+        "registroSNPC": "20220012345"
+      }
     },
     {
       "id": "b9b0",
-      "titulo": "dawdasdawd",
-      "descricao": "dawdawwdasda",
-      "departamento": "artes",
-      "dataCriacao": "0468-05-14",
+      "titulo": "Aplicativo de Gestão de Clínicas Veterinárias",
+      "descricao": "Aplicativo para controle de agendamentos e prontuários em clínicas veterinárias.",
+      "departamento": "Veterinária",
+      "dataCriacao": "2020-05-14",
       "status": "aprovado",
-      "nomeInventor": "jydrj",
-      "emailInventor": "kleberfraga9@gmail.com",
-      "cpfInventor": "2478583",
-      "tipo": "Patente",
-      "patente": {
-        "tipoPatente": "hfghfhhts",
-        "classificacao": "hvbcbvcbc"
-      },
+      "nomeInventor": "João Mendes",
+      "emailInventor": "joao.mendes@universidade.edu",
+      "cpfInventor": "74185296300",
+      "tipo": "software",
+      "patente": {},
       "marca": {},
-      "software": {},
+      "software": {
+        "linguagem": "Java",
+        "registroINPI": "BR512020000002-1"
+      },
       "indicacaoGeografica": {},
       "desenhoIndustrial": {},
       "cultivar": {}

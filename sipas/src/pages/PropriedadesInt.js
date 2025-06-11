@@ -7,6 +7,22 @@ import Tabela from '../components/propriedadesInt.js/Tabela.js';
 function PropriedadesInt() {
   const [propriedades, setPropriedades] = useState([]);
   const [erro, setErro] = useState('');
+  const [filtros, setFiltros] = useState({
+  tipo: '',
+  status: '',
+  departamento: '',
+  });
+
+  const handleFiltroChange = (campo, valor) => {
+    setFiltros(prev => ({ ...prev, [campo]: valor }));
+  };
+  const propriedadesFiltradas = propriedades.filter(item => {
+  return (
+    (!filtros.tipo || item.tipo === filtros.tipo) &&
+    (!filtros.status || item.status === filtros.status) &&
+    (!filtros.departamento || item.departamento === filtros.departamento)
+  );
+  });
 
   const getTipoClass = (tipo) => {
   switch (tipo.toLowerCase()) {
@@ -26,6 +42,22 @@ function PropriedadesInt() {
       return '';
     }
   };
+
+  const getStatusClass = (status) => {
+    switch (status.toLowerCase()) {
+      case 'concluído':
+        return 'status-concluido';
+      case 'aprovado':
+        return 'status-aprovado';
+      case 'andamento':
+        return 'status-andamento';
+      case 'pendente':
+        return 'status-pendente';
+      default:
+        return '';
+    }
+  }
+
 
   useEffect(() => {
       fetch('http://localhost:3001/propriedades')
@@ -52,10 +84,10 @@ function PropriedadesInt() {
   return (
     <>
     <Header />
+    {erro && <div style={{color: 'red'}}>{erro}</div>}
     <div className="conteudo">
-      <Sidebar />
-      {erro && <div style={{color: 'red'}}>{erro}</div>}
-      <Tabela propriedades={propriedades} getTipoClass={getTipoClass} />
+      <Sidebar filtros={filtros} onFiltroChange={handleFiltroChange}/>     
+      <Tabela propriedades={propriedades} getTipoClass={getTipoClass} getStatusClass={getStatusClass} />
       </div>
     </>
   );

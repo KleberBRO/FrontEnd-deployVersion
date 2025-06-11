@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Tabela({ propriedades, getTipoClass }) {
+function Tabela({ propriedades, getTipoClass, getStatusClass }) {
   return (
     <div className="tabela-container">
       <table className="tabela-propriedades">
@@ -25,9 +25,9 @@ function Tabela({ propriedades, getTipoClass }) {
               </td>
               <td className={getTipoClass(item.tipo)}>{item.tipo}</td>
               <td>{item.titulo}</td>
-              <td>{item.inventor}</td>
+              <td>{item.nomeInventor}</td>
               <td>{item.departamento}</td>
-              <td>{item.status}</td>
+              <td className={getStatusClass(item.status)}>{item.status}</td>
               <td>{item.dataVencimento}</td>
             </tr>
           ))}
