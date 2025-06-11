@@ -16,8 +16,8 @@ function App() {
             >Registrar PI</button>
             <button className="Propriedades-registradas" onClick={() => navigate('/Propriedades-registradas')}
             >Propriedades Registradas</button>
-            <button className="pedidos-andamento">Pedidos em Andamento</button>
             <button className="gerar-relatorio">Gerar Relatório</button>
+            <button className="sair" onClick={() => navigate('/Login')}>Sair</button>
             </div>
         </div>
       
