@@ -7,6 +7,8 @@ import Tabela from '../components/propriedadesInt.js/Tabela.js';
 function PropriedadesInt() {
   const [propriedades, setPropriedades] = useState([]);
   const [erro, setErro] = useState('');
+  const [modalAberto, setModalAberto] = useState(false);
+  const [piSelecionada, setPiSelecionada] = useState(null); 
   const [filtros, setFiltros] = useState({
   tipo: '',
   status: '',
@@ -81,13 +83,67 @@ function PropriedadesInt() {
         });
   }, []);
 
+  const abrirModal = (pi) => {
+    setPiSelecionada(pi);
+    setModalAberto(true);
+  };
+
+  const fecharModal = () => {
+    setModalAberto(false);
+    setPiSelecionada(null);
+  };
+
   return (
     <>
     <Header />
     {erro && <div style={{color: 'red'}}>{erro}</div>}
     <div className="conteudo">
       <Sidebar filtros={filtros} onFiltroChange={handleFiltroChange}/>     
-      <Tabela propriedades={propriedades} getTipoClass={getTipoClass} getStatusClass={getStatusClass} />
+      <Tabela 
+      propriedades={propriedades} 
+      getTipoClass={getTipoClass} 
+      getStatusClass={getStatusClass} 
+      onLupaClick={abrirModal}
+      />
+      {modalAberto && piSelecionada && (
+        <div className="modal-overlay">
+          <div className="modal-conteudo">
+            <button className="modal-fechar" onClick={fecharModal}>Fechar</button>
+            <h2>{piSelecionada.titulo}</h2>
+            <div className="modal-flex-row">
+              <div className="descricao">
+                <h3>Descrição:</h3>
+                <p>{piSelecionada.descricao}</p>
+              </div>
+              <div className="lista-documentos">
+                <h3>Documentos Relacionados:</h3>
+                {piSelecionada.documentos && piSelecionada.documentos.length > 0 ? (
+                  <ul>
+                    {piSelecionada.documentos.map((doc, index) => (
+                      <li key={index}>
+                        <a href={doc.url} target="_blank" rel="noopener noreferrer">{doc.nome}</a>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p>Nenhum documento relacionado encontrado.</p>
+                )}
+              </div>
+            </div>
+            <div className="dados-gerais">
+              <h3>Dados Gerais:</h3>
+              <p><strong>Tipo:</strong> {piSelecionada.tipo}</p>
+              <p><strong>Departamento:</strong> {piSelecionada.departamento}</p>
+              <p><strong>Status:</strong> {piSelecionada.status}</p>
+              <p><strong>Data de Criação:</strong> {piSelecionada.dataCriacao}</p>
+              <p><strong>Data de Vencimento:</strong> {piSelecionada.dataVencimento}</p>
+              <p><strong>Inventor:</strong> {piSelecionada.nomeInventor}</p>
+              <p><strong>email Inventor: </strong> {piSelecionada.emailInventor}</p>
+              <p><strong>Cpf Inventor: </strong> {piSelecionada.cpfInventor}</p>
+            </div>
+          </div>
+        </div>
+      )}
       </div>
     </>
   );

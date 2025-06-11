@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Tabela({ propriedades, getTipoClass, getStatusClass }) {
+function Tabela({ propriedades, getTipoClass, getStatusClass, onLupaClick }) {
   return (
     <div className="tabela-container">
       <table className="tabela-propriedades">
@@ -19,7 +19,7 @@ function Tabela({ propriedades, getTipoClass, getStatusClass }) {
           {propriedades.map((item) => (
             <tr key={item.id}>
               <td>
-                <button>
+                <button onClick={() => onLupaClick(item)}>
                   <img src={require('../../assets/lupa.svg').default} alt="Buscar" />
                 </button>
               </td>
