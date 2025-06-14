@@ -20,7 +20,7 @@ function Tabela({ propriedades, getTipoClass, getStatusClass, onLupaClick }) {
             <tr key={item.id}>
               <td>
                 <button onClick={() => onLupaClick(item)}>
-                  <img src={require('../../assets/lupa.svg').default} alt="Buscar" />
+                  <img src={require('../../../assets/lupa.svg').default} alt="Buscar" />
                 </button>
               </td>
               <td className={getTipoClass(item.tipo)}>{item.tipo}</td>

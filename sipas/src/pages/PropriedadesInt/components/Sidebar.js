@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../styles/PropriedadesInt.css';
+import '../PropriedadesInt.css';
 import { useNavigate } from 'react-router-dom';
 
 function Sidebar({ filtros, onFiltroChange }) {
@@ -11,7 +11,7 @@ function Sidebar({ filtros, onFiltroChange }) {
       <div className="busca">
         <input type="text" className="search-bar" placeholder="Digite para buscar..." />
         <button className="search-button">
-          <img src={require('../../assets/lupa.svg').default} alt="Buscar" />
+          <img src={require('../../../assets/lupa.svg').default} alt="Buscar" />
         </button>
       </div>
       <div className="busca-por">

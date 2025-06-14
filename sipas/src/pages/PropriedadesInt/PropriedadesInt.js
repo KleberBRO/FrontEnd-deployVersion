@@ -1,8 +1,8 @@
 import React, {useEffect, useState } from 'react';
-import Header from '../components/Header';
-import '../styles/PropriedadesInt.css';
-import Sidebar from '../components/propriedadesInt.js/Sidebar.js';
-import Tabela from '../components/propriedadesInt.js/Tabela.js';
+import Header from '../../components/Header';
+import './PropriedadesInt.css';
+import Sidebar from './components/Sidebar.js';
+import Tabela from './components/Tabela.js';
 
 function PropriedadesInt() {
   const [propriedades, setPropriedades] = useState([]);

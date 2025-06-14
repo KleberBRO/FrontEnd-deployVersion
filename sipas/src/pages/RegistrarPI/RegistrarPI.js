@@ -1,9 +1,9 @@
 import React from 'react';
-import '../styles/RegistrarPI.css';
+import './RegistrarPI.css';
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
-import Header from '../components/Header';
-import Form from '../components/RegistrarPI/Form';
+import Header from '../../components/Header';
+import Form from './components/Form';
 
 function RegistrarPI() {
     const navigate = useNavigate();

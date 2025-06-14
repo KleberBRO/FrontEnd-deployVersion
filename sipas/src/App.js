@@ -1,10 +1,10 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from './pages/Home';
-import EscolherPI from './pages/EscolherPI.js';
-import PropriedadesInt from './pages/PropriedadesInt.js';
-import RegistrarPI from './pages/RegistrarPI.js';
-import Login from './pages/Login.js';
+import Home from './pages/Home/Home.js';
+import EscolherPI from './pages/EscolherPI/EscolherPI.js';
+import PropriedadesInt from './pages/PropriedadesInt/PropriedadesInt.js';
+import RegistrarPI from './pages/RegistrarPI/RegistrarPI.js';
+import Login from './pages/Login/Login.js';
 
 function App() {
   return (
