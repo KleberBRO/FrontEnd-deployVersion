@@ -1,0 +1,121 @@
+.startup-header {
+    background-color: #1a28f3;
+    color: white;
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .versao {
+    font-size: 12px;
+    color: #ccc;
+  }
+  
+  .startup-container {
+    padding: 32px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  
+  .startup-form h2 {
+    text-align: center;
+    margin-bottom: 24px;
+  }
+  
+  .form-content {
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+  }
+  
+  .form-left {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  
+  .form-left label {
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+  }
+  
+  .form-left input,
+  .form-left select,
+  .form-left textarea {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    margin-top: 4px;
+  }
+  
+  .form-left textarea {
+    height: 60px;
+    resize: vertical;
+  }
+  
+  .form-right {
+    width: 260px;
+  }
+  
+  .form-right h3 {
+    margin-bottom: 12px;
+  }
+  
+  .form-right ul {
+    padding-left: 20px;
+    margin-bottom: 12px;
+  }
+  
+  .form-right input {
+    width: 100%;
+    margin-bottom: 8px;
+    padding: 6px;
+  }
+  
+  .btn-participante {
+    width: 100%;
+    background-color: #1a28f3;
+    color: white;
+    border: none;
+    padding: 8px;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  
+  .form-buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 24px;
+    gap: 16px;
+  }
+  
+  .btn-confirmar {
+    background-color: #1a28f3;
+    color: white;
+    padding: 10px 24px;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .btn-cancelar {
+    background-color: red;
+    color: white;
+    padding: 10px 24px;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .startup-container {
+    padding: 20px;
+    height: 100vh;
+    overflow-y: auto; 
+    box-sizing: border-box;
+  }
+  

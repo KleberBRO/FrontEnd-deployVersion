@@ -5,6 +5,7 @@ import EscolherPI from './pages/EscolherPI/EscolherPI.js';
 import PropriedadesInt from './pages/PropriedadesInt/PropriedadesInt.js';
 import RegistrarPI from './pages/RegistrarPI/RegistrarPI.js';
 import Login from './pages/Login/Login.js';
+import CadastroStartup from './pages/CadastroStartup/CadastroStartup.js';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/home" element={<Home />} />
         <Route path="/escolher-pi" element={<EscolherPI />} />
+        <Route path="/cadastro-startup" element={<CadastroStartup />} />
         <Route path="/propriedades-registradas" element={<PropriedadesInt/>} />
         <Route path="/registrar-pi" element={<RegistrarPI />} />
         <Route path="/login" element={<Login />} />
