@@ -7,6 +7,9 @@ Repositorio do código frontEnd do projeto.
 * Caio Nogueira - caio.melloneto@ufrpe.br
 
 ## Descrição geral sobre o projeto
+para rodar o front basta ter o node.js
+Ir para a pasta sipas no terminal
+executar o código "npm start"
 
 ## Requisitos da interface
 

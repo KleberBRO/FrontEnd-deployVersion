@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import PrivateRoute from './components/PrivateRoute.js';
 import Home from './pages/Home/Home.js';
 import EscolherPI from './pages/EscolherPI/EscolherPI.js';
 import PropriedadesInt from './pages/PropriedadesInt/PropriedadesInt.js';
@@ -11,13 +12,21 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/escolher-pi" element={<EscolherPI />} />
-        <Route path="/cadastro-startup" element={<CadastroStartup />} />
-        <Route path="/propriedades-registradas" element={<PropriedadesInt/>} />
-        <Route path="/registrar-pi" element={<RegistrarPI />} />
-        <Route path="/login" element={<Login />} />
+        {/* Rotas Públicas */}
+        <Route path="/" element={<Login />} />
+
+        {/* Rotas Privadas */}
+        <Route element={<PrivateRoute />}>
+          <Route path="/home" element={<Home />} />
+          <Route path="/escolher-pi" element={<EscolherPI />} />
+          <Route path="/cadastro-startup" element={<CadastroStartup />} />
+          <Route path="/propriedades-registradas" element={<PropriedadesInt/>} />
+          <Route path="/registrar-pi" element={<RegistrarPI />} />
+          <Route path="/login" element={<Login />} />
+        </Route>
+
+        {/* Rota padrão para redirecionar para o login */}
+        <Route path="*" element={<Login />} />
       </Routes>
     </Router>
   );

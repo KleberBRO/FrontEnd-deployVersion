@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { use, useEffect } from 'react';
 import './Home.css';
 import { useNavigate } from 'react-router-dom';
 import Header from '../../components/Header';
+import { authService } from '../../services/authService';
 
 function App() {
   const navigate = useNavigate();
+
+  const handleLogout = () => {
+    authService.logout();
+    navigate('/Login');
+  };
 
   return (
     <>
@@ -19,7 +25,7 @@ function App() {
             <button className="Cadastro-startup" onClick={() => navigate('/cadastro-startup')}
             >Cadastrar Startup</button>
             <button className="gerar-relatorio">Gerar Relatório</button>
-            <button className="sair" onClick={() => navigate('/Login')}>Sair</button>
+            <button className="sair" onClick={handleLogout}>Sair</button>
             </div>
         </div>
       
