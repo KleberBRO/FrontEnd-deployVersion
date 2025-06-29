@@ -42,3 +42,19 @@
 .home-content button:hover {
     background-color: darkblue;
 }
+
+.home-content button.sair {
+    background-color: rgb(255, 0, 0);
+}
+
+.home-content button.sair:hover {
+    background-color: rgb(185, 0, 0);
+}
+
+.home-content button.gerenciar-usuarios {
+    background-color: rgb(0, 185, 0);
+}
+
+.home-content button.gerenciar-usuarios:hover {
+    background-color: rgb(0, 150, 0);
+}

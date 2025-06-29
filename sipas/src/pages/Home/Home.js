@@ -1,4 +1,4 @@
-import React, { use, useEffect } from 'react';
+import React from 'react';
 import './Home.css';
 import { useNavigate } from 'react-router-dom';
 import Header from '../../components/Header';
@@ -25,6 +25,8 @@ function App() {
             <button className="Cadastro-startup" onClick={() => navigate('/cadastro-startup')}
             >Cadastrar Startup</button>
             <button className="gerar-relatorio">Gerar Relatório</button>
+            <button className='gerenciar-usuarios' onClick={() => navigate('/Gerenciar-usuarios')}
+            >Usuários</button>
             <button className="sair" onClick={handleLogout}>Sair</button>
             </div>
         </div>

@@ -7,6 +7,7 @@ import PropriedadesInt from './pages/PropriedadesInt/PropriedadesInt.js';
 import RegistrarPI from './pages/RegistrarPI/RegistrarPI.js';
 import Login from './pages/Login/Login.js';
 import CadastroStartup from './pages/CadastroStartup/CadastroStartup.js';
+import GerenciarUsuarios from './pages/GerenciarUsuarios/GerenciarUsuarios.js';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="/propriedades-registradas" element={<PropriedadesInt/>} />
           <Route path="/registrar-pi" element={<RegistrarPI />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/gerenciar-usuarios" element={<GerenciarUsuarios />} />
         </Route>
 
         {/* Rota padrão para redirecionar para o login */}
