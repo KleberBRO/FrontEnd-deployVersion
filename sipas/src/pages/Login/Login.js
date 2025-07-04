@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
 import Header from '../../components/Header';
+import Notification from './components/Notification';
 import { authService } from '../../services/authService';
 
 function Login() {
@@ -10,6 +11,7 @@ function Login() {
     password: ''
   });
   const [erro, setErro] = useState('');
+  const [notification, setNotification] = useState({ message: '', type: '' });
   const [carregando, setCarregando] = useState(false);
   const navigate = useNavigate();
 
@@ -21,30 +23,43 @@ function Login() {
     }));
     // Limpar erro quando usuário digitar
     if (erro) setErro('');
+    if (notification.message) setNotification({ message: '', type: '' });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setCarregando(true);
     setErro('');
+    setNotification({ message: '', type: '' });
 
     try {
       await authService.login(formData.email, formData.password);
       navigate('/home');
-
-      // Redirecionar para página principal
-      navigate('/home');
       
     } catch (error) {
-      setErro(error.message || 'Erro ao fazer login');
+        // Mostrar outros erros como notificação
+        setNotification({
+          message: error.message || 'Erro inesperado',
+          type: error.type || 'server'
+        });
+
     } finally {
       setCarregando(false);
     }
   };
 
+  const closeNotification = () => {
+    setNotification({ message: '', type: '' });
+  };
+
   return (
     <>
       <Header/>
+      <Notification 
+        message={notification.message}
+        type={notification.type}
+        onClose={closeNotification}
+      />
       <div className="login-background">
         <form className="login-form" onSubmit={handleSubmit}>
           <h2>Login</h2>

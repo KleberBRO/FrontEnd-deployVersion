@@ -62,26 +62,43 @@ function PropriedadesInt() {
 
 
   useEffect(() => {
-      fetch('http://localhost:3001/propriedades')
-        .then(response => {
-          if (!response.ok) {
-            throw new Error('Erro ao carregar propriedades');
+    const token = localStorage.getItem('token'); // Ou sessionStorage.getItem('token');
+    if (!token) {
+      setErro('Você precisa estar logado para ver as propriedades.');
+      // Opcional: Redirecionar para a página de login
+      // navigate('/login');
+      return;
+    }
+
+    fetch('http://localhost:8080/api/propriedades', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}` // Inclui o token no cabeçalho Authorization
+      }
+    })
+      .then(response => {
+        if (!response.ok) {
+          if (response.status === 403) {
+            throw new Error('Acesso negado. Você não tem permissão para ver estas propriedades.');
           }
-          return response.json();
-        })
-        .then(data => {
-          if (Array.isArray(data)) {
-            setPropriedades(data);
-          } else if (Array.isArray(data.propriedades)) {
-            setPropriedades(data.propriedades);
-          } else {
-            setErro('Dados inválidos no endpoint');
-          }
-        })
-        .catch((e) => {
-          setErro('Não foi possível carregar os dados.');
-        });
-  }, []);
+          throw new Error('Erro ao carregar propriedades');
+        }
+        return response.json();
+      })
+      .then(data => {
+        if (Array.isArray(data)) {
+          setPropriedades(data);
+        } else if (Array.isArray(data.propriedades)) {
+          setPropriedades(data.propriedades);
+        } else {
+          setErro('Dados inválidos no endpoint');
+        }
+      })
+      .catch((e) => {
+        setErro('Não foi possível carregar os dados: ' + e.message); // Exibe a mensagem de erro específica
+      });
+  }, []);
 
   const abrirModal = (pi) => {
     setPiSelecionada(pi);
