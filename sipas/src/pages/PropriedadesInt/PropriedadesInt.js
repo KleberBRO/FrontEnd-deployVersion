@@ -8,16 +8,18 @@ import Modal from './components/Modal.js';
 
 function PropriedadesInt() {
   const [propriedades, setPropriedades] = useState([]);
+  const [propriedadesOriginais, setPropriedadesOriginais] = useState([]);
   const [erro, setErro] = useState('');
   const [modalAberto, setModalAberto] = useState(false);
   const [piSelecionada, setPiSelecionada] = useState(null); 
+  const [carregando, setCarregando] = useState(false);
   const [filtros, setFiltros] = useState({
-  tipo: '',
-  status: '',
-  departamento: '',
+    tipo: '',
+    status: '',
+    departamento: '',
   });
 
-    // Dados mockados para teste
+  // Dados mockados para teste
   const dadosMockados = [
     {
       id: 1,
@@ -54,34 +56,165 @@ function PropriedadesInt() {
     }
   ];
 
+  // Função para carregar propriedades do backend
+  const carregarPropriedades = async () => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      setErro('Você precisa estar logado para ver as propriedades.');
+      return;
+    }
+
+    try {
+      setCarregando(true);
+      const response = await fetch('http://localhost:8080/api/propriedades', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      if (!response.ok) {
+        if (response.status === 403) {
+          throw new Error('Acesso negado. Você não tem permissão para ver estas propriedades.');
+        }
+        throw new Error('Erro ao carregar propriedades');
+      }
+
+      const data = await response.json();
+      let propriedadesData = [];
+      
+      if (Array.isArray(data)) {
+        propriedadesData = data;
+      } else if (Array.isArray(data.propriedades)) {
+        propriedadesData = data.propriedades;
+      } else {
+        throw new Error('Dados inválidos no endpoint');
+      }
+
+      setPropriedades(propriedadesData);
+      setPropriedadesOriginais(propriedadesData);
+    } catch (error) {
+      console.error('Erro ao carregar propriedades:', error);
+      setErro('Não foi possível carregar os dados: ' + error.message);
+      // Fallback para dados mockados
+      setPropriedades(dadosMockados);
+      setPropriedadesOriginais(dadosMockados);
+    } finally {
+      setCarregando(false);
+    }
+  };
+
+  // Função para pesquisar no backend
+  const handleSearch = async (termo, campo) => {
+    if (!termo.trim()) {
+      // Se o termo está vazio, recarrega todas as propriedades
+      setPropriedades(propriedadesOriginais);
+      return;
+    }
+
+    const token = localStorage.getItem('token');
+    if (!token) {
+      setErro('Você precisa estar logado para pesquisar.');
+      return;
+    }
+
+    try {
+      setCarregando(true);
+      
+      // Construir URL com parâmetros de pesquisa
+      const params = new URLSearchParams({
+        termo: termo,
+        campo: campo
+      });
+
+      const response = await fetch(`http://localhost:8080/api/propriedades/pesquisar?${params}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error('Erro ao pesquisar propriedades');
+      }
+
+      const data = await response.json();
+      let resultados = [];
+      
+      if (Array.isArray(data)) {
+        resultados = data;
+      } else if (Array.isArray(data.propriedades)) {
+        resultados = data.propriedades;
+      }
+
+      setPropriedades(resultados);
+      
+      if (resultados.length === 0) {
+        setErro(`Nenhum resultado encontrado para "${termo}" no campo "${campo}"`);
+      }
+    } catch (error) {
+      console.error('Erro ao pesquisar:', error);
+      setErro('Erro ao realizar pesquisa: ' + error.message);
+      
+      // Fallback para pesquisa local nos dados mockados
+      const resultadosLocal = dadosMockados.filter(item => {
+        switch (campo) {
+          case 'titulo':
+            return item.titulo.toLowerCase().includes(termo.toLowerCase());
+          case 'inventor':
+            return item.nomeInventor.toLowerCase().includes(termo.toLowerCase());
+          case 'data':
+            return item.dataCriacao.includes(termo) || item.dataVencimento.includes(termo);
+          default:
+            return false;
+        }
+      });
+      
+      setPropriedades(resultadosLocal);
+    } finally {
+      setCarregando(false);
+    }
+  };
+
   const handleFiltroChange = (campo, valor) => {
     setFiltros(prev => ({ ...prev, [campo]: valor }));
   };
 
+  const handleClearFilters = () => {
+    setFiltros({
+      tipo: '',
+      status: '',
+      departamento: '',
+    });
+  };
+
   const propriedadesFiltradas = propriedades.filter(item => {
-  return (
-    (!filtros.tipo || item.tipo === filtros.tipo) &&
-    (!filtros.status || item.status === filtros.status) &&
-    (!filtros.departamento || item.departamento === filtros.departamento)
-  );
+    // Verificar se todos os filtros passam
+    const filtroTipo = !filtros.tipo || item.tipo === filtros.tipo;
+    const filtroStatus = !filtros.status || item.status === filtros.status;
+    const filtroDepartamento = !filtros.departamento || item.departamento === filtros.departamento;
+    
+    return filtroTipo && filtroStatus && filtroDepartamento;
   });
 
   const getTipoClass = (tipo) => {
-  switch (tipo.toLowerCase()) {
-    case 'software':
-      return 'tipo-software';
-    case 'cultivar':
-      return 'tipo-cultivar';
-    case 'marca':
-      return 'tipo-marca';
-    case 'desenho industrial':
-      return 'tipo-desenho-industrial';
-    case 'indicação geográfica':
-      return 'tipo-indicacao-geografica';
-    case 'patente':
-      return 'tipo-patente';
-    default:
-      return '';
+    switch (tipo.toLowerCase()) {
+      case 'software':
+        return 'tipo-software';
+      case 'cultivar':
+        return 'tipo-cultivar';
+      case 'marca':
+        return 'tipo-marca';
+      case 'desenho industrial':
+        return 'tipo-desenho-industrial';
+      case 'indicação geográfica':
+        return 'tipo-indicacao-geografica';
+      case 'patente':
+        return 'tipo-patente';
+      default:
+        return '';
     }
   };
 
@@ -104,63 +237,29 @@ function PropriedadesInt() {
     setErro('');
   };
 
-
   useEffect(() => {
-    setPropriedades(dadosMockados); // Carrega os dados mockados inicialmente
-    const token = localStorage.getItem('token'); // Ou sessionStorage.getItem('token');
-    if (!token) {
-      setErro('Você precisa estar logado para ver as propriedades.');
-      return;
-    }
-
-    fetch('http://localhost:8080/api/propriedades', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      }
-    })
-      .then(response => {
-        if (!response.ok) {
-          if (response.status === 403) {
-            throw new Error('Acesso negado. Você não tem permissão para ver estas propriedades.');
-          }
-          throw new Error('Erro ao carregar propriedades');
-        }
-        return response.json();
-      })
-      .then(data => {
-        if (Array.isArray(data)) {
-          setPropriedades(data);
-        } else if (Array.isArray(data.propriedades)) {
-          setPropriedades(data.propriedades);
-        } else {
-          setErro('Dados inválidos no endpoint');
-        }
-      })
-      .catch((e) => {
-        setErro('Não foi possível carregar os dados: ' + e.message); // Exibe a mensagem de erro específica
-      });
-  }, []);
+    carregarPropriedades();
+  }, []);
 
   const handleSavePI = (piEditada) => {
-    // Atualizar a lista de propriedades
     const token = localStorage.getItem('token');
     setPropriedades(prev => 
       prev.map(pi => pi.id === piEditada.id ? piEditada : pi)
     );
     
-    // Aqui você pode fazer a chamada para o backend para salvar as alterações
+    // Chamada para o backend para salvar as alterações
     fetch(`http://localhost:8080/api/propriedades/${piEditada.id}`, {
-    method: 'PUT',
-    headers: {
-    'Content-Type': 'application/json',
-    'Authorization': `Bearer ${token}`
-    },
-    body: JSON.stringify(piEditada)
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify(piEditada)
+    }).catch(error => {
+      console.error('Erro ao salvar propriedade:', error);
+      setErro('Erro ao salvar alterações');
     });
   };
-
 
   const abrirModal = (pi) => {
     setPiSelecionada(pi);
@@ -174,27 +273,38 @@ function PropriedadesInt() {
 
   return (
     <>
-    <Header />
-    <Notification 
-      message={erro} 
-      type="error" 
-      onClose={handleCloseNotification}
-      duration={5000}
-    />
-    <div className="conteudo">
-      <Sidebar filtros={filtros} onFiltroChange={handleFiltroChange}/>     
-      <Tabela 
-      propriedades={propriedades} 
-      getTipoClass={getTipoClass} 
-      getStatusClass={getStatusClass} 
-      onLupaClick={abrirModal}
+      <Header />
+      <Notification 
+        message={erro} 
+        type="error" 
+        onClose={handleCloseNotification}
+        duration={5000}
       />
-      {modalAberto && (
-        <Modal 
-          piSelecionada={piSelecionada} 
-          onClose={fecharModal} 
+      <div className="conteudo">
+        <Sidebar 
+          filtros={filtros} 
+          onFiltroChange={handleFiltroChange}
+          onSearch={handleSearch}
+          onClearFilters={handleClearFilters}
+        />     
+        <Tabela 
+          propriedades={carregando ? [] : propriedadesFiltradas} 
+          getTipoClass={getTipoClass} 
+          getStatusClass={getStatusClass} 
+          onLupaClick={abrirModal}
         />
-      )}
+        {modalAberto && (
+          <Modal 
+            piSelecionada={piSelecionada} 
+            onClose={fecharModal} 
+            onSave={handleSavePI}
+          />
+        )}
+        {carregando && (
+          <div className="loading-overlay">
+            <p>Carregando...</p>
+          </div>
+        )}
       </div>
     </>
   );

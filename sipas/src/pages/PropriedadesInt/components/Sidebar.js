@@ -1,58 +1,130 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../PropriedadesInt.css';
 import { useNavigate } from 'react-router-dom';
 
-function Sidebar({ filtros, onFiltroChange }) {
+function Sidebar({ filtros, onFiltroChange, onSearch, onClearFilters }) {
   const navigate = useNavigate();
+  const [termoPesquisa, setTermoPesquisa] = useState('');
+  const [campoPesquisa, setCampoPesquisa] = useState('titulo');
+
+  const handleSearch = () => {
+    if (onSearch) {
+      onSearch(termoPesquisa, campoPesquisa);
+    }
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleSearch();
+    }
+  };
+
+  const handleClearSearch = () => {
+    setTermoPesquisa('');
+    if (onSearch) {
+      onSearch('', campoPesquisa);
+    }
+  };
+
+  const handleClearFilters = () => {
+    if (onClearFilters) {
+      onClearFilters();
+    }
+  };
+
+  const hasActiveFilters = filtros.tipo || filtros.status || filtros.departamento;
 
   return (
     <div className="barra-lateral">
       <h1>Buscar</h1>
       <div className="busca">
-        <input type="text" className="search-bar" placeholder="Digite para buscar..." />
-        <button className="search-button">
+        <input 
+          type="text" 
+          className="search-bar" 
+          placeholder="Digite para buscar..." 
+          value={termoPesquisa}
+          onChange={(e) => setTermoPesquisa(e.target.value)}
+          onKeyPress={handleKeyPress}
+        />
+        <button className="search-button" onClick={handleSearch}>
           <img src={require('../../../assets/lupa.svg').default} alt="Buscar" />
         </button>
+        {termoPesquisa && (
+          <button className="clear-search-button" onClick={handleClearSearch} title="Limpar pesquisa">
+            ×
+          </button>
+        )}
       </div>
       <div className="busca-por">
         <p>por:</p>
-          <select>
-            <option value="titulo">titulo</option>
-            <option value="inventor">Inventor</option>
-            <option value="data">data</option>
-          </select>
+        <select value={campoPesquisa} onChange={(e) => setCampoPesquisa(e.target.value)}>
+          <option value="titulo">Título</option>
+          <option value="inventor">Inventor</option>
+          <option value="data">Data</option>
+        </select>
       </div>
-        <div className='filtros'>
+      <div className='filtros'>
+        <div className="filtros-header">
           <h1>Filtros</h1>
-          <div className='filtro-item'>
-            <input type='checkbox' id='ativo-tipo' checked={!!filtros.tipo} readOnly />
-            <select value={filtros.tipo} onChange={(e) => onFiltroChange('tipo', e.target.value)}>
-              <option value="">Tipo</option>
-              <option value="software">Software</option>
-              <option value="Cultivar">Cultivar</option>
-              <option value="Marca">Marca</option>
-            </select>
-          </div>
-          <div className='filtro-item'>
-            <input type='checkbox' id='ativo-status' checked={!!filtros.status} readOnly />
-            <select value={filtros.status} onChange={(e) => onFiltroChange('status', e.target.value)}>
-              <option value="">Status</option>
-              <option value="concluido">Concluído</option>
-              <option value="andamento">andamento</option>
-              <option value="Pendente">Pendente</option>
-            </select>
-          </div>
-          <div className='filtro-item'>
-            <input type='checkbox' id='ativo-departamento' checked={!!filtros.departamento} readOnly />
-            <select value={filtros.departamento} onChange={(e) => onFiltroChange('departamento', e.target.value)}>
-              <option value="">Departamento</option>
-              <option value="computacao">computação</option>
-              <option value="engenharia-florestal">Engenharia florestal</option>
-              <option value="veterinaria">veterinária</option>
-            </select>
-          </div>
+          {hasActiveFilters && (
+            <button className="clear-filters-button" onClick={handleClearFilters}>
+              Limpar filtros
+            </button>
+          )}
         </div>
-        <button className="btn-voltar-sidebar" onClick={() => navigate('/home')}>Voltar</button>
+        <div className='filtro-item'>
+          <input 
+            type='checkbox' 
+            id='ativo-tipo' 
+            checked={!!filtros.tipo} 
+            onChange={() => {}} 
+            readOnly 
+          />
+          <select value={filtros.tipo} onChange={(e) => onFiltroChange('tipo', e.target.value)}>
+            <option value="">Tipo</option>
+            <option value="software">Software</option>
+            <option value="cultivar">Cultivar</option>
+            <option value="marca">Marca</option>
+            <option value="patente">Patente</option>
+            <option value="desenho-industrial">Desenho Industrial</option>
+            <option value="indicacao-geografica">Indicação Geográfica</option>
+          </select>
+        </div>
+        <div className='filtro-item'>
+          <input 
+            type='checkbox' 
+            id='ativo-status' 
+            checked={!!filtros.status} 
+            onChange={() => {}} 
+            readOnly 
+          />
+          <select value={filtros.status} onChange={(e) => onFiltroChange('status', e.target.value)}>
+            <option value="">Status</option>
+            <option value="concluído">Concluído</option>
+            <option value="andamento">Em Andamento</option>
+            <option value="pendente">Pendente</option>
+            <option value="aprovado">Aprovado</option>
+          </select>
+        </div>
+        <div className='filtro-item'>
+          <input 
+            type='checkbox' 
+            id='ativo-departamento' 
+            checked={!!filtros.departamento} 
+            onChange={() => {}} 
+            readOnly 
+          />
+          <select value={filtros.departamento} onChange={(e) => onFiltroChange('departamento', e.target.value)}>
+            <option value="">Departamento</option>
+            <option value="Computação">Computação</option>
+            <option value="Engenharia florestal">Engenharia florestal</option>
+            <option value="Veterinária">Veterinária</option>
+            <option value="TI">TI</option>
+            <option value="Pesquisa">Pesquisa</option>
+          </select>
+        </div>
+      </div>
+      <button className="btn-voltar-sidebar" onClick={() => navigate('/home')}>Voltar</button>
     </div>
   );
 }

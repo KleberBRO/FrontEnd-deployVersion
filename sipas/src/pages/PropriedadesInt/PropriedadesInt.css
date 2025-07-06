@@ -27,7 +27,10 @@ html, body {
 }
 
 .busca {
+    position: relative;
     display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 .search-bar,
@@ -57,6 +60,25 @@ html, body {
     border: black 2px solid;
 }
 
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.loading-overlay p {
+  font-size: 1.2rem;
+  color: #333;
+  font-weight: bold;
+}
+
 .busca-por {
     display: flex;
     align-items: center;
@@ -71,11 +93,53 @@ html, body {
     margin-left: 10px;
 }
 
+.filtros-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.clear-filters-button {
+  background: #ff6b6b;
+  color: white;
+  border: none;
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.clear-filters-button:hover {
+  background: #ff5252;
+}
+
+.clear-search-button {
+  background: #ccc;
+  color: #666;
+  border: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s;
+}
+
+.clear-search-button:hover {
+  background: #999;
+  color: white;
+}
+
 .filtro-item {
     display: flex;
     align-items: center;
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
 }
 
 .filtro-item input[type="checkbox"] {
@@ -89,10 +153,10 @@ html, body {
 }
 
 .filtro-item select {
-    padding: 5px;
-    border-radius: 5px;
-    min-width: 8rem;
+    flex: 1;
+    padding: 0.5rem;
     border: 1px solid #ddd;
+    border-radius: 4px;
 }
 
 .tabela-container {
