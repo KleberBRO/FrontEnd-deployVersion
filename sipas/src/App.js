@@ -9,6 +9,7 @@ import Login from './pages/Login/Login.js';
 import CadastroStartup from './pages/CadastroStartup/CadastroStartup.js';
 import GerenciarUsuarios from './pages/GerenciarUsuarios/GerenciarUsuarios.js';
 import FeedbackSucesso from './pages/RegistrarPI/components/FeedbackSucesso';
+import GerarRelatorio from './pages/GerarRelatorio/GerarRelatorio.js';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/gerenciar-usuarios" element={<GerenciarUsuarios />} />
           <Route path="/registrar-pi/sucesso" element={<FeedbackSucesso />} />
+          <Route path="/gerar-relatorio" element={<GerarRelatorio />} />
         </Route>
 
         {/* Rota padrão para redirecionar para o login */}
