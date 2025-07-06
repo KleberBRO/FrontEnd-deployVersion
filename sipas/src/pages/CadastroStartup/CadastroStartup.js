@@ -1,7 +1,10 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Header from "../../components/Header";
 import "./CadastroStartup.css";
 
 function CadastroStartup() {
+  const navigate = useNavigate();
   const [form, setForm] = useState({
     nome: "",
     cnpj: "",
@@ -102,11 +105,9 @@ function CadastroStartup() {
   
 
   return (
+    <>
+    <Header />
     <div className="startup-container">
-      <header className="startup-header">
-        <h1>UFRPE - SIGPS</h1>
-        <span className="versao">versão 0.1.0</span>
-      </header>
 
       <form className="startup-form" onSubmit={handleSubmit}>
         <h2>Cadastrar dados da Startup</h2>
@@ -179,6 +180,7 @@ function CadastroStartup() {
         </div>
       </form>
     </div>
+    </>
   );
 }
 

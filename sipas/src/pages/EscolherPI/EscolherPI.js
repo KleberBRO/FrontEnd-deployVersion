@@ -8,7 +8,7 @@ function EscolherPI() {
 
   return (
     <>
-      <Header/>
+      <Header />
         <div className="container">
             <h1>PORTAL SIGPS</h1>
 
