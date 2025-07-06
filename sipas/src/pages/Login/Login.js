@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
 import Header from '../../components/Header';
-import Notification from './components/Notification';
+import Notification from '../../components/Notification/Notification.js';
 import { authService } from '../../services/authService';
 
 function Login() {

@@ -3,6 +3,7 @@ import Header from '../../components/Header';
 import './PropriedadesInt.css';
 import Sidebar from './components/Sidebar.js';
 import Tabela from './components/Tabela.js';
+import Notification from '../../components/Notification/Notification.js';
 
 function PropriedadesInt() {
   const [propriedades, setPropriedades] = useState([]);
@@ -60,13 +61,15 @@ function PropriedadesInt() {
     }
   }
 
+  const handleCloseNotification = () => {
+    setErro('');
+  };
+
 
   useEffect(() => {
     const token = localStorage.getItem('token'); // Ou sessionStorage.getItem('token');
     if (!token) {
       setErro('Você precisa estar logado para ver as propriedades.');
-      // Opcional: Redirecionar para a página de login
-      // navigate('/login');
       return;
     }
 
@@ -74,7 +77,7 @@ function PropriedadesInt() {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}` // Inclui o token no cabeçalho Authorization
+        'Authorization': `Bearer ${token}`
       }
     })
       .then(response => {
@@ -113,7 +116,12 @@ function PropriedadesInt() {
   return (
     <>
     <Header />
-    {erro && <div style={{color: 'red'}}>{erro}</div>}
+    <Notification 
+      message={erro} 
+      type="error" 
+      onClose={handleCloseNotification}
+      duration={5000}
+    />
     <div className="conteudo">
       <Sidebar filtros={filtros} onFiltroChange={handleFiltroChange}/>     
       <Tabela 

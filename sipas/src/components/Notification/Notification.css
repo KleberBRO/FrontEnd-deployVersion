@@ -38,6 +38,26 @@
   background-color: #2196f3; /* Azul para erro de validação */
 }
 
+.notification-error {
+  background-color: #f44336; /* Vermelho para erro */
+  border-left: 4px solid #d32f2f;
+}
+
+.notification-success {
+  background-color: #4caf50; /* Verde para sucesso */
+  border-left: 4px solid #388e3c;
+}
+
+.notification-warning {
+  background-color: #ff9800; /* Laranja para aviso */
+  border-left: 4px solid #f57c00;
+}
+
+.notification-info {
+  background-color: #2196f3; /* Azul para informação */
+  border-left: 4px solid #1976d2;
+}
+
 .notification-close {
   background: none;
   border: none;
