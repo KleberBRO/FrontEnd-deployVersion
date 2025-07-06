@@ -1,13 +1,22 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import StepDadosGerais from './StepDadosGerais';
 import StepInventor from './StepInventor';
 import StepDetalhesEspecificos from './StepDetalhesEspecificos';
 import StepAnexarArquivos from './StepAnexarArquivos';
 import StepConfirmar from './StepConfirmar';
+import Notification from '../../../components/Notification/Notification.js'
 
 function Form({ onSubmit, onBack, tipo}) {
     const [step, setStep] = React.useState(1);
-    const [success, setSuccess] = React.useState(false);
+    const navigate = useNavigate();
+
+    const [notification, setNotification] = React.useState({
+        message: '',
+        type: '',
+        show: false
+    });
+
 
     const [formData, setFormData] = React.useState({
         titulo: '',
@@ -42,17 +51,35 @@ function Form({ onSubmit, onBack, tipo}) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        await fetch('http://localhost:3001/propriedades', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(formData)
-        });
-        setSuccess(true); // mostra notificação
-        setTimeout(() => {
-            setSuccess(false);
-            onBack && onBack(); // volta para escolherPI
-        }, 2000); // 2 segundos
-        onSubmit && onSubmit(formData);
+        try {
+            await fetch('http://localhost:3001/propriedades', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
+            });
+            
+            // Navega para a página de sucesso
+            navigate('/registrar-pi/sucesso', { 
+                state: { 
+                    tipo: tipo.charAt(0).toUpperCase() + tipo.slice(1).replace('-', ' ')
+                }
+            });
+            
+            onSubmit && onSubmit(formData);
+        } catch (error) {
+            console.error('Erro ao registrar propriedade:', error);
+            
+            // Mostra a notificação de erro
+            setNotification({
+                message: "Erro ao registrar a propriedade intelectual. Por favor, tente novamente.",
+                type: "error",
+                show: true
+            });
+        }
+    };
+
+    const handleCloseNotification = () => {
+        setNotification(prev => ({ ...prev, show: false }));
     };
 
     const handleChange = (e, tipoCampo) => {
@@ -77,13 +104,16 @@ function Form({ onSubmit, onBack, tipo}) {
 
 
     return (
+        <>
+            {notification.show && (
+                <Notification
+                    type={notification.type}
+                    message={notification.message}
+                    onClose={handleCloseNotification}
+                />
+            )}
         <form onSubmit={step === 5 ? handleSubmit : handleNext} >
         <h1>Registrar {tipo.charAt(0).toUpperCase() + tipo.slice(1).replace('-', ' ')}</h1>
-            {success && (
-                <div style={{ color: 'green', marginBottom: 16 }}>
-                    Registro enviado com sucesso!
-                </div>
-            )}
         {step === 1 && (
             <StepDadosGerais formData={formData} handleChange={handleChange} />
         )}
@@ -114,6 +144,7 @@ function Form({ onSubmit, onBack, tipo}) {
         > Voltar
         </button>
         </form>
+        </>
     );
 }
 

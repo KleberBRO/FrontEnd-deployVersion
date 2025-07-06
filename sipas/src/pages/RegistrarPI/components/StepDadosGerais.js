@@ -39,7 +39,7 @@ function StepDadosGerais({ formData, handleChange }) {
                     required
                 >
                     <option value="">Selecionar Departamento</option>
-                    <option value="Computação">Computação"</option>
+                    <option value="Computação">Computação</option>
                     <option value="Engenharia florestal">Engenharia florestal</option>
                     <option value="veterinária">veterinária</option>
                     <option value="agropecuaria">agropecuaria</option>
