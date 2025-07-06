@@ -4,6 +4,7 @@ import './PropriedadesInt.css';
 import Sidebar from './components/Sidebar.js';
 import Tabela from './components/Tabela.js';
 import Notification from '../../components/Notification/Notification.js';
+import Modal from './components/Modal.js';
 
 function PropriedadesInt() {
   const [propriedades, setPropriedades] = useState([]);
@@ -16,9 +17,47 @@ function PropriedadesInt() {
   departamento: '',
   });
 
+    // Dados mockados para teste
+  const dadosMockados = [
+    {
+      id: 1,
+      titulo: "Sistema de Gestão de PI - Mock",
+      descricao: "Sistema para gerenciamento de propriedades intelectuais da empresa - dados de teste",
+      tipo: "software",
+      departamento: "TI",
+      status: "andamento",
+      dataCriacao: "2024-01-15",
+      dataVencimento: "2025-01-15",
+      nomeInventor: "João Silva",
+      emailInventor: "joao@empresa.com",
+      cpfInventor: "123.456.789-00",
+      documentos: [
+        { nome: "Especificação Técnica.pdf", url: "#" },
+        { nome: "Diagrama de Arquitetura.pdf", url: "#" }
+      ]
+    },
+    {
+      id: 2,
+      titulo: "Patente de Processo Químico - Mock",
+      descricao: "Processo inovador para síntese de compostos orgânicos - dados de teste",
+      tipo: "patente",
+      departamento: "Pesquisa",
+      status: "concluído",
+      dataCriacao: "2023-06-10",
+      dataVencimento: "2043-06-10",
+      nomeInventor: "Maria Santos",
+      emailInventor: "maria@empresa.com",
+      cpfInventor: "987.654.321-00",
+      documentos: [
+        { nome: "Relatório de Pesquisa.pdf", url: "#" }
+      ]
+    }
+  ];
+
   const handleFiltroChange = (campo, valor) => {
     setFiltros(prev => ({ ...prev, [campo]: valor }));
   };
+
   const propriedadesFiltradas = propriedades.filter(item => {
   return (
     (!filtros.tipo || item.tipo === filtros.tipo) &&
@@ -67,6 +106,7 @@ function PropriedadesInt() {
 
 
   useEffect(() => {
+    setPropriedades(dadosMockados); // Carrega os dados mockados inicialmente
     const token = localStorage.getItem('token'); // Ou sessionStorage.getItem('token');
     if (!token) {
       setErro('Você precisa estar logado para ver as propriedades.');
@@ -103,6 +143,25 @@ function PropriedadesInt() {
       });
   }, []);
 
+  const handleSavePI = (piEditada) => {
+    // Atualizar a lista de propriedades
+    const token = localStorage.getItem('token');
+    setPropriedades(prev => 
+      prev.map(pi => pi.id === piEditada.id ? piEditada : pi)
+    );
+    
+    // Aqui você pode fazer a chamada para o backend para salvar as alterações
+    fetch(`http://localhost:8080/api/propriedades/${piEditada.id}`, {
+    method: 'PUT',
+    headers: {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${token}`
+    },
+    body: JSON.stringify(piEditada)
+    });
+  };
+
+
   const abrirModal = (pi) => {
     setPiSelecionada(pi);
     setModalAberto(true);
@@ -130,44 +189,11 @@ function PropriedadesInt() {
       getStatusClass={getStatusClass} 
       onLupaClick={abrirModal}
       />
-      {modalAberto && piSelecionada && (
-        <div className="modal-overlay">
-          <div className="modal-conteudo">
-            <button className="modal-fechar" onClick={fecharModal}>Fechar</button>
-            <h2>{piSelecionada.titulo}</h2>
-            <div className="modal-flex-row">
-              <div className="descricao">
-                <h3>Descrição:</h3>
-                <p>{piSelecionada.descricao}</p>
-              </div>
-              <div className="lista-documentos">
-                <h3>Documentos Relacionados:</h3>
-                {piSelecionada.documentos && piSelecionada.documentos.length > 0 ? (
-                  <ul>
-                    {piSelecionada.documentos.map((doc, index) => (
-                      <li key={index}>
-                        <a href={doc.url} target="_blank" rel="noopener noreferrer">{doc.nome}</a>
-                      </li>
-                    ))}
-                  </ul>
-                ) : (
-                  <p>Nenhum documento relacionado encontrado.</p>
-                )}
-              </div>
-            </div>
-            <div className="dados-gerais">
-              <h3>Dados Gerais:</h3>
-              <p><strong>Tipo:</strong> {piSelecionada.tipo}</p>
-              <p><strong>Departamento:</strong> {piSelecionada.departamento}</p>
-              <p><strong>Status:</strong> {piSelecionada.status}</p>
-              <p><strong>Data de Criação:</strong> {piSelecionada.dataCriacao}</p>
-              <p><strong>Data de Vencimento:</strong> {piSelecionada.dataVencimento}</p>
-              <p><strong>Inventor:</strong> {piSelecionada.nomeInventor}</p>
-              <p><strong>email Inventor: </strong> {piSelecionada.emailInventor}</p>
-              <p><strong>Cpf Inventor: </strong> {piSelecionada.cpfInventor}</p>
-            </div>
-          </div>
-        </div>
+      {modalAberto && (
+        <Modal 
+          piSelecionada={piSelecionada} 
+          onClose={fecharModal} 
+        />
       )}
       </div>
     </>
