@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Header from '../../components/Header';
 import TabelaUsuarios from './components/TabelaUsuarios';
 import AddUsuario from './components/AddUsuario';
+import { API_BASE_URL } from '../../config/api.js';
 
 const GerenciarUsuarios = () => {
     const [usuarios, setUsuarios] = useState([]);
@@ -14,7 +15,7 @@ const GerenciarUsuarios = () => {
     const fetchUsuarios = async () => {
         try {
             setLoading(true);
-            const response = await fetch('http://localhost:8080/api/user/');
+            const response = await fetch(API_BASE_URL+'/user/');
             
             if (!response.ok) {
                 throw new Error(`Erro: ${response.status}`);

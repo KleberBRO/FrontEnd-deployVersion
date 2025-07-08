@@ -5,6 +5,7 @@ import Sidebar from './components/Sidebar.js';
 import Tabela from './components/Tabela.js';
 import Notification from '../../components/Notification/Notification.js';
 import Modal from './components/Modal.js';
+import { API_BASE_URL } from '../../config/api.js';
 
 function PropriedadesInt() {
   const [propriedades, setPropriedades] = useState([]);
@@ -66,7 +67,7 @@ function PropriedadesInt() {
 
     try {
       setCarregando(true);
-      const response = await fetch('http://localhost:8080/api/propriedades', {
+      const response = await fetch(API_BASE_URL+'/propriedades', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -128,7 +129,7 @@ function PropriedadesInt() {
         campo: campo
       });
 
-      const response = await fetch(`http://localhost:8080/api/propriedades/pesquisar?${params}`, {
+      const response = await fetch(API_BASE_URL+`/propriedades/pesquisar?${params}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -248,7 +249,7 @@ function PropriedadesInt() {
     );
     
     // Chamada para o backend para salvar as alterações
-    fetch(`http://localhost:8080/api/propriedades/${piEditada.id}`, {
+    fetch(API_BASE_URL+`/propriedades/${piEditada.id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
