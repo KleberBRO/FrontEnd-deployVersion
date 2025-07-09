@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import '../GerenciarUsuarios.css';
+import { API_BASE_URL } from '../../../config/api';
+import Notification from '../../../components/Notification/Notification';
 
 const AddUsuario = ({ isOpen, onClose, onAddUsuario }) => {
   const [formData, setFormData] = useState({
@@ -9,6 +11,8 @@ const AddUsuario = ({ isOpen, onClose, onAddUsuario }) => {
     cpf: '',
     role: '',
   });
+
+  const [notification, setNotification] = useState({ message: '', type: '' });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -22,29 +26,85 @@ const AddUsuario = ({ isOpen, onClose, onAddUsuario }) => {
     e.preventDefault();
     
     try {
-      const response = await fetch('http://localhost:8080/api/user/', {
+      const token = localStorage.getItem('token');
+
+      if (!token) {
+        setNotification({
+          message: 'Token de autenticação não encontrado',
+          type: 'error'
+        });
+        return;
+      }
+
+      const registerData = {
+        username: formData.nome,
+        email: formData.email,
+        password: formData.senha,   
+        cpf: formData.cpf,
+        role: formData.role
+      };
+
+      const response = await fetch(`${API_BASE_URL}/user/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(registerData),
       });
 
       if (!response.ok) {
-        throw new Error(`Erro: ${response.status}`);
+        const errorData = await response.text();
+        setNotification({
+          message: `Erro ao adicionar usuário: ${errorData}`,
+          type: 'error'
+        });
+        return;
       }
 
-      const newUser = await response.json();
-      onAddUsuario(newUser);
-      onClose();
+      setNotification({
+        message: 'Usuário criado com sucesso!',
+        type: 'success'
+      });
+      
+      // Limpar o formulário após sucesso
+      setFormData({
+        nome: '',
+        email: '',
+        senha: '',
+        cpf: '',
+        role: '',
+      });
+
+      onAddUsuario({ 
+        username: registerData.username, 
+        email: registerData.email, 
+        cpf: registerData.cpf, 
+        role: registerData.role 
+      });
+      
+      setTimeout(() => {
+        onClose();
+        setNotification({ message: '', type: '' });
+      }, 2000);
+
     } catch (error) {
       console.error('Erro ao adicionar usuário:', error);
+      setNotification({
+        message: `Erro ao adicionar usuário: ${error.message}`,
+        type: 'error'
+      });
     }
+  };
+
+  const handleCloseNotification = () => {
+    setNotification({ message: '', type: '' });
   };
 
   if (!isOpen) return null;
 
   return (
+    <>
     <div className="modal-backdrop">
       <div className="modal-container">
         <div className="modal-header">
@@ -96,20 +156,20 @@ const AddUsuario = ({ isOpen, onClose, onAddUsuario }) => {
               required
             />
           </div>
-            <div className="form-group">
-                <label htmlFor="role">Função</label>
-                <select
-                id="role"
-                name="role"
-                value={formData.role}
-                onChange={handleChange}
-                required
-                >
-                <option value="">Selecione uma função</option>
-                <option value="ADMIN">Administrador</option>
-                <option value="USER">Usuário</option>
-                </select>
-            </div>
+          <div className="form-group">
+            <label htmlFor="role">Função</label>
+            <select
+              id="role"
+              name="role"
+              value={formData.role}
+              onChange={handleChange}
+              required
+            >
+              <option value="">Selecione uma função</option>
+              <option value="ADMIN">Administrador</option>
+              <option value="MODERATOR">Servidor</option>
+            </select>
+          </div>
           <div className="form-actions">
             <button type="button" className="cancel-button" onClick={onClose}>Cancelar</button>
             <button type="submit" className="submit-button">Salvar</button>
@@ -117,6 +177,14 @@ const AddUsuario = ({ isOpen, onClose, onAddUsuario }) => {
         </form>
       </div>
     </div>
+
+    <Notification
+        message={notification.message}
+        type={notification.type}
+        onClose={handleCloseNotification}
+        duration={5000}
+      />
+    </>
   );
 };
 

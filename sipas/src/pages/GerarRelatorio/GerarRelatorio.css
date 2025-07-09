@@ -13,21 +13,9 @@
     margin-bottom: 20px;
 }
 
-.header-info-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-}
-
-.header-info-container h1 {
-    margin: 0;
-    flex-shrink: 0;
-}
-
 .informacoes-container {
     flex: 1;
-    margin-left: 1rem;
-    background-color: aqua;
+    background-color: rgb(247, 249, 255);
     padding: 15px;
     border-radius: 5px;
 }
@@ -62,7 +50,7 @@
     flex-direction: column;
     width: 100%;
     max-width: 15rem;
-    background-color: aqua;
+    background-color: rgb(247, 249, 255);
     padding: 15px;
     border-radius: 5px;
     height: fit-content;

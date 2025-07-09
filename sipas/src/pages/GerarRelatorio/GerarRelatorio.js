@@ -12,8 +12,6 @@ const GerarRelatorio = () => {
             <Header />
             <div className="gerar-relatorio-container">
                 <div className="content-container">
-                    <div className="header-info-container">
-                        <h1>Gerar Relatório</h1>
                         <div className="informacoes-container">
                             <h2>Informações a serem impressas:</h2>
                             <div className="checkbox-grid">
@@ -55,7 +53,6 @@ const GerarRelatorio = () => {
                                 </label>
                             </div>
                         </div>
-                    </div>
 
                     <div className="main-content">
                         <div className="filtros-container">
