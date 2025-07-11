@@ -27,6 +27,8 @@ function App() {
             <button className="gerar-relatorio" onClick={() => navigate('/gerar-relatorio')}>Gerar Relatório</button>
             <button className='gerenciar-usuarios' onClick={() => navigate('/Gerenciar-usuarios')}
             >Usuários</button>
+            <button className="listagem-startups" onClick={() => navigate('/listagem-startups')}
+            >Listagem de Startups</button>
             <button className="sair" onClick={handleLogout}>Sair</button>
             </div>
         </div>

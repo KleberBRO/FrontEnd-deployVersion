@@ -10,6 +10,7 @@ import CadastroStartup from './pages/CadastroStartup/CadastroStartup.js';
 import GerenciarUsuarios from './pages/GerenciarUsuarios/GerenciarUsuarios.js';
 import FeedbackSucesso from './pages/RegistrarPI/components/FeedbackSucesso';
 import GerarRelatorio from './pages/GerarRelatorio/GerarRelatorio.js';
+import ListagemStartups from "./pages/ListagemStartups/ListagemStartups";
 
 function App() {
   return (
@@ -17,9 +18,10 @@ function App() {
       <Routes>
         {/* Rotas Públicas */}
         <Route path="/" element={<Login />} />
+        
 
         {/* Rotas Privadas */}
-        <Route element={<PrivateRoute />}>
+        <Route element={<PrivateRoute />}></Route>
           <Route path="/home" element={<Home />} />
           <Route path="/escolher-pi" element={<EscolherPI />} />
           <Route path="/cadastro-startup" element={<CadastroStartup />} />
@@ -29,10 +31,12 @@ function App() {
           <Route path="/gerenciar-usuarios" element={<GerenciarUsuarios />} />
           <Route path="/registrar-pi/sucesso" element={<FeedbackSucesso />} />
           <Route path="/gerar-relatorio" element={<GerarRelatorio />} />
-        </Route>
+          <Route path="/listagem-startups" element={<ListagemStartups />} />
+          
+    
 
         {/* Rota padrão para redirecionar para o login */}
-        <Route path="*" element={<Login />} />
+        <Route path="*" element={<Login/>} />
       </Routes>
     </Router>
   );
