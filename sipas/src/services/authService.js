@@ -1,5 +1,20 @@
 import { API_BASE_URL } from '../config/api.js';
 
+// Função para decodificar JWT
+const decodeJWT = (token) => {
+  try {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+    return JSON.parse(jsonPayload);
+  } catch (error) {
+    console.error('Erro ao decodificar token:', error);
+    return null;
+  }
+};
+
 export const authService = {
 async login(email, password) {
     try {
@@ -53,15 +68,39 @@ async login(email, password) {
 
       const data = await response.json();
       
+      // Decodificar o token para extrair informações do usuário
+      const tokenPayload = decodeJWT(data.token);
+      console.log('Token payload:', tokenPayload);
+      
       // Salvar dados do usuário
       localStorage.setItem('token', data.token);
-      localStorage.setItem('userRole', data.role);
-      localStorage.setItem('email', data.email);
+      localStorage.setItem('email', tokenPayload?.sub || email); // 'sub' geralmente é o email/username
+      
+      // Fazer uma segunda requisição para buscar o role do usuário
+      await this.fetchUserRole(data.token);
       
       return data;
     } catch (error) {
       console.error('Erro ao fazer login:', error);
       throw error;
+    }
+  },
+
+  async fetchUserRole(token) {
+    try {
+      const response = await fetch(`${API_BASE_URL}/user/me`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+      
+      if (response.ok) {
+        const userData = await response.json();
+        localStorage.setItem('userRole', userData.role);
+      }
+    } catch (error) {
+      console.error('Erro ao buscar role do usuário:', error);
     }
   },
 
@@ -81,5 +120,26 @@ async login(email, password) {
 
   getUserRole() {
     return localStorage.getItem('userRole');
+  },
+
+  getCurrentUser() {
+    const token = this.getToken();
+    if (!token) {
+      return null;
+    }
+
+    const email = localStorage.getItem('email');
+    const role = localStorage.getItem('userRole');
+
+    // Verificar se os valores não são 'undefined' como string
+    if (!email || email === 'undefined' || !role || role === 'undefined') {
+      return null;
+    }
+
+    return {
+      email: email,
+      role: role,
+      token: token
+    };
   }
 };

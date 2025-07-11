@@ -11,25 +11,40 @@ const GerenciarUsuarios = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const navigate = useNavigate();
 
     const fetchUsuarios = async () => {
-        try {
-            setLoading(true);
-            const response = await fetch(API_BASE_URL+'/user/');
-            
-            if (!response.ok) {
-                throw new Error(`Erro: ${response.status}`);
-            }
-            
-            const data = await response.json();
-            setUsuarios(data);
-        } catch (err) {
-            setError('Falha ao carregar usuários: ' + err.message);
-            console.error('Erro ao buscar usuários:', err);
-        } finally {
-            setLoading(false);
+    try {
+        setLoading(true);
+        
+        // Recuperar o token do localStorage ou sessionStorage
+        const token = localStorage.getItem('token');
+        
+        if (!token) {
+            throw new Error('Token de autenticação não encontrado');
         }
-    };
+        
+        const response = await fetch(API_BASE_URL+'/user/', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}` // ou apenas `${token}` dependendo do seu backend
+            }
+        });
+        
+        if (!response.ok) {
+            throw new Error(`Erro: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        setUsuarios(data);
+    } catch (err) {
+        setError('Falha ao carregar usuários: ' + err.message);
+        console.error('Erro ao buscar usuários:', err);
+    } finally {
+        setLoading(false);
+    }
+};
 
     useEffect(() => {
         fetchUsuarios();
@@ -41,24 +56,34 @@ const GerenciarUsuarios = () => {
     };
 
     const handleDelete = async (id) => {
-        if (window.confirm('Tem certeza que deseja excluir este usuário?')) {
-            try {
-                const response = await fetch(`http://localhost:8080/api/user/${id}`, {
-                    method: 'DELETE'
-                });
-
-                if (!response.ok) {
-                    throw new Error(`Erro: ${response.status}`);
-                }
-
-                // Atualizar a lista após exclusão
-                fetchUsuarios();
-            } catch (err) {
-                setError('Falha ao excluir usuário: ' + err.message);
-                console.error('Erro ao excluir usuário:', err);
+    if (window.confirm('Tem certeza que deseja excluir este usuário?')) {
+        try {
+            const token = localStorage.getItem('token');
+            
+            if (!token) {
+                throw new Error('Token de autenticação não encontrado');
             }
+            
+            const response = await fetch(`${API_BASE_URL}/user/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error(`Erro: ${response.status}`);
+            }
+
+            // Atualizar a lista após exclusão
+            fetchUsuarios();
+        } catch (err) {
+            setError('Falha ao excluir usuário: ' + err.message);
+            console.error('Erro ao excluir usuário:', err);
         }
-    };
+    }
+};
 
     const handleAddUsuario = (newUsuario) => {
         setUsuarios([...usuarios, newUsuario]);
@@ -70,10 +95,15 @@ const GerenciarUsuarios = () => {
             <div className="gerenciar-usuarios-container">
                 <div className="gerenciar-usuarios-content">
                     <button 
-                        className="adicionar-usuario" 
-                        onClick={() => setIsModalOpen(true)}
-                    >
+                        className="btn-adicionar-usuario" 
+                        onClick={() => setIsModalOpen(true)}>
                         Adicionar
+                    </button>
+
+                    <button 
+                        className='btn-voltar-usuario' 
+                        onClick={() => navigate('/home')}>
+                        voltar
                     </button>
                     
                     {error && <div className="error-message">{error}</div>}

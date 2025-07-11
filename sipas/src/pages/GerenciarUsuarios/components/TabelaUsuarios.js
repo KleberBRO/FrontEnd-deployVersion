@@ -12,7 +12,8 @@ const TabelaUsuarios = ({ usuarios = [], onEdit, onDelete }) => {
                         <th>Nome</th>
                         <th>Email</th>
                         <th>CPF</th>
-                        <th>função</th>
+                        <th>Função</th>
+                        <th>Ações</th>
                     </tr>
                 </thead>
                 <tbody>

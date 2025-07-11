@@ -1,5 +1,5 @@
-.adicionar-usuario {
-    padding: 8px 16px;
+.btn-adicionar-usuario {
+  padding: 8px 16px;
   background-color: #4CAF50;
   color: white;
   border: none;
@@ -8,8 +8,21 @@
   
 }
 
-.adicionar-usuario:hover {
+.btn-adicionar-usuario:hover {
   background-color: #45a049;
+}
+
+.btn-voltar-usuario {
+    padding: 8px 16px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-voltar-usuario:hover {
+    background-color: #da190b;
 }
 
 .modal-backdrop {
@@ -96,4 +109,96 @@
 
 .submit-button:hover {
   background-color: #45a049;
+}
+
+.tabela-container {
+  margin-top: 20px;
+  overflow-x: auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.tabela-usuarios {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  font-size: 14px;
+}
+
+.tabela-usuarios thead {
+  background-color: #f8f9fa;
+}
+
+.tabela-usuarios th {
+  padding: 12px 15px;
+  text-align: left;
+  font-weight: 600;
+  color: #333;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.tabela-usuarios td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #dee2e6;
+  color: #555;
+}
+
+.tabela-usuarios tbody tr:hover {
+  background-color: #f8f9fa;
+}
+
+.tabela-usuarios tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Botões da tabela */
+.tabela-usuarios td:last-child {
+  text-align: center;
+  white-space: nowrap;
+}
+
+.tabela-usuarios button {
+  padding: 6px 12px;
+  margin: 0 3px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.tabela-usuarios button:first-of-type {
+  background-color: #007bff;
+  color: white;
+}
+
+.tabela-usuarios button:first-of-type:hover {
+  background-color: #0056b3;
+}
+
+.tabela-usuarios button:last-of-type {
+  background-color: #dc3545;
+  color: white;
+}
+
+.tabela-usuarios button:last-of-type:hover {
+  background-color: #c82333;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .tabela-usuarios {
+    font-size: 12px;
+  }
+  
+  .tabela-usuarios th,
+  .tabela-usuarios td {
+    padding: 8px 10px;
+  }
+  
+  .tabela-usuarios button {
+    padding: 4px 8px;
+    font-size: 11px;
+  }
 }

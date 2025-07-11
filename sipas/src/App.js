@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import PrivateRoute from './components/PrivateRoute.js';
+import ProtectedRoute from './components/ProtectedRoute.js';
 import Home from './pages/Home/Home.js';
 import EscolherPI from './pages/EscolherPI/EscolherPI.js';
 import PropriedadesInt from './pages/PropriedadesInt/PropriedadesInt.js';

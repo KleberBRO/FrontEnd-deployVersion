@@ -51,7 +51,7 @@ function Login() {
   const closeNotification = () => {
     setNotification({ message: '', type: '' });
   };
-
+  
   return (
     <>
       <Header/>
