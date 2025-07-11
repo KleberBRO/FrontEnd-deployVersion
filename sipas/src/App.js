@@ -17,11 +17,11 @@ function App() {
   return (
     <Router>
       <Routes>
-        {/* Rotas Públicas */}
+        {/* Rota Pública */}
         <Route path="/" element={<Login />} />
         
 
-        {/* Rotas Privadas */}
+        {/* Rota Privada */}
         <Route element={<PrivateRoute />}></Route>
           <Route path="/home" element={<Home />} />
           <Route path="/escolher-pi" element={<EscolherPI />} />
