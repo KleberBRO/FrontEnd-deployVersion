@@ -4,7 +4,7 @@ const Header = () => {
     return (
         <header style={styles.header}>
             <h1 style={styles.h1}>UFRPE - SIGPS</h1>
-            <p style={styles.p}>Versão 0.1.0</p>
+            <p style={styles.p}>Versão 0.1.1</p>
         </header>
     );
 };
