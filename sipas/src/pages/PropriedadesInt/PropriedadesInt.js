@@ -67,7 +67,7 @@ function PropriedadesInt() {
 
     try {
       setCarregando(true);
-      const response = await fetch(API_BASE_URL+'/propriedades', {
+      const response = await fetch(API_BASE_URL+'/intellectual-properties', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -79,7 +79,7 @@ function PropriedadesInt() {
         if (response.status === 403) {
           throw new Error('Acesso negado. Você não tem permissão para ver estas propriedades.');
         }
-        throw new Error('Erro ao carregar propriedades');
+        throw new Error('Erro ao carregar propriedades: ' + response.statusText);
       }
 
       const data = await response.json();
@@ -87,14 +87,18 @@ function PropriedadesInt() {
       
       if (Array.isArray(data)) {
         propriedadesData = data;
-      } else if (Array.isArray(data.propriedades)) {
+      } else if (data && Array.isArray(data.propriedades)) {
         propriedadesData = data.propriedades;
+      } else if (data && Array.isArray(data.data)) {
+        propriedadesData = data.data;
       } else {
-        throw new Error('Dados inválidos no endpoint');
+        // Se não é array mas é um objeto válido, considera como array vazio
+        propriedadesData = [];
       }
 
       setPropriedades(propriedadesData);
       setPropriedadesOriginais(propriedadesData);
+      
     } catch (error) {
       console.error('Erro ao carregar propriedades:', error);
       setErro('Não foi possível carregar os dados: ' + error.message);

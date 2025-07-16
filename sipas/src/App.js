@@ -22,7 +22,7 @@ function App() {
         
 
         {/* Rota Privada */}
-        <Route element={<PrivateRoute />}></Route>
+        <Route element={<PrivateRoute />}>
           <Route path="/home" element={<Home />} />
           <Route path="/escolher-pi" element={<EscolherPI />} />
           <Route path="/cadastro-startup" element={<CadastroStartup />} />
@@ -33,6 +33,7 @@ function App() {
           <Route path="/registrar-pi/sucesso" element={<FeedbackSucesso />} />
           <Route path="/gerar-relatorio" element={<GerarRelatorio />} />
           <Route path="/listagem-startups" element={<ListagemStartups />} />
+        </Route>
           
     
 

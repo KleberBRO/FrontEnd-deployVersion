@@ -4,49 +4,112 @@ function Marca({ formData, handleChange }) {
     return (
         <>
             <h2>Detalhes da Marca</h2>
+            
             <div className="form-group">
-                <label htmlFor="tipoMarca">Tipo de Marca</label>
+                <label htmlFor="brandType">Tipo de Marca</label>
+                <select
+                    id="brandType"
+                    name="brandType"
+                    value={formData.marca?.brandType || ''}
+                    onChange={(e) => handleChange(e, 'marca')}
+                    required
+                >
+                    <option value="">Selecione o tipo de marca</option>
+                    <option value="NOMINATIVE">Nominativa</option>
+                    <option value="FIGURATIVE">Figurativa</option>
+                    <option value="MIXED">Mista</option>
+                    <option value="TRIDIMENSIONAL">Tridimensional</option>
+                </select>
+            </div>
+
+            <div className="form-group">
+                <label htmlFor="brandName">Nome da Marca</label>
                 <input
                     type="text"
-                    id="tipoMarca"
-                    name="tipoMarca"
-                    placeholder="Digite o tipo de marca (ex: nominativa, figurativa)"
-                    value={formData.tipoMarca || ''}
-                    onChange={handleChange}
+                    id="brandName"
+                    name="brandName"
+                    placeholder="Digite o nome da marca"
+                    value={formData.marca?.brandName || ''}
+                    onChange={(e) => handleChange(e, 'marca')}
                 />
             </div>
+
             <div className="form-group">
-                <label htmlFor="classeMarca">Classe da Marca</label>
+                <label htmlFor="imageUrl">URL da Imagem</label>
                 <input
-                    type="text"
-                    id="classeMarca"
-                    name="classeMarca"
-                    placeholder="Digite a classe da marca"
-                    value={formData.classeMarca || ''}
-                    onChange={handleChange}
+                    type="url"
+                    id="imageUrl"
+                    name="imageUrl"
+                    placeholder="Digite a URL da imagem da marca (opcional)"
+                    value={formData.marca?.imageUrl || ''}
+                    onChange={(e) => handleChange(e, 'marca')}
                 />
             </div>
+
             <div className="form-group">
-                <label htmlFor="naturezaMarca">Natureza da Marca</label>
+                <label htmlFor="niceClassificationCode">Código de Classificação de Nice</label>
                 <input
                     type="text"
-                    id="naturezaMarca"
-                    name="naturezaMarca"
-                    placeholder="Digite a natureza da marca (ex: coletiva, individual)"
-                    value={formData.naturezaMarca || ''}
-                    onChange={handleChange}
+                    id="niceClassificationCode"
+                    name="niceClassificationCode"
+                    placeholder="Digite o código de classificação de Nice (ex: 09, 35, 42)"
+                    value={formData.marca?.niceClassificationCode || ''}
+                    onChange={(e) => handleChange(e, 'marca')}
+                    required
                 />
             </div>
+
             <div className="form-group">
-                <label htmlFor="UsosMarca">Usos da Marca</label>
+                <label htmlFor="activityDescription">Descrição da Atividade</label>
+                <textarea
+                    id="activityDescription"
+                    name="activityDescription"
+                    placeholder="Descreva as atividades relacionadas à marca"
+                    value={formData.marca?.activityDescription || ''}
+                    onChange={(e) => handleChange(e, 'marca')}
+                    required
+                ></textarea>
+            </div>
+
+            <div className="form-group">
+                <label htmlFor="requestNature">Natureza da Solicitação</label>
                 <input
                     type="text"
-                    id="UsosMarca"
-                    name="UsosMarca"
-                    placeholder="Digite os usos da marca"
-                    value={formData.UsosMarca || ''}
-                    onChange={handleChange}
+                    id="requestNature"
+                    name="requestNature"
+                    placeholder="Digite a natureza da solicitação (ex: registro, renovação)"
+                    value={formData.marca?.requestNature || ''}
+                    onChange={(e) => handleChange(e, 'marca')}
+                    required
                 />
+            </div>
+
+            <div className="form-group">
+                <label htmlFor="usageStatus">Status de Uso da Marca</label>
+                <select
+                    id="usageStatus"
+                    name="usageStatus"
+                    value={formData.marca?.usageStatus || ''}
+                    onChange={(e) => handleChange(e, 'marca')}
+                    required
+                >
+                    <option value="">Selecione o status de uso</option>
+                    <option value="EM_USO">Em Uso</option>
+                    <option value="NAO_EM_USO">Não em Uso</option>
+                    <option value="PRETENDE_USAR">Pretende Usar</option>
+                </select>
+            </div>
+
+            <div className="form-group">
+                <label htmlFor="startUsageDate">Data de Início do Uso</label>
+                <input
+                    type="date"
+                    id="startUsageDate"
+                    name="startUsageDate"
+                    value={formData.marca?.startUsageDate || ''}
+                    onChange={(e) => handleChange(e, 'marca')}
+                />
+                <small>Obrigatório apenas se a marca já estiver em uso</small>
             </div>
         </>
     );

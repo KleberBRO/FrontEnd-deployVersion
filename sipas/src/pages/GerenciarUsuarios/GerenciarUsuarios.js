@@ -24,11 +24,11 @@ const GerenciarUsuarios = () => {
             throw new Error('Token de autenticação não encontrado');
         }
         
-        const response = await fetch(API_BASE_URL+'/user/', {
+        const response = await fetch(API_BASE_URL+'/v1/users', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}` // ou apenas `${token}` dependendo do seu backend
+                'Authorization': `Bearer ${token}`
             }
         });
         
@@ -64,7 +64,7 @@ const GerenciarUsuarios = () => {
                 throw new Error('Token de autenticação não encontrado');
             }
             
-            const response = await fetch(`${API_BASE_URL}/user/${id}`, {
+            const response = await fetch(`${API_BASE_URL}/v1/user/${id}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',

@@ -6,7 +6,7 @@ function FeedbackSucesso({ tipo }) {
     const navigate = useNavigate();
 
     const handleVoltarInicio = () => {
-        navigate('/');
+        navigate('/home');
     };
 
     const handleAdicionarOutra = () => {
@@ -25,10 +25,7 @@ function FeedbackSucesso({ tipo }) {
                 
                 <h1>Sucesso!</h1>
                 <p className="success-message">
-                    Sua propriedade intelectual do tipo <strong>{tipo}</strong> foi registrada com sucesso!
-                </p>
-                <p className="success-submessage">
-                    O registro foi enviado e está sendo processado. Você receberá uma confirmação em breve.
+                    A propriedade intelectual do tipo <strong>{tipo || '???'}</strong> foi registrada com sucesso!
                 </p>
 
                 <div className="feedback-buttons">

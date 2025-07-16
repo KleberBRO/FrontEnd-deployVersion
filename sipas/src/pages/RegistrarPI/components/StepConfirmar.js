@@ -16,9 +16,9 @@ function renderObject(obj) {
 function StepConfirmar({ formData }) {
     // Campos gerais
     const camposGerais = [
-        { label: 'Título', value: formData.titulo },
-        { label: 'Descrição', value: formData.descricao },
-        { label: 'Departamento', value: formData.departamento },
+        { label: 'Título', value: formData.title },
+        { label: 'Descrição', value: formData.description },
+        { label: 'Departamento', value: formData.department },
         { label: 'Data de Criação', value: formData.dataCriacao },
         { label: 'Status', value: formData.status },
         { label: 'Nome do Inventor', value: formData.nomeInventor },

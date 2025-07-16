@@ -167,7 +167,7 @@ const AddUsuario = ({ isOpen, onClose, onAddUsuario }) => {
             >
               <option value="">Selecione uma função</option>
               <option value="ADMIN">Administrador</option>
-              <option value="MODERATOR">Servidor</option>
+              <option value="INVENTOR">Servidor</option>
             </select>
           </div>
           <div className="form-actions">

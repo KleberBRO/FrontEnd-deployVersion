@@ -12,8 +12,6 @@ function StepInventor({ formData, handleChange }) {
                     name="nomeInventor"
                     placeholder="Digite o nome completo do inventor"
                     value={formData.nomeInventor}
-                    onChange={handleChange}
-                    required
                 />
             </div>
             <div className="form-group">
@@ -24,8 +22,6 @@ function StepInventor({ formData, handleChange }) {
                     name="emailInventor"
                     placeholder="Digite o e-mail do inventor"
                     value={formData.emailInventor}
-                    onChange={handleChange}
-                    required
                 />
             </div>
             <div className="form-group">
@@ -36,8 +32,6 @@ function StepInventor({ formData, handleChange }) {
                     name="cpfInventor"
                     placeholder="Digite o CPF do inventor"
                     value={formData.cpfInventor}
-                    onChange={handleChange}
-                    required
                 />
             </div>
         </>

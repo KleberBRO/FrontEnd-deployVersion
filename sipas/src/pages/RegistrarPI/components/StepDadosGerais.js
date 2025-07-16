@@ -5,74 +5,96 @@ function StepDadosGerais({ formData, handleChange }) {
         <>
             <h2>Dados Gerais</h2>
             <div className="form-group">
-                <label htmlFor="titulo">Título da Propriedade</label>
+                <label htmlFor="title">Título da Propriedade</label>
                 <input
                     type="text"
-                    id="titulo"
-                    name="titulo"
+                    id="title"
+                    name="title"
                     placeholder="Digite o título ou nome da criação"
-                    value={formData.titulo}
+                    value={formData.title}
                     onChange={handleChange}
                     required
                 />
             </div>
 
             <div className="form-group">
-                <label htmlFor="descricao">Descrição</label>
+                <label htmlFor="description">Descrição</label>
                 <textarea
-                    id="descricao"
-                    name="descricao"
+                    id="description"
+                    name="description"
                     placeholder="Descreva a criação, invenção ou obra"
-                    value={formData.descricao}
+                    value={formData.description}
                     onChange={handleChange}
                     required
                 ></textarea>
             </div>
 
             <div className="form-group">
-                <label htmlFor="departamento">Departamento</label>
+                <label htmlFor="startupName">Departamento</label>
                 <select
-                    id="departamento"
-                    name="departamento"
-                    value={formData.departamento}
+                    id="startupName"
+                    name="startupName"
+                    value={formData.startupName}
                     onChange={handleChange}
                     required
                 >
                     <option value="">Selecionar Departamento</option>
                     <option value="Computação">Computação</option>
                     <option value="Engenharia florestal">Engenharia florestal</option>
-                    <option value="veterinária">veterinária</option>
-                    <option value="agropecuaria">agropecuaria</option>
-                    <option value="outro">Outro</option>
+                    <option value="Veterinária">Veterinária</option>
+                    <option value="Agropecuária">Agropecuária</option>
+                    <option value="Outro">Outro</option>
                 </select>
             </div>
 
             <div className="form-group">
-                <label htmlFor="dataCriacao">Data de Criação</label>
+                <label htmlFor="requestDate">Data de Requisição</label>
                 <input
                     type="date"
-                    id="dataCriacao"
-                    name="dataCriacao"
-                    value={formData.dataCriacao}
+                    id="requestDate"
+                    name="requestDate"
+                    value={formData.requestDate}
                     onChange={handleChange}
                     required
                 />
             </div>
 
             <div className="form-group">
-                <label htmlFor="status">Status atual</label>
+                <label htmlFor="grantDate">Data de Concessão</label>
+                <input
+                    type="date"
+                    id="grantDate"
+                    name="grantDate"
+                    value={formData.grantDate}
+                    onChange={handleChange}
+                />
+            </div>
+
+            <div className="form-group">
+                <label htmlFor="expirationDate">Data de Expiração</label>
+                <input
+                    type="date"
+                    id="expirationDate"
+                    name="expirationDate"
+                    value={formData.expirationDate}
+                    onChange={handleChange}
+                />
+            </div>
+
+            <div className="form-group">
+                <label htmlFor="processingStage">Status atual</label>
                 <select
-                    id="status"
-                    name="status"
-                    value={formData.status}
+                    id="processingStage"
+                    name="processingStage"
+                    value={formData.processingStage}
                     onChange={handleChange}
                     required
                 >
                     <option value="">Selecione o status</option>
-                    <option value="pendente">Pendente</option>
-                    <option value="aprovado">Aprovado</option>
-                    <option value="rejeitado">Rejeitado</option>
-                    <option value="em-analise">Em Análise</option>
+                    <option value="PENDENTE">Pendente</option>
+                    <option value="APROVADO">Aprovado</option>
+                    <option value="REJEITADO">Rejeitado</option>
+                    <option value="EM_ANALISE">Em Análise</option>
                 </select>
             </div>
         </>

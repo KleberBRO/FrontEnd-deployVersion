@@ -4,60 +4,71 @@ function DesenhoInd({ formData, handleChange }) {
     return (
         <>
             <h2>Detalhes do Desenho Industrial</h2>
+            
             <div className="form-group">
-                <label htmlFor="tipoDesenho">Tipo de Desenho Industrial</label>
+                <label htmlFor="locarnoClassification">Classificação de Locarno *</label>
                 <input
                     type="text"
-                    id="tipoDesenho"
-                    name="tipoDesenho"
-                    placeholder="Digite o tipo de desenho industrial"
-                    value={formData.tipoDesenho || ''}
+                    id="locarnoClassification"
+                    name="locarnoClassification"
+                    placeholder="Digite a classificação de Locarno (ex: 01-01)"
+                    value={formData.locarnoClassification || ''}
                     onChange={handleChange}
+                    required
                 />
             </div>
+
             <div className="form-group">
-                <label htmlFor="classificacaoDesenho">Classificação do Desenho</label>
+                <label htmlFor="numberOfVariations">Número de Variações *</label>
                 <input
-                    type="text"
-                    id="classificacaoDesenho"
-                    name="classificacaoDesenho"
-                    placeholder="Digite a classificação do desenho industrial"
-                    value={formData.classificacaoDesenho || ''}
+                    type="number"
+                    id="numberOfVariations"
+                    name="numberOfVariations"
+                    placeholder="Digite o número de variações do desenho"
+                    value={formData.numberOfVariations || ''}
                     onChange={handleChange}
+                    min="0"
+                    required
                 />
             </div>
+
             <div className="form-group">
-                <label htmlFor="numeroVariacao">Número de Variação</label>
+                <label htmlFor="designCreationDate">Data de Criação do Desenho *</label>
                 <input
-                    type="text"
-                    id="numeroVariacao"
-                    name="numeroVariacao"
-                    placeholder="Digite o número de variação do desenho industrial"
-                    value={formData.numeroVariacao || ''}
+                    type="date"
+                    id="designCreationDate"
+                    name="designCreationDate"
+                    value={formData.designCreationDate || ''}
                     onChange={handleChange}
+                    required
                 />
             </div>
+
             <div className="form-group">
-                <label htmlFor="prioridade">Prioridade</label>
-                <input
-                    type="text"
-                    id="prioridade"
-                    name="prioridade"
-                    placeholder="Digite a prioridade do desenho industrial"
-                    value={formData.prioridade || ''}
+                <label htmlFor="applicationField">Campo de Aplicação *</label>
+                <textarea
+                    id="applicationField"
+                    name="applicationField"
+                    placeholder="Descreva o campo de aplicação do desenho industrial (ex: móveis, utensílios domésticos, eletrônicos)"
+                    value={formData.applicationField || ''}
                     onChange={handleChange}
+                    rows={3}
+                    required
                 />
             </div>
+
             <div className="form-group">
-                <label htmlFor="camposAplicacao">Campos de Aplicação</label>
-                <input
-                    type="text"
-                    id="camposAplicacao"
-                    name="camposAplicacao"
-                    placeholder="Digite os campos de aplicação do desenho industrial"
-                    value={formData.camposAplicacao || ''}
+                <label htmlFor="unionistPriority">Prioridade Unionista</label>
+                <select
+                    id="unionistPriority"
+                    name="unionistPriority"
+                    value={formData.unionistPriority || ''}
                     onChange={handleChange}
-                />
+                >
+                    <option value="">Selecione uma opção</option>
+                    <option value="true">Sim</option>
+                    <option value="false">Não</option>
+                </select>
             </div>
         </>
     );

@@ -4,104 +4,145 @@ function Cultivar({ formData, handleChange }) {
     return (
         <>
             <h2>Detalhes da Cultivar</h2>
+            
             <div className="form-group">
-                <label htmlFor="especieCultivar">Espécie da Cultivar</label>
+                <label htmlFor="cultivarName">Nome do Cultivar *</label>
                 <input
                     type="text"
-                    id="especieCultivar"
-                    name="especieCultivar"
-                    placeholder="Digite a espécie da cultivar"
-                    value={formData.especieCultivar || ''}
+                    id="cultivarName"
+                    name="cultivarName"
+                    placeholder="Digite o nome do cultivar"
+                    value={formData.cultivarName || ''}
+                    onChange={handleChange}
+                    required
+                />
+            </div>
+
+            <div className="form-group">
+                <label htmlFor="botanicalSpecies">Espécie Botânica *</label>
+                <input
+                    type="text"
+                    id="botanicalSpecies"
+                    name="botanicalSpecies"
+                    placeholder="Digite a espécie botânica (ex: Solanum lycopersicum)"
+                    value={formData.botanicalSpecies || ''}
+                    onChange={handleChange}
+                    required
+                />
+            </div>
+
+            <div className="form-group">
+                <label htmlFor="commercialDenomination">Denominação Comercial</label>
+                <input
+                    type="text"
+                    id="commercialDenomination"
+                    name="commercialDenomination"
+                    placeholder="Digite a denominação comercial (opcional)"
+                    value={formData.commercialDenomination || ''}
                     onChange={handleChange}
                 />
             </div>
+
             <div className="form-group">
-                <label htmlFor="denominacaoCultivar">Denominação da Cultivar</label>
+                <label htmlFor="origin">Origem *</label>
                 <input
                     type="text"
-                    id="denominacaoCultivar"
-                    name="denominacaoCultivar"
-                    placeholder="Digite a denominação da cultivar"
-                    value={formData.denominacaoCultivar || ''}
+                    id="origin"
+                    name="origin"
+                    placeholder="Digite a origem do cultivar"
+                    value={formData.origin || ''}
                     onChange={handleChange}
+                    required
                 />
             </div>
+
             <div className="form-group">
-                <label htmlFor="origemCultivar">Origem da Cultivar</label>
-                <input
-                    type="text"
-                    id="origemCultivar"
-                    name="origemCultivar"
-                    placeholder="Digite a origem da cultivar"
-                    value={formData.origemCultivar || ''}
-                    onChange={handleChange}
-                />
-            </div>
-            <div className="form-group">
-                <label htmlFor="caracteristicasCultivar">Características da Cultivar</label>
+                <label htmlFor="distinctiveCharacteristics">Características Distintivas *</label>
                 <textarea
-                    id="caracteristicasCultivar"
-                    name="caracteristicasCultivar"
-                    placeholder="Descreva as características da cultivar"
-                    value={formData.caracteristicasCultivar || ''}
+                    id="distinctiveCharacteristics"
+                    name="distinctiveCharacteristics"
+                    placeholder="Descreva as características distintivas do cultivar"
+                    value={formData.distinctiveCharacteristics || ''}
                     onChange={handleChange}
-                ></textarea>
-            </div>
-            <div className="form-group">
-                <label htmlFor="finalidadeCultivar">Finalidade da Cultivar</label>
-                <input
-                    type="text"
-                    id="finalidadeCultivar"
-                    name="finalidadeCultivar"
-                    placeholder="Digite a finalidade da cultivar"
-                    value={formData.finalidadeCultivar || ''}
-                    onChange={handleChange}
+                    rows={4}
+                    required
                 />
             </div>
+
             <div className="form-group">
-                <label htmlFor="paisCultivar">País de Origem</label>
-                <input
-                    type="text"
-                    id="paisCultivar"
-                    name="paisCultivar"
-                    placeholder="Digite o país de origem da cultivar"
-                    value={formData.paisCultivar || ''}
-                    onChange={handleChange}
-                />
-            </div>
-            <div className="form-group">
-                <label htmlFor="tipoProtecao">Tipo de Proteção</label>
+                <label htmlFor="purposeOfUse">Finalidade de Uso *</label>
                 <select
-                    id="tipoProtecao"
-                    name="tipoProtecao"
-                    value={formData.tipoProtecao || ''}
+                    id="purposeOfUse"
+                    name="purposeOfUse"
+                    value={formData.purposeOfUse || ''}
                     onChange={handleChange}
+                    required
                 >
-                    <option value="">Selecione o tipo de proteção</option>
-                    <option value="cultivar">Cultivar</option>
-                    <option value="semente">Semente</option>
-                    <option value="outro">Outro</option>
+                    <option value="">Selecione a finalidade de uso</option>
+                    <option value="ALIMENTACAO_HUMANA">Alimentação Humana</option>
+                    <option value="ALIMENTACAO_ANIMAL">Alimentação Animal</option>
+                    <option value="ORNAMENTAL">Ornamental</option>
+                    <option value="MEDICINAL">Medicinal</option>
+                    <option value="INDUSTRIAL">Industrial</option>
+                    <option value="FORRAGEIRA">Forrageira</option>
+                    <option value="FIBRA">Fibra</option>
+                    <option value="OUTRO">Outro</option>
                 </select>
             </div>
+
             <div className="form-group">
-                <label htmlFor="dataRegistro">Data de Registro</label>
+                <label htmlFor="countryOfOrigin">País de Obtenção *</label>
                 <input
-                    type="date"
-                    id="dataRegistro"
-                    name="dataRegistro"
-                    value={formData.dataRegistro || ''}
+                    type="text"
+                    id="countryOfOrigin"
+                    name="countryOfOrigin"
+                    placeholder="Digite o país onde o cultivar foi obtido"
+                    value={formData.countryOfOrigin || ''}
                     onChange={handleChange}
+                    required
                 />
             </div>
+
             <div className="form-group">
-                <label htmlFor="descricaoCultivar">Descrição da Cultivar</label>
-                <textarea
-                    id="descricaoCultivar"
-                    name="descricaoCultivar"
-                    placeholder="Descreva a cultivar"
-                    value={formData.descricaoCultivar || ''}
+                <label htmlFor="protectionType">Tipo de Proteção *</label>
+                <select
+                    id="protectionType"
+                    name="protectionType"
+                    value={formData.protectionType || ''}
                     onChange={handleChange}
-                ></textarea>
+                    required
+                >
+                    <option value="">Selecione o tipo de proteção</option>
+                    <option value="CULTIVAR">Cultivar</option>
+                    <option value="ESSENCIALMENTE_DERIVADA">Essencialmente Derivada</option>
+                    <option value="VARIEDADE_LOCAL">Variedade Local</option>
+                    <option value="LINHA_ENDOGAMICA">Linha Endogâmica</option>
+                    <option value="HIBRIDO">Híbrido</option>
+                </select>
+            </div>
+
+            <div className="form-group">
+                <label htmlFor="creationDevelopmentDate">Data de Criação/Desenvolvimento *</label>
+                <input
+                    type="date"
+                    id="creationDevelopmentDate"
+                    name="creationDevelopmentDate"
+                    value={formData.creationDevelopmentDate || ''}
+                    onChange={handleChange}
+                    required
+                />
+            </div>
+
+            <div className="form-group">
+                <label htmlFor="dheData">Dados DHE</label>
+                <textarea
+                    id="dheData"
+                    name="dheData"
+                    placeholder="Digite os dados de Distinguibilidade, Homogeneidade e Estabilidade (DHE)"
+                    value={formData.dheData || ''}
+                    onChange={handleChange}
+                    rows={3}
+                />
             </div>
         </>
     );

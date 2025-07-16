@@ -88,7 +88,7 @@ async login(email, password) {
 
   async fetchUserRole(token) {
     try {
-      const response = await fetch(`${API_BASE_URL}/user/me`, {
+      const response = await fetch(`${API_BASE_URL}/v1/users/me`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
