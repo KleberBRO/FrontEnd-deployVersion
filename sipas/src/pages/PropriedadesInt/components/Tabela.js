@@ -1,5 +1,19 @@
 import React from 'react';
 
+const mapStatusToPtBr = (status) => {
+  const statusMap = {
+    'approved': 'Aprovado',
+    'concluded': 'Concluído',
+    'pending': 'Pendente',
+    'IN_PROCESSING': 'Em Andamento',
+    'INACTIVE': 'Inativo',
+    'expired': 'Expirado',
+    // Adicione outros status conforme necessário
+  };
+  
+  return statusMap[status] || status; // Retorna o status original se não encontrar mapeamento
+};
+
 function Tabela({ propriedades, getTipoClass, getStatusClass, onLupaClick }) {
   return (
     <div className="tabela-container">
@@ -23,12 +37,12 @@ function Tabela({ propriedades, getTipoClass, getStatusClass, onLupaClick }) {
                   <img src={require('../../../assets/lupa.svg').default} alt="Buscar" />
                 </button>
               </td>
-              <td className={getTipoClass(item.tipo)}>{item.tipo}</td>
-              <td>{item.titulo}</td>
-              <td>{item.nomeInventor}</td>
-              <td>{item.departamento}</td>
-              <td className={getStatusClass(item.status)}>{item.status}</td>
-              <td>{item.dataVencimento}</td>
+              <td className={getTipoClass(item.type)}>{item.type}</td>
+              <td>{item.title}</td>
+              <td>{item.inventorName}</td>
+              <td>{item.department}</td>
+              <td className={getStatusClass(item.status)}>{mapStatusToPtBr(item.status)}</td>
+              <td>{item.expirationDate}</td>
             </tr>
           ))}
         </tbody>

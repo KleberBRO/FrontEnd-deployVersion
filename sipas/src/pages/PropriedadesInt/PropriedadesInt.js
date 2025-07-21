@@ -205,6 +205,8 @@ function PropriedadesInt() {
   });
 
   const getTipoClass = (tipo) => {
+    if (!tipo) return '';
+
     switch (tipo.toLowerCase()) {
       case 'software':
         return 'tipo-software';
@@ -224,14 +226,14 @@ function PropriedadesInt() {
   };
 
   const getStatusClass = (status) => {
-    switch (status.toLowerCase()) {
+    switch (status) {
       case 'concluído':
         return 'status-concluido';
       case 'aprovado':
         return 'status-aprovado';
-      case 'andamento':
+      case 'IN_PROCESSING':
         return 'status-andamento';
-      case 'pendente':
+      case 'INACTIVE':
         return 'status-pendente';
       default:
         return '';

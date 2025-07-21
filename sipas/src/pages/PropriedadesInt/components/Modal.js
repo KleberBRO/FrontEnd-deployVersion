@@ -3,15 +3,15 @@ import React, { useState } from 'react';
 function Modal({ piSelecionada, onClose, onSave }) {
   const [editando, setEditando] = useState(false);
   const [dadosEditados, setDadosEditados] = useState({
-    titulo: piSelecionada?.titulo || '',
-    descricao: piSelecionada?.descricao || '',
-    tipo: piSelecionada?.tipo || '',
-    departamento: piSelecionada?.departamento || '',
+    title: piSelecionada?.title || '',
+    description: piSelecionada?.description || '',
+    type: piSelecionada?.type || '',
+    department: piSelecionada?.department || '',
     status: piSelecionada?.status || '',
-    dataCriacao: piSelecionada?.dataCriacao || '',
-    dataVencimento: piSelecionada?.dataVencimento || '',
-    nomeInventor: piSelecionada?.nomeInventor || '',
-    emailInventor: piSelecionada?.emailInventor || '',
+    creationDate: piSelecionada?.creationDate || '',
+    expirationDate: piSelecionada?.expirationDate || '',
+    inventorName: piSelecionada?.inventorName || '',
+    inventorEmail: piSelecionada?.inventorEmail || '',
     cpfInventor: piSelecionada?.cpfInventor || ''
   });
 
