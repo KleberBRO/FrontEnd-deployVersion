@@ -16,7 +16,7 @@ const decodeJWT = (token) => {
 };
 
 export const authService = {
-async login(email, password) {
+  async login(email, password) {
     try {
       const response = await fetch(`${API_BASE_URL}/auth/login`, {
         method: 'POST',
@@ -24,12 +24,13 @@ async login(email, password) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ 
-        email,
-        password 
+          email,
+          password 
         })
       });
 
       if (!response.ok) {
+        // ...existing error handling...
         let errorMessage = 'Erro no servidor';
         let errorType = 'server';
 
@@ -37,7 +38,6 @@ async login(email, password) {
           const errorData = await response.json();
           errorMessage = errorData.message || 'Erro ao fazer login';
           
-          // Definir tipo de erro baseado no status
           if (response.status === 401) {
             errorType = 'auth';
           } else if (response.status === 400) {
@@ -68,16 +68,26 @@ async login(email, password) {
 
       const data = await response.json();
       
-      // Decodificar o token para extrair informações do usuário
-      const tokenPayload = decodeJWT(data.token);
-      console.log('Token payload:', tokenPayload);
-      
-      // Salvar dados do usuário
+      // Salvar token e email
       localStorage.setItem('token', data.token);
-      localStorage.setItem('email', tokenPayload?.sub || email); // 'sub' geralmente é o email/username
+      localStorage.setItem('email', email);
+
+      // Decodificar token e extrair role
+      const decodedToken = decodeJWT(data.token);
       
-      // Fazer uma segunda requisição para buscar o role do usuário
-      await this.fetchUserRole(data.token);
+      if (decodedToken) {
+        // Salvar expiração
+        if (decodedToken.exp) {
+          const expirationTime = new Date(decodedToken.exp * 1000);
+          localStorage.setItem('tokenExpiration', expirationTime);
+        }
+        
+        // Extrair e salvar role
+        if (decodedToken.roles && decodedToken.roles.length > 0) {
+          const role = decodedToken.roles[0].replace('ROLE_', '');
+          localStorage.setItem('userRole', role);
+        }
+      }
       
       return data;
     } catch (error) {
@@ -87,8 +97,16 @@ async login(email, password) {
   },
 
   async fetchUserRole(token) {
+    const decodedToken = decodeJWT(token);
+
+    if (decodedToken && decodedToken.roles && decodedToken.roles.length > 0) {
+      const role = decodedToken.roles[0].replace('ROLE_', '');
+      localStorage.setItem('userRole', role);
+      return role;
+    }
+
     try {
-      const response = await fetch(`${API_BASE_URL}/v1/users/me`, {
+      const response = await fetch(`${API_BASE_URL}/v1/users`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -96,18 +114,81 @@ async login(email, password) {
       });
       
       if (response.ok) {
-        const userData = await response.json();
-        localStorage.setItem('userRole', userData.role);
+        const users = await response.json();
+        const decodedTokenForUserId = decodeJWT(token);
+        if (decodedTokenForUserId && decodedTokenForUserId.userId) {
+          const currentUser = users.find(user => user.id === decodedTokenForUserId.userId);
+          if (currentUser) {
+            localStorage.setItem('userRole', currentUser.role);
+            return currentUser.role;
+          }
+        }
       }
     } catch (error) {
       console.error('Erro ao buscar role do usuário:', error);
     }
+    
+    return null;
   },
 
+  getCurrentUser() {
+    const token = this.getToken();
+    if (!token) {
+      return null;
+    }
+
+    // Tentar extrair dados do token primeiro
+    const decodedToken = decodeJWT(token);
+    
+    let role = localStorage.getItem('userRole');
+    
+    // Se não temos role no localStorage, tentar extrair do token
+    if (!role && decodedToken && decodedToken.roles && decodedToken.roles.length > 0) {
+      role = decodedToken.roles[0].replace('ROLE_', '');
+      localStorage.setItem('userRole', role);
+    }
+    
+    // Se ainda não temos role, buscar do backend
+    if (!role) {
+      this.fetchUserRole(token).then(fetchedRole => {
+        if (fetchedRole) {
+          role = fetchedRole;
+        }
+      });
+    }
+
+    if (decodedToken) {
+      const email = localStorage.getItem('email');
+      
+      return {
+        id: decodedToken.userId,
+        name: decodedToken.name,
+        email: email,
+        role: role,
+        token: token
+      };
+    }
+
+    // Fallback para localStorage
+    const email = localStorage.getItem('email');
+
+    if (!email || email === 'undefined') {
+      return null;
+    }
+
+    return {
+      email: email,
+      role: role,
+      token: token
+    };
+  },
+
+  // ...existing code...
   logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('userRole');
     localStorage.removeItem('email');
+    localStorage.removeItem('tokenExpiration');
   },
 
   getToken() {
@@ -120,26 +201,5 @@ async login(email, password) {
 
   getUserRole() {
     return localStorage.getItem('userRole');
-  },
-
-  getCurrentUser() {
-    const token = this.getToken();
-    if (!token) {
-      return null;
-    }
-
-    const email = localStorage.getItem('email');
-    const role = localStorage.getItem('userRole');
-
-    // Verificar se os valores não são 'undefined' como string
-    if (!email || email === 'undefined' || !role || role === 'undefined') {
-      return null;
-    }
-
-    return {
-      email: email,
-      role: role,
-      token: token
-    };
   }
 };

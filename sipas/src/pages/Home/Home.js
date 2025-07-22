@@ -6,10 +6,11 @@ import { authService } from '../../services/authService';
 
 function App() {
   const navigate = useNavigate();
+  const userRole = localStorage.getItem('userRole');
 
   const handleLogout = () => {
     authService.logout();
-    navigate('/Login');
+    navigate('/');
   };
 
   return (
@@ -20,15 +21,24 @@ function App() {
             <div className="home-content">
             <button className="registrar-pi" onClick={() => navigate('/Escolher-pi')}
             >Registrar PI</button>
-            <button className="Propriedades-registradas" onClick={() => navigate('/Propriedades-registradas')}
-            >Propriedades Registradas</button>
             <button className="Cadastro-startup" onClick={() => navigate('/cadastro-startup')}
             >Cadastrar Startup</button>
-            <button className="gerar-relatorio" onClick={() => navigate('/gerar-relatorio')}>Gerar Relatório</button>
-            <button className='gerenciar-usuarios' onClick={() => navigate('/Gerenciar-usuarios')}
-            >Usuários</button>
-            <button className="listagem-startups" onClick={() => navigate('/listagem-startups')}
-            >Listagem de Startups</button>
+            
+            {userRole === 'ADMIN' && (
+              <>
+              <button className="listagem-startups" onClick={() => navigate('/listagem-startups')}
+              >Listagem de Startups</button>
+
+              <button className="gerar_relatorio" onClick={() => navigate('/gerar-relatorio')}>Gerar Relatório</button>
+              
+              <button className="propriedades_registradas" onClick={() => navigate('/Propriedades-registradas')}
+              >Propriedades Registradas</button>
+
+              <button className='gerenciar-usuarios' onClick={() => navigate('/Gerenciar-usuarios')}
+              >Usuários</button>
+              </>
+            )}
+            
             <button className="sair" onClick={handleLogout}>Sair</button>
             </div>
         </div>

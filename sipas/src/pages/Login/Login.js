@@ -37,9 +37,6 @@ function Login() {
 
       // Armazenar e logar o token
       localStorage.setItem('token', response.token);
-      const payload = JSON.parse(atob(response.token.split('.')[1]));
-      console.log('Token JWT:', response.token);
-      console.log('Payload decodificado:', payload);
 
       navigate('/home');
 

@@ -30,13 +30,18 @@ function App() {
           <Route path="/propriedades-registradas" element={<PropriedadesInt/>} />
           <Route path="/registrar-pi" element={<RegistrarPI />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/gerenciar-usuarios" element={<GerenciarUsuarios />} />
+          <Route 
+            path="/gerenciar-usuarios" 
+            element={
+              <ProtectedRoute requiredRole="ADMIN">
+                <GerenciarUsuarios />
+              </ProtectedRoute>
+            } 
+          />
           <Route path="/registrar-pi/sucesso" element={<FeedbackSucesso />} />
           <Route path="/gerar-relatorio" element={<GerarRelatorio />} />
           <Route path="/listagem-startups" element={<ListagemStartups />} />
         </Route>
-          
-    
 
         {/* Rota padrão para redirecionar para o login */}
         <Route path="*" element={<Login/>} />
