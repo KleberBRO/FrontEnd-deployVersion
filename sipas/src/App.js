@@ -7,6 +7,7 @@ import EscolherPI from './pages/EscolherPI/EscolherPI.js';
 import PropriedadesInt from './pages/PropriedadesInt/PropriedadesInt.js';
 import RegistrarPI from './pages/RegistrarPI/RegistrarPI.js';
 import Login from './pages/Login/Login.js';
+import RegistrarInventor from './pages/RegistrarInventor/RegistrarInventor.js';
 import CadastroStartup from './pages/CadastroStartup/CadastroStartup.js';
 import GerenciarUsuarios from './pages/GerenciarUsuarios/GerenciarUsuarios.js';
 import FeedbackSucesso from './pages/RegistrarPI/components/FeedbackSucesso';
@@ -19,7 +20,7 @@ function App() {
       <Routes>
         {/* Rota Pública */}
         <Route path="/" element={<Login />} />
-        
+        <Route path="/register" element={<RegistrarInventor />} />
 
         {/* Rota Privada */}
         <Route element={<PrivateRoute />}>
