@@ -27,26 +27,32 @@ function Login() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setCarregando(true);
-    setErro('');
-    setNotification({ message: '', type: '' });
+  e.preventDefault();
+  setCarregando(true);
+  setErro('');
+  setNotification({ message: '', type: '' });
 
-    try {
-      await authService.login(formData.email, formData.password);
-      navigate('/home');
-      
-    } catch (error) {
-        // Mostrar outros erros como notificação
-        setNotification({
-          message: error.message || 'Erro inesperado',
-          type: error.type || 'server'
-        });
+  try {
+    const response = await authService.login(formData.email, formData.password);
 
-    } finally {
-      setCarregando(false);
-    }
-  };
+    // Armazenar e logar o token
+    localStorage.setItem('token', response.token);
+    const payload = JSON.parse(atob(response.token.split('.')[1]));
+    console.log('Token JWT:', response.token);
+    console.log('Payload decodificado:', payload);
+
+    navigate('/home');
+
+  } catch (error) {
+    setNotification({
+      message: error.message || 'Erro inesperado',
+      type: error.type || 'server'
+    });
+  } finally {
+    setCarregando(false);
+  }
+};
+
 
   const closeNotification = () => {
     setNotification({ message: '', type: '' });

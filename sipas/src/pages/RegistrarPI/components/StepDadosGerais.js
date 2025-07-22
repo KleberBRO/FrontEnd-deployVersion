@@ -29,12 +29,13 @@ function StepDadosGerais({ formData, handleChange }) {
                 ></textarea>
             </div>
 
+             {/* --- BLOCO CORRIGIDO --- */}
             <div className="form-group">
-                <label htmlFor="startupName">Departamento</label>
+                <label htmlFor="departamento">Departamento</label>
                 <select
-                    id="startupName"
-                    name="startupName"
-                    value={formData.startupName}
+                    id="departamento" // CORRIGIDO
+                    name="departamento" // CORRIGIDO
+                    value={formData.departamento} // CORRIGIDO
                     onChange={handleChange}
                     required
                 >

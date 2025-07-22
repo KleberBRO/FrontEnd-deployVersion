@@ -33,6 +33,9 @@ function Form({ onSubmit, onBack, tipo}) {
         type: tipo || '',
         documents: [],
         images: [],
+        cpf: '',
+        email: '',
+        departamento: '',
         patente: {},
         marca: {},
         software: {},
@@ -131,6 +134,9 @@ function Form({ onSubmit, onBack, tipo}) {
                 inventorName: formData.inventorName,
                 startupName: formData.startupName,
                 processingStage: formData.processingStage,
+                cpf: formData.cpf,
+                email: formData.email,
+                departamento: formData.departamento,
                 ...cleanTypeSpecificData(formData[formData.type.toLowerCase()])
             };
 

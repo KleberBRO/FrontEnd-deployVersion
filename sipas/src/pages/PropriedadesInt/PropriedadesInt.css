@@ -236,7 +236,7 @@ html, body {
 }
 
 .status-andamento {
-    color: rgb(214, 214, 0);
+    color: yellow;
     font-weight: bold;
 }
 
