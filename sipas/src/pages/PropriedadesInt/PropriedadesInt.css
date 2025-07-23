@@ -153,7 +153,9 @@ html, body {
 }
 
 .filtro-item select {
-    flex: 1;
+    width: auto;      /* Define a largura como automática (baseada no conteúdo) */
+    flex-grow: 0;     /* Impede que o elemento cresça para preencher espaço */
+    min-width: 120px; /* Define uma largura mínima para não ficar muito pequeno */
     padding: 0.5rem;
     border: 1px solid #ddd;
     border-radius: 4px;
