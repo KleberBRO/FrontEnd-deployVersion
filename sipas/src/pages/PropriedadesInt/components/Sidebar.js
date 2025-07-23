@@ -90,6 +90,8 @@ function Sidebar({ filtros, onFiltroChange, onSearch, onClearFilters }) {
             <option value="indicacao-geografica">Indicação Geográfica</option>
           </select>
         </div>
+
+        {/* --- BLOCO DE STATUS CORRIGIDO --- */}
         <div className='filtro-item'>
           <input 
             type='checkbox' 
@@ -100,12 +102,12 @@ function Sidebar({ filtros, onFiltroChange, onSearch, onClearFilters }) {
           />
           <select value={filtros.status} onChange={(e) => onFiltroChange('status', e.target.value)}>
             <option value="">Status</option>
-            <option value="concluído">Concluído</option>
-            <option value="andamento">Em Andamento</option>
-            <option value="pendente">Pendente</option>
-            <option value="aprovado">Aprovado</option>
+            <option value="ACTIVE">Active</option>
+            <option value="INACTIVE">Inactive</option>
+            <option value="IN_PROCESSING">In Processing</option>
           </select>
         </div>
+        
         <div className='filtro-item'>
           <input 
             type='checkbox' 
