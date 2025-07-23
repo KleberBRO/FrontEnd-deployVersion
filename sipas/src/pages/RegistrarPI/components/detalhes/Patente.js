@@ -55,6 +55,8 @@ function Patente({ formData, handleChange }) {
                     value={formData?.filingDate || ''}
                     onChange={handleChange}
                     required
+                    min="1900-01-01"
+                    max="2100-12-31"
                 />
             </div>
 
@@ -66,6 +68,8 @@ function Patente({ formData, handleChange }) {
                     name="priorityDate"
                     value={formData?.priorityDate || ''}
                     onChange={handleChange}
+                    min="1900-01-01"
+                    max="2100-12-31"
                 />
             </div>
 

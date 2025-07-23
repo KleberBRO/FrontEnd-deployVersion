@@ -130,6 +130,8 @@ function Cultivar({ formData, handleChange }) {
                     value={formData.creationDevelopmentDate || ''}
                     onChange={handleChange}
                     required
+                    min="1900-01-01"
+                    max="2100-12-31"
                 />
             </div>
 

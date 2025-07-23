@@ -28,16 +28,16 @@ function EscolherPI() {
                 <p>Protege programas de computador, garantindo direitos autorais sobre o código-fonte e a interface do usuário.</p>
               </div>
 
-              <div className="registrar-desenho-industrial" onClick={() => navigate('/registrar-pi', { state: { tipo: 'desenho_industrial' } })}>
+              <div className="registrar-desenho-industrial" onClick={() => navigate('/registrar-pi', { state: { tipo: 'desenho-industrial' } })}>
                 <h1>Registrar Desenho Industrial</h1>
                 <p>Protege a forma estética de um produto, como seu design, cor e textura, garantindo exclusividade ao criador.</p>
               </div>
 
-              <div className="registrar-indicacao-geografica" onClick={() => navigate('/registrar-pi', { state: { tipo: 'indicacao_geografica' } })}>
+              <div className="registrar-indicacao-geografica" onClick={() => navigate('/registrar-pi', { state: { tipo: 'indicacao-geografica' } })}>
                 <h1>Registrar Indicação Geográfica</h1>
                 <p>Identifica produtos originários de uma localidade específica, conferindo características únicas devido ao ambiente geográfico.</p>
                 </div>
-              <div className="registrar-cultivar" onClick={() => navigate('/registrar-pi', { state: { tipo: 'Cultivar' } })}>
+              <div className="registrar-cultivar" onClick={() => navigate('/registrar-pi', { state: { tipo: 'cultivar' } })}>
                 <h1>Registrar Cultivar</h1>
                 <p>Protege variedades de plantas, garantindo direitos sobre novas cultivares desenvolvidas por melhoristas.</p>
               </div>

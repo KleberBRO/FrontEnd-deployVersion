@@ -10,7 +10,7 @@ function Marca({ formData, handleChange }) {
                 <select
                     id="brandType"
                     name="brandType"
-                    value={formData.marca?.brandType || ''}
+                    value={formData.brandType || ''}
                     onChange={(e) => handleChange(e, 'marca')}
                     required
                 >
@@ -29,7 +29,7 @@ function Marca({ formData, handleChange }) {
                     id="brandName"
                     name="brandName"
                     placeholder="Digite o nome da marca"
-                    value={formData.marca?.brandName || ''}
+                    value={formData.brandName || ''}
                     onChange={(e) => handleChange(e, 'marca')}
                 />
             </div>
@@ -41,7 +41,7 @@ function Marca({ formData, handleChange }) {
                     id="imageUrl"
                     name="imageUrl"
                     placeholder="Digite a URL da imagem da marca (opcional)"
-                    value={formData.marca?.imageUrl || ''}
+                    value={formData.imageUrl || ''}
                     onChange={(e) => handleChange(e, 'marca')}
                 />
             </div>
@@ -53,7 +53,7 @@ function Marca({ formData, handleChange }) {
                     id="niceClassificationCode"
                     name="niceClassificationCode"
                     placeholder="Digite o código de classificação de Nice (ex: 09, 35, 42)"
-                    value={formData.marca?.niceClassificationCode || ''}
+                    value={formData.niceClassificationCode || ''}
                     onChange={(e) => handleChange(e, 'marca')}
                     required
                 />
@@ -65,7 +65,7 @@ function Marca({ formData, handleChange }) {
                     id="activityDescription"
                     name="activityDescription"
                     placeholder="Descreva as atividades relacionadas à marca"
-                    value={formData.marca?.activityDescription || ''}
+                    value={formData.activityDescription || ''}
                     onChange={(e) => handleChange(e, 'marca')}
                     required
                 ></textarea>
@@ -78,7 +78,7 @@ function Marca({ formData, handleChange }) {
                     id="requestNature"
                     name="requestNature"
                     placeholder="Digite a natureza da solicitação (ex: registro, renovação)"
-                    value={formData.marca?.requestNature || ''}
+                    value={formData.requestNature || ''}
                     onChange={(e) => handleChange(e, 'marca')}
                     required
                 />
@@ -89,7 +89,7 @@ function Marca({ formData, handleChange }) {
                 <select
                     id="usageStatus"
                     name="usageStatus"
-                    value={formData.marca?.usageStatus || ''}
+                    value={formData.usageStatus || ''}
                     onChange={(e) => handleChange(e, 'marca')}
                     required
                 >
@@ -106,8 +106,10 @@ function Marca({ formData, handleChange }) {
                     type="date"
                     id="startUsageDate"
                     name="startUsageDate"
-                    value={formData.marca?.startUsageDate || ''}
+                    value={formData.startUsageDate || ''}
                     onChange={(e) => handleChange(e, 'marca')}
+                    min="1900-01-01"
+                    max="2100-12-31"
                 />
                 <small>Obrigatório apenas se a marca já estiver em uso</small>
             </div>

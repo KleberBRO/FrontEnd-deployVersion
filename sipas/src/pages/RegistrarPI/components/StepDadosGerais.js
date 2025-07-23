@@ -57,6 +57,8 @@ function StepDadosGerais({ formData, handleChange }) {
                     value={formData.requestDate}
                     onChange={handleChange}
                     required
+                    min="1900-01-01"
+                    max="2100-12-31"
                 />
             </div>
 
@@ -68,6 +70,8 @@ function StepDadosGerais({ formData, handleChange }) {
                     name="grantDate"
                     value={formData.grantDate}
                     onChange={handleChange}
+                    min="1900-01-01"
+                    max="2100-12-31"
                 />
             </div>
 
@@ -79,6 +83,8 @@ function StepDadosGerais({ formData, handleChange }) {
                     name="expirationDate"
                     value={formData.expirationDate}
                     onChange={handleChange}
+                    min="1900-01-01"
+                    max="2100-12-31"
                 />
             </div>
 

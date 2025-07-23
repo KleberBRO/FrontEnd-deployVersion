@@ -18,13 +18,14 @@ function StepConfirmar({ formData }) {
     const camposGerais = [
         { label: 'Título', value: formData.title },
         { label: 'Descrição', value: formData.description },
-        { label: 'Departamento', value: formData.department },
-        { label: 'Data de Criação', value: formData.dataCriacao },
-        { label: 'Status', value: formData.status },
+        { label: 'Departamento', value: formData.departamento },
+        { label: 'Data de Criação', value: formData.requestDate },
+        { label: 'Data de Concessão', value: formData.grantDate },
+        { label: 'Data de expiração', value: formData.expirationDate },
         { label: 'Nome do Inventor', value: formData.nomeInventor },
         { label: 'Email do Inventor', value: formData.emailInventor },
         { label: 'CPF do Inventor', value: formData.cpfInventor },
-        { label: 'Tipo', value: formData.tipo },
+        { label: 'Tipo', value: formData.type },
     ];
 
     // Campos específicos do tipo

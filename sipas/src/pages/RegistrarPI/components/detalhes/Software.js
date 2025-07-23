@@ -65,6 +65,8 @@ function Software({ formData, handleChange }) {
                     value={formData.creationDate || ''}
                     onChange={handleChange}
                     required
+                    min="1900-01-01"
+                    max="2100-12-31"
                 />
             </div>
 
@@ -76,6 +78,8 @@ function Software({ formData, handleChange }) {
                     name="publicationDate"
                     value={formData.publicationDate || ''}
                     onChange={handleChange}
+                    min="1900-01-01"
+                    max="2100-12-31"
                 />
             </div>
 
