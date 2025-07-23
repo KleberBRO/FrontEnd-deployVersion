@@ -1,33 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Navigate } from 'react-router-dom';
 import { authService } from '../services/authService';
 
 const ProtectedRoute = ({ children, requiredRole }) => {
-    const [user, setUser] = useState(null);
-    const [loading, setLoading] = useState(true);
+    const user = authService.getCurrentUser();
 
-    useEffect(() => {
-        const checkUser = async () => {
-            const currentUser = authService.getCurrentUser();
-
-            // Se o usuário existe mas não tem role, tentar buscar
-            if (currentUser && !currentUser.role && currentUser.token) {
-                const role = await authService.fetchUserRole(currentUser.token);
-                if (role) {
-                    currentUser.role = role;
-                }
-            }
-
-            setUser(currentUser);
-            setLoading(false);
-        };
-
-        checkUser();
-    }, []);
-
-    if (loading) {
-        return <div>Carregando...</div>;
-    }
+    // Debug logs
+    console.log('ProtectedRoute - User:', user);
+    console.log('ProtectedRoute - Required Role:', requiredRole);
+    console.log('ProtectedRoute - User Role:', user?.role);
 
     if (!user) {
         return <Navigate to="/" replace />;

@@ -27,28 +27,32 @@ function Login() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setCarregando(true);
-    setErro('');
-    setNotification({ message: '', type: '' });
+  e.preventDefault();
+  setCarregando(true);
+  setErro('');
+  setNotification({ message: '', type: '' });
 
-    try {
-      const response = await authService.login(formData.email, formData.password);
+  try {
+    const response = await authService.login(formData.email, formData.password);
 
-      // Armazenar e logar o token
-      localStorage.setItem('token', response.token);
+    // Armazenar e logar o token
+    localStorage.setItem('token', response.token);
+    const payload = JSON.parse(atob(response.token.split('.')[1]));
+    console.log('Token JWT:', response.token);
+    console.log('Payload decodificado:', payload);
 
-      navigate('/home');
+    navigate('/home');
 
-    } catch (error) {
-      setNotification({
-        message: error.message || 'Erro inesperado',
-        type: error.type || 'server'
-      });
-    } finally {
-      setCarregando(false);
-    }
-  };
+  } catch (error) {
+    setNotification({
+      message: error.message || 'Erro inesperado',
+      type: error.type || 'server'
+    });
+  } finally {
+    setCarregando(false);
+  }
+};
+
 
   const closeNotification = () => {
     setNotification({ message: '', type: '' });
@@ -97,10 +101,6 @@ function Login() {
               *{erro}
             </p>
           )}
-
-          <p className="login-footer">
-            Não tem uma conta? <a href="/register">Registrar</a>
-          </p>
         </form>
       </div>
     </>

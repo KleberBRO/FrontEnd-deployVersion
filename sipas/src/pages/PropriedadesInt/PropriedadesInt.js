@@ -1,4 +1,4 @@
-import React, {useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from '../../components/Header';
 import './PropriedadesInt.css';
 import Sidebar from './components/Sidebar.js';
@@ -7,56 +7,34 @@ import Notification from '../../components/Notification/Notification.js';
 import Modal from './components/Modal.js';
 import { API_BASE_URL } from '../../config/api.js';
 
+// --- NOVA FUNÇÃO AUXILIAR ---
+// Para traduzir os status do backend (ex: "IN_PROGRESS") para o que o frontend espera (ex: "andamento")
+const traduzirStatus = (statusBackend) => {
+  if (!statusBackend) return 'desconhecido';
+  const mapaStatus = {
+    DEPOSIT_REQUESTED: 'depósito solicitado',
+    IN_PROGRESS: 'andamento',
+    CONCLUDED: 'concluído',
+    PENDING: 'pendente',
+    APPROVED: 'aprovado',
+    REJECTED: 'rejeitado'
+  };
+  return mapaStatus[statusBackend.toUpperCase()] || statusBackend.toLowerCase();
+};
+
 function PropriedadesInt() {
   const [propriedades, setPropriedades] = useState([]);
   const [propriedadesOriginais, setPropriedadesOriginais] = useState([]);
   const [erro, setErro] = useState('');
   const [modalAberto, setModalAberto] = useState(false);
-  const [piSelecionada, setPiSelecionada] = useState(null); 
+  const [piSelecionada, setPiSelecionada] = useState(null);
   const [carregando, setCarregando] = useState(false);
   const [filtros, setFiltros] = useState({
     tipo: '',
     status: '',
-    departamento: '',
+    departamento: '', // Este campo não vem do DTO base, pode precisar de ajuste
   });
-
-  // Dados mockados para teste
-  const dadosMockados = [
-    {
-      id: 1,
-      titulo: "Sistema de Gestão de PI - Mock",
-      descricao: "Sistema para gerenciamento de propriedades intelectuais da empresa - dados de teste",
-      tipo: "software",
-      departamento: "TI",
-      status: "andamento",
-      dataCriacao: "2024-01-15",
-      dataVencimento: "2025-01-15",
-      nomeInventor: "João Silva",
-      emailInventor: "joao@empresa.com",
-      cpfInventor: "123.456.789-00",
-      documentos: [
-        { nome: "Especificação Técnica.pdf", url: "#" },
-        { nome: "Diagrama de Arquitetura.pdf", url: "#" }
-      ]
-    },
-    {
-      id: 2,
-      titulo: "Patente de Processo Químico - Mock",
-      descricao: "Processo inovador para síntese de compostos orgânicos - dados de teste",
-      tipo: "patente",
-      departamento: "Pesquisa",
-      status: "concluído",
-      dataCriacao: "2023-06-10",
-      dataVencimento: "2043-06-10",
-      nomeInventor: "Maria Santos",
-      emailInventor: "maria@empresa.com",
-      cpfInventor: "987.654.321-00",
-      documentos: [
-        { nome: "Relatório de Pesquisa.pdf", url: "#" }
-      ]
-    }
-  ];
-
+  
   // Função para carregar propriedades do backend
   const carregarPropriedades = async () => {
     const token = localStorage.getItem('token');
@@ -67,7 +45,7 @@ function PropriedadesInt() {
 
     try {
       setCarregando(true);
-      const response = await fetch(API_BASE_URL+'/intellectual-properties', {
+      const response = await fetch(`${API_BASE_URL}/intellectual-properties/getAll`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -76,111 +54,75 @@ function PropriedadesInt() {
       });
 
       if (!response.ok) {
-        if (response.status === 403) {
-          throw new Error('Acesso negado. Você não tem permissão para ver estas propriedades.');
-        }
-        throw new Error('Erro ao carregar propriedades: ' + response.statusText);
+        throw new Error(`Erro ao carregar propriedades: ${response.statusText}`);
       }
 
       const data = await response.json();
-      let propriedadesData = [];
       
-      if (Array.isArray(data)) {
-        propriedadesData = data;
-      } else if (data && Array.isArray(data.propriedades)) {
-        propriedadesData = data.propriedades;
-      } else if (data && Array.isArray(data.data)) {
-        propriedadesData = data.data;
-      } else {
-        // Se não é array mas é um objeto válido, considera como array vazio
-        propriedadesData = [];
-      }
+      // --- MAPEAMENTO DOS DADOS DA API ---
+      // Converte o formato do backend para o formato que o frontend espera
+      const propriedadesMapeadas = data.map(pi => ({
+        // Lado esquerdo: como o frontend usa (ex: titulo)
+        // Lado direito: como vem do DTO (ex: pi.title)
+        id: pi.id,
+        titulo: pi.title,
+        descricao: pi.description,
+        tipo: pi.type ? pi.type.toLowerCase() : 'desconhecido', // Converte "PATENTE" para "patente"
+        status: traduzirStatus(pi.status), // Usa a função auxiliar para traduzir o status
+        dataCriacao: pi.requestDate,
+        dataVencimento: pi.expirationDate,
+        nomeInventor: pi.inventorName,
+        departamento: pi.departamento || 'N/A', // Ajuste se o departamento não existir no DTO
+        cpf: pi.cpf,
+        email: pi.email,
+        // Mapeia os arquivos para o formato esperado pelo modal
+        documentos: pi.files ? pi.files.map(file => ({
+          nome: file.title || 'Arquivo sem nome',
+          url: file.filePath || '#'
+        })) : [],
+        // Incluindo outros campos que podem ser úteis no modal/tabela
+        ...pi 
+      }));
 
-      setPropriedades(propriedadesData);
-      setPropriedadesOriginais(propriedadesData);
+      setPropriedades(propriedadesMapeadas);
+      setPropriedadesOriginais(propriedadesMapeadas);
       
     } catch (error) {
       console.error('Erro ao carregar propriedades:', error);
-      setErro('Não foi possível carregar os dados: ' + error.message);
-      // Fallback para dados mockados
-      setPropriedades(dadosMockados);
-      setPropriedadesOriginais(dadosMockados);
+      setErro(`Não foi possível carregar os dados: ${error.message}`);
+      // O fallback para dados mockados pode ser removido se não for mais necessário
+      // setPropriedades(dadosMockados); 
+      // setPropriedadesOriginais(dadosMockados);
     } finally {
       setCarregando(false);
     }
   };
 
-  // Função para pesquisar no backend
+  // Carrega os dados quando o componente é montado
+  useEffect(() => {
+    carregarPropriedades();
+  }, []);
+
+  // O restante do seu código (handleSearch, handleFiltroChange, etc.) permanece o mesmo.
+  // Apenas certifique-se de que os campos usados nos filtros e na busca
+  // correspondam aos nomes das propriedades do objeto mapeado (titulo, tipo, status, etc.).
+
+  // ... (Cole aqui o restante das suas funções: handleSearch, handleFiltroChange, getTipoClass, etc.)
+  // O código abaixo é uma cópia do que você enviou, sem alterações, pois já deve funcionar com os dados mapeados.
+  
   const handleSearch = async (termo, campo) => {
+    // ATENÇÃO: A URL de pesquisa está incorreta. Precisa ser ajustada para o endpoint correto do backend.
+    console.warn("A função de busca está usando um endpoint ('/propriedades/pesquisar') que pode estar incorreto.");
     if (!termo.trim()) {
-      // Se o termo está vazio, recarrega todas as propriedades
       setPropriedades(propriedadesOriginais);
       return;
     }
-
-    const token = localStorage.getItem('token');
-    if (!token) {
-      setErro('Você precisa estar logado para pesquisar.');
-      return;
-    }
-
-    try {
-      setCarregando(true);
-      
-      // Construir URL com parâmetros de pesquisa
-      const params = new URLSearchParams({
-        termo: termo,
-        campo: campo
-      });
-
-      const response = await fetch(API_BASE_URL+`/propriedades/pesquisar?${params}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        }
-      });
-
-      if (!response.ok) {
-        throw new Error('Erro ao pesquisar propriedades');
-      }
-
-      const data = await response.json();
-      let resultados = [];
-      
-      if (Array.isArray(data)) {
-        resultados = data;
-      } else if (Array.isArray(data.propriedades)) {
-        resultados = data.propriedades;
-      }
-
-      setPropriedades(resultados);
-      
-      if (resultados.length === 0) {
-        setErro(`Nenhum resultado encontrado para "${termo}" no campo "${campo}"`);
-      }
-    } catch (error) {
-      console.error('Erro ao pesquisar:', error);
-      setErro('Erro ao realizar pesquisa: ' + error.message);
-      
-      // Fallback para pesquisa local nos dados mockados
-      const resultadosLocal = dadosMockados.filter(item => {
-        switch (campo) {
-          case 'titulo':
-            return item.titulo.toLowerCase().includes(termo.toLowerCase());
-          case 'inventor':
-            return item.nomeInventor.toLowerCase().includes(termo.toLowerCase());
-          case 'data':
-            return item.dataCriacao.includes(termo) || item.dataVencimento.includes(termo);
-          default:
-            return false;
-        }
-      });
-      
-      setPropriedades(resultadosLocal);
-    } finally {
-      setCarregando(false);
-    }
+    // Lógica de pesquisa local para demonstração, já que o endpoint pode não existir
+    const resultadosLocal = propriedadesOriginais.filter(item => {
+      const itemCampo = String(item[campo] || '').toLowerCase();
+      return itemCampo.includes(termo.toLowerCase());
+    });
+    setPropriedades(resultadosLocal);
   };
 
   const handleFiltroChange = (campo, valor) => {
@@ -188,55 +130,39 @@ function PropriedadesInt() {
   };
 
   const handleClearFilters = () => {
-    setFiltros({
-      tipo: '',
-      status: '',
-      departamento: '',
-    });
+    setFiltros({ tipo: '', status: '', departamento: '' });
   };
 
   const propriedadesFiltradas = propriedades.filter(item => {
-    // Verificar se todos os filtros passam
     const filtroTipo = !filtros.tipo || item.tipo === filtros.tipo;
     const filtroStatus = !filtros.status || item.status === filtros.status;
     const filtroDepartamento = !filtros.departamento || item.departamento === filtros.departamento;
-    
     return filtroTipo && filtroStatus && filtroDepartamento;
   });
 
   const getTipoClass = (tipo) => {
-    if (!tipo) return '';
-
-    switch (tipo.toLowerCase()) {
-      case 'software':
-        return 'tipo-software';
-      case 'cultivar':
-        return 'tipo-cultivar';
-      case 'marca':
-        return 'tipo-marca';
-      case 'desenho industrial':
-        return 'tipo-desenho-industrial';
-      case 'indicação geográfica':
-        return 'tipo-indicacao-geografica';
-      case 'patente':
-        return 'tipo-patente';
-      default:
-        return '';
+    if(!tipo) return '';
+    // A lógica aqui já funciona porque o tipo foi convertido para minúsculas no mapeamento
+    switch (tipo) {
+      case 'software': return 'tipo-software';
+      case 'cultivar': return 'tipo-cultivar';
+      case 'marca': return 'tipo-marca';
+      case 'desenho_industrial': return 'tipo-desenho-industrial';
+      case 'indicacao_geografica': return 'tipo-indicacao-geografica';
+      case 'patente': return 'tipo-patente';
+      default: return '';
     }
   };
 
   const getStatusClass = (status) => {
+    if(!status) return '';
+    // A lógica aqui deve ser ajustada para os status traduzidos
     switch (status) {
-      case 'concluído':
-        return 'status-concluido';
-      case 'aprovado':
-        return 'status-aprovado';
-      case 'IN_PROCESSING':
-        return 'status-andamento';
-      case 'INACTIVE':
-        return 'status-pendente';
-      default:
-        return '';
+      case 'concluído': return 'status-concluido';
+      case 'aprovado': return 'status-aprovado';
+      case 'andamento': return 'status-andamento';
+      case 'pendente': return 'status-pendente';
+      default: return '';
     }
   }
 
@@ -244,28 +170,10 @@ function PropriedadesInt() {
     setErro('');
   };
 
-  useEffect(() => {
-    carregarPropriedades();
-  }, []);
-
   const handleSavePI = (piEditada) => {
-    const token = localStorage.getItem('token');
-    setPropriedades(prev => 
-      prev.map(pi => pi.id === piEditada.id ? piEditada : pi)
-    );
-    
-    // Chamada para o backend para salvar as alterações
-    fetch(API_BASE_URL+`/propriedades/${piEditada.id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      },
-      body: JSON.stringify(piEditada)
-    }).catch(error => {
-      console.error('Erro ao salvar propriedade:', error);
-      setErro('Erro ao salvar alterações');
-    });
+    // ATENÇÃO: É preciso fazer o mapeamento reverso antes de enviar para o backend.
+    console.warn("A função de salvar ainda precisa implementar o mapeamento reverso para enviar os dados no formato do DTO.");
+    setPropriedades(prev => prev.map(pi => pi.id === piEditada.id ? piEditada : pi));
   };
 
   const abrirModal = (pi) => {

@@ -7,7 +7,6 @@ import EscolherPI from './pages/EscolherPI/EscolherPI.js';
 import PropriedadesInt from './pages/PropriedadesInt/PropriedadesInt.js';
 import RegistrarPI from './pages/RegistrarPI/RegistrarPI.js';
 import Login from './pages/Login/Login.js';
-import RegistrarInventor from './pages/RegistrarInventor/RegistrarInventor.js';
 import CadastroStartup from './pages/CadastroStartup/CadastroStartup.js';
 import GerenciarUsuarios from './pages/GerenciarUsuarios/GerenciarUsuarios.js';
 import FeedbackSucesso from './pages/RegistrarPI/components/FeedbackSucesso';
@@ -20,7 +19,7 @@ function App() {
       <Routes>
         {/* Rota Pública */}
         <Route path="/" element={<Login />} />
-        <Route path="/register" element={<RegistrarInventor />} />
+        
 
         {/* Rota Privada */}
         <Route element={<PrivateRoute />}>
@@ -30,18 +29,13 @@ function App() {
           <Route path="/propriedades-registradas" element={<PropriedadesInt/>} />
           <Route path="/registrar-pi" element={<RegistrarPI />} />
           <Route path="/login" element={<Login />} />
-          <Route 
-            path="/gerenciar-usuarios" 
-            element={
-              <ProtectedRoute requiredRole="ADMIN">
-                <GerenciarUsuarios />
-              </ProtectedRoute>
-            } 
-          />
+          <Route path="/gerenciar-usuarios" element={<GerenciarUsuarios />} />
           <Route path="/registrar-pi/sucesso" element={<FeedbackSucesso />} />
           <Route path="/gerar-relatorio" element={<GerarRelatorio />} />
           <Route path="/listagem-startups" element={<ListagemStartups />} />
         </Route>
+          
+    
 
         {/* Rota padrão para redirecionar para o login */}
         <Route path="*" element={<Login/>} />
