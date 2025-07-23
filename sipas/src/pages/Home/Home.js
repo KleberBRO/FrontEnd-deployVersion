@@ -9,7 +9,7 @@ function App() {
 
   const handleLogout = () => {
     authService.logout();
-    navigate('/Login');
+    navigate('/');
   };
 
   return (
