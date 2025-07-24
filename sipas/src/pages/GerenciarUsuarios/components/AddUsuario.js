@@ -44,14 +44,23 @@ const AddUsuario = ({ isOpen, onClose, onAddUsuario }) => {
         role: formData.role
       };
 
-      const response = await fetch(`${API_BASE_URL}/api/auth/register`, {
+      let fetchOptions = {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify(registerData),
-      });
+      };
+
+      let endpoint = '/auth/register';
+      if (formData.role === 'ADMIN') {
+        endpoint = '/admin/users/create-admin'; 
+        fetchOptions.headers['Authorization'] = `Bearer ${token}`;
+      } else if (formData.role === 'INVENTOR') {
+        endpoint = '/v1/users/register-inventor';
+      }
+
+      const response = await fetch(`${API_BASE_URL}${endpoint}`, fetchOptions);
 
       if (!response.ok) {
         const errorData = await response.text();
@@ -167,7 +176,7 @@ const AddUsuario = ({ isOpen, onClose, onAddUsuario }) => {
             >
               <option value="">Selecione uma função</option>
               <option value="ADMIN">Administrador</option>
-              <option value="INVENTOR">Servidor</option>
+              <option value="INVENTOR">INVENTOR</option>
             </select>
           </div>
           <div className="form-actions">

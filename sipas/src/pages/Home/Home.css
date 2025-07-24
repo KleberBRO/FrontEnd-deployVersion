@@ -58,3 +58,43 @@
 .home-content button.gerenciar-usuarios:hover {
     background-color: rgb(0, 150, 0);
 }
+
+/* ...existing code... */
+
+@media (max-width: 768px) {
+    .home-content {
+        grid-template-columns: 1fr;
+        max-height: none;
+        gap: 15px;
+    }
+
+    .home-content button {
+        width: 90vw;
+        font-size: 1.2rem;
+        height: 4rem;
+        padding: 10px;
+    }
+
+    .home-background h1 {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .home-background {
+        height: auto;
+        padding: 20px 0;
+    }
+
+    .home-content button {
+        width: 100%;
+        font-size: 1rem;
+        height: 3rem;
+        padding: 5px;
+    }
+
+    .home-background h1 {
+        font-size: 1.5rem;
+    }
+}
+/* ...existing code... */
