@@ -15,9 +15,9 @@ function Marca({ formData, handleChange }) {
                     required
                 >
                     <option value="">Selecione o tipo de marca</option>
-                    <option value="NOMINATIVE">Nominativa</option>
-                    <option value="FIGURATIVE">Figurativa</option>
-                    <option value="MIXED">Mista</option>
+                    <option value="NOMINATIVA">Nominativa</option>
+                    <option value="FIGURATIVA">Figurativa</option>
+                    <option value="MISTA">Mista</option>
                     <option value="TRIDIMENSIONAL">Tridimensional</option>
                 </select>
             </div>

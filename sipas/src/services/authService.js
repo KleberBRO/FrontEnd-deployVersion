@@ -10,7 +10,7 @@ const decodeJWT = (token) => {
     }).join(''));
     return JSON.parse(jsonPayload);
   } catch (error) {
-    console.error('Erro ao decodificar token:', error);
+    throw new Error('Erro ao decodificar o token JWT');
     return null;
   }
 };
@@ -70,7 +70,6 @@ async login(email, password) {
       
       // Decodificar o token para extrair informações do usuário
       const tokenPayload = decodeJWT(data.token);
-      console.log('Token payload:', tokenPayload);
       
       // Salvar dados do usuário
       localStorage.setItem('token', data.token);

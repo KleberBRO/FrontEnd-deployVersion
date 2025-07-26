@@ -21,11 +21,11 @@ function StepDetalhesEspecificos({ tipo, formData, handleChange }) {
             {tipoNormalizado === 'software' && (
                 <Software formData={formData.software} handleChange={e => handleChange(e, 'software')} />
             )}
-            {tipoNormalizado === 'indicacao-geografica' && (
-                <Indicacao formData={formData.indicacaoGeografica} handleChange={e => handleChange(e, 'indicacaoGeografica')} />
+            {tipoNormalizado === 'indicacao_geografica' && (
+                <Indicacao formData={formData.indicacao_geografica} handleChange={e => handleChange(e, 'indicacao_geografica')} />
             )}
-            {tipoNormalizado === 'desenho-industrial' && (
-                <DesenhoInd formData={formData.desenhoIndustrial} handleChange={e => handleChange(e, 'desenhoIndustrial')} />
+            {tipoNormalizado === 'desenho_industrial' && (
+                <DesenhoInd formData={formData.desenho_industrial} handleChange={e => handleChange(e, 'desenho_industrial')} />
             )}
             {tipoNormalizado === 'cultivar' && (
                 <Cultivar formData={formData.cultivar} handleChange={e => handleChange(e, 'cultivar')} />

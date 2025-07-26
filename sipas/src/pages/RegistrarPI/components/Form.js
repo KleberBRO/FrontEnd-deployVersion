@@ -39,8 +39,8 @@ function Form({ onSubmit, onBack, tipo}) {
         patente: {},
         marca: {},
         software: {},
-        indicacaoGeografica: {},
-        desenhoIndustrial: {},
+        indicacao_geografica: {},
+        desenho_industrial: {},
         cultivar: {},
     });
 
@@ -211,7 +211,7 @@ function Form({ onSubmit, onBack, tipo}) {
                     throw new Error('Sessão expirada. Faça login novamente.');
                 } else if (response.status === 403) {
                     // 403 is permission denied, not expired session
-                    throw new Error('Você não tem permissão para realizar esta ação. Verifique suas credenciais.');
+                    throw new Error('algo de errado não está certo.');
                 } else if (response.status === 400) {
                     // Try to get specific error message from server
                     let errorMessage = 'Dados inválidos enviados.';
