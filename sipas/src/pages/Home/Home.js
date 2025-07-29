@@ -6,6 +6,8 @@ import { authService } from '../../services/authService';
 
 function App() {
   const navigate = useNavigate();
+  const currentUser = authService.getCurrentUser();
+  const isAdmin = currentUser?.roles.includes('ROLE_ADMIN');
 
   const handleLogout = () => {
     authService.logout();
@@ -25,12 +27,16 @@ function App() {
             <button className="Cadastro-startup" onClick={() => navigate('/cadastro-startup')}
             >Cadastrar Startup</button>
             <button className="gerar-relatorio" onClick={() => navigate('/gerar-relatorio')}>Gerar Relatório</button>
-            <button className="listagem-startups" onClick={() => navigate('/listagem-startups')}
-            >Listagem de Startups</button>
-            <button className='gerenciar-usuarios' onClick={() => navigate('/Gerenciar-usuarios')}
-            >Usuários</button>
-            <button className="sair" onClick={handleLogout}>Sair</button>
+            {isAdmin && (
+              <>
+                <button className="listagem-startups" onClick={() => navigate('/listagem-startups')}
+                >Listagem de Startups</button>
+                <button className="gerenciar-usuarios" onClick={() => navigate('/gerenciar-usuarios')}
+                >Gerenciar Usuários</button>
+              </>
+            )}
             </div>
+            <button className="btn-logout" onClick={handleLogout}>Sair</button>
         </div>
       
     </>

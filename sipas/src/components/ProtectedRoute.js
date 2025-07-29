@@ -8,13 +8,13 @@ const ProtectedRoute = ({ children, requiredRole }) => {
     // Debug logs
     console.log('ProtectedRoute - User:', user);
     console.log('ProtectedRoute - Required Role:', requiredRole);
-    console.log('ProtectedRoute - User Role:', user?.role);
+    console.log('ProtectedRoute - User Roles:', user?.roles);
 
     if (!user) {
         return <Navigate to="/" replace />;
     }
 
-    if (requiredRole && user.role !== requiredRole) {
+    if (requiredRole && !user.roles.includes(requiredRole)) {
         alert('Acesso negado. Você não tem permissão para acessar esta página.');
         return <Navigate to="/home" replace />;
     }

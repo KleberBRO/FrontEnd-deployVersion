@@ -99,6 +99,10 @@ function Login() {
               *{erro}
             </p>
           )}
+
+          <p className="login-footer">
+            Não tem uma conta? <a href="/registrar-inventor">Registrar</a>
+          </p>
         </form>
       </div>
     </>

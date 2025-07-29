@@ -70,11 +70,13 @@ async login(email, password) {
       
       // Decodificar o token para extrair informações do usuário
       const tokenPayload = decodeJWT(data.token);
+      const userRoles = tokenPayload?.roles; // Aqui você extrai o role
       
       // Salvar dados do usuário
       localStorage.setItem('token', data.token);
       localStorage.setItem('email', tokenPayload?.sub || email); // 'sub' geralmente é o email/username
-      
+      localStorage.setItem('userRoles', JSON.stringify(userRoles)); // Salvar os roles do usuário
+
       // Fazer uma segunda requisição para buscar o role do usuário
       await this.fetchUserRole(data.token);
       
@@ -128,16 +130,16 @@ async login(email, password) {
     }
 
     const email = localStorage.getItem('email');
-    const role = localStorage.getItem('userRole');
+    const roles = JSON.parse(localStorage.getItem('userRoles'));
 
     // Verificar se os valores não são 'undefined' como string
-    if (!email || email === 'undefined' || !role || role === 'undefined') {
+    if (!email || email === 'undefined' || !roles || roles === 'undefined') {
       return null;
     }
 
     return {
       email: email,
-      role: role,
+      roles: roles,
       token: token
     };
   }
