@@ -65,18 +65,6 @@ function StepAnexarArquivos({ formData, handleChange }) {
                     <p>Formatos aceitos: PDF, DOC, DOCX</p>
                 </div>
 
-                {/* Seção para Imagens */}
-                <div className="file-upload-section">
-                    <h3>Imagens</h3>
-                    <input
-                        type="file"
-                        name="images"
-                        onChange={(e) => handleFileChange(e, 'images')}
-                        accept=".jpg,.jpeg,.png,.gif"
-                        multiple
-                    />
-                    <p>Formatos aceitos: JPG, JPEG, PNG, GIF</p>
-                </div>
             </div>
 
             <div className="step-anexar-arquivo-preview">
@@ -84,12 +72,9 @@ function StepAnexarArquivos({ formData, handleChange }) {
                 
                 {/* Preview dos Documentos */}
                 {renderFileList(formData.documents, 'documents', 'Documentos')}
-                
-                {/* Preview das Imagens */}
-                {renderFileList(formData.images, 'images', 'Imagens')}
-                
-                {(!formData.documents || formData.documents.length === 0) && 
-                 (!formData.images || formData.images.length === 0) && (
+
+
+                {(!formData.documents || formData.documents.length === 0) && (
                     <p>Nenhum arquivo anexado.</p>
                 )}
             </div>

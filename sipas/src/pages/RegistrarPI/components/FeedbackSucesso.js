@@ -1,9 +1,12 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import '../RegistrarPI.css';
+import Header from '../../../components/Header.js';
 
-function FeedbackSucesso({ tipo }) {
+function FeedbackSucesso() {
     const navigate = useNavigate();
+    const location = useLocation();
+    const tipo = location.state?.tipo;
 
     const handleVoltarInicio = () => {
         navigate('/home');
@@ -14,6 +17,8 @@ function FeedbackSucesso({ tipo }) {
     };
 
     return (
+        <>
+        <Header />
         <div className="feedback-sucesso-container">
             <div className="feedback-card">
                 <div className="success-icon">
@@ -44,6 +49,7 @@ function FeedbackSucesso({ tipo }) {
                 </div>
             </div>
         </div>
+        </>
     );
 }
 
