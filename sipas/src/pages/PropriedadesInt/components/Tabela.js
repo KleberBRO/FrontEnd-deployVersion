@@ -28,9 +28,6 @@ function Tabela({ propriedades, getTipoClass, getStatusClass, onLupaClick, reque
             <th onClick={() => requestSort('titulo')} className="th-sortable">
               Título{getSortIndicator('titulo')}
             </th>
-            <th onClick={() => requestSort('nomeInventor')} className="th-sortable">
-              Inventor{getSortIndicator('nomeInventor')}
-            </th>
             <th onClick={() => requestSort('departamento')} className="th-sortable">
               Departamento{getSortIndicator('departamento')}
             </th>
@@ -58,7 +55,6 @@ function Tabela({ propriedades, getTipoClass, getStatusClass, onLupaClick, reque
               </td>
               <td className={getTipoClass(item.tipo)}>{item.tipo}</td>
               <td>{item.titulo}</td>
-              <td>{item.nomeInventor}</td>
               <td>{item.departamento}</td>
               <td>{item.cpf || 'N/A'}</td>
               <td>{item.email || 'N/A'}</td>

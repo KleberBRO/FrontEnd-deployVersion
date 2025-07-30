@@ -65,6 +65,8 @@ function PropriedadesInt() {
       }
 
       const data = await response.json();
+
+      console.log('Dados recebidos:', data);
       
       const propriedadesMapeadas = data.map(pi => ({
         id: pi.id,
@@ -100,7 +102,6 @@ function PropriedadesInt() {
     carregarPropriedades();
   }, []);
 
-  // ... (funções de filtro e busca permanecem as mesmas)
   const handleSearch = async (termo, campo) => {
     if (!termo.trim()) {
       setPropriedades(propriedadesOriginais);
@@ -186,7 +187,39 @@ function PropriedadesInt() {
   }
   const handleCloseNotification = () => setErro('');
   const atualizarPI = async (piEditada) => { /* ...código existente... */ };
-  const excluirPI = async (piId) => { /* ...código existente... */ };
+  const excluirPI = async (piId) => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      setErro('Você precisa estar logado para excluir propriedades.');
+      return;
+    }
+    if (!piId) {
+      setErro('ID da propriedade inválido.');
+      return;
+    }
+    try {
+      setCarregando(true);
+      const response = await fetch(`${API_BASE_URL}/intellectual-properties/${piId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      if (!response.ok) {
+        throw new Error('Erro ao excluir propriedade.');
+      }
+      // Remove do estado local
+      setPropriedades(prev => prev.filter(pi => pi.id !== piId));
+      setPropriedadesOriginais(prev => prev.filter(pi => pi.id !== piId));
+      setErro('Propriedade excluída com sucesso!');
+      fecharModal();
+    } catch (error) {
+      setErro(`Não foi possível excluir: ${error.message}`);
+    } finally {
+      setCarregando(false);
+    }
+  };
   const handleSavePI = (piEditada) => atualizarPI(piEditada);
   const abrirModal = (pi) => { setPiSelecionada(pi); setModalAberto(true); };
   const fecharModal = () => { setModalAberto(false); setPiSelecionada(null); };

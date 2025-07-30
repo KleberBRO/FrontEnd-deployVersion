@@ -60,7 +60,7 @@ function Sidebar({ filtros, onFiltroChange, onSearch, onClearFilters }) {
         <select value={campoPesquisa} onChange={(e) => setCampoPesquisa(e.target.value)}>
           <option value="titulo">Título</option>
           <option value="inventor">Inventor</option>
-          <option value="data">Data</option>
+          <option value="data de Vencimento">Data de Vencimento</option>
         </select>
       </div>
       <div className='filtros'>
@@ -121,8 +121,7 @@ function Sidebar({ filtros, onFiltroChange, onSearch, onClearFilters }) {
             <option value="Computação">Computação</option>
             <option value="Engenharia florestal">Engenharia florestal</option>
             <option value="Veterinária">Veterinária</option>
-            <option value="TI">TI</option>
-            <option value="Pesquisa">Pesquisa</option>
+            <option value="Agropecuária">Agropecuária</option>
           </select>
         </div>
       </div>
