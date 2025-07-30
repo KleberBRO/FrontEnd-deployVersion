@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
 import { authService } from '../services/authService';
 
 const ProtectedRoute = ({ children, requiredRole }) => {
@@ -19,7 +19,7 @@ const ProtectedRoute = ({ children, requiredRole }) => {
         return <Navigate to="/home" replace />;
     }
 
-    return children;
+    return <Outlet />;
 };
 
 export default ProtectedRoute;

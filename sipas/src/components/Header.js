@@ -1,7 +1,7 @@
 import React from "react";
 import packageJson from '../../package.json';
 
-const Header = () => {
+const Header = ({ showHomeButton = true }) => {
     return (
         <header style={styles.header}>
             <div style={styles.headerContent}>
@@ -14,6 +14,15 @@ const Header = () => {
                     <h1 style={styles.h1}>UFRPE - SIGPS</h1>
                     <p style={styles.p}>Versão {packageJson.version}</p>
                 </div>
+                {showHomeButton && (
+                    <button 
+                        className="btn-home" 
+                        onClick={() => window.location.href = '/Home'}
+                        style={styles.button}
+                    >
+                        Home
+                    </button>
+                )}
             </div>
         </header>
     );
@@ -61,7 +70,7 @@ const styles = {
         marginTop: '0px',
         fontSize: '12px',
         fontFamily: 'Roboto, sans-serif',
-    }
+    },
 };
 
 export default Header;

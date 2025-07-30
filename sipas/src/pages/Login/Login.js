@@ -58,7 +58,7 @@ function Login() {
   
   return (
     <>
-      <Header/>
+      <Header showHomeButton={false} />
       <Notification 
         message={notification.message}
         type={notification.type}

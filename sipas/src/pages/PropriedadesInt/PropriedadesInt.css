@@ -238,12 +238,12 @@ html, body {
 }
 
 .status-andamento {
-    color: yellow;
+    color: orange;
     font-weight: bold;
 }
 
 .status-pendente {
-    color: orange;
+    color: red;
     font-weight: bold;
 }
 

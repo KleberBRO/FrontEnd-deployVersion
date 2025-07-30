@@ -90,9 +90,6 @@ function PropriedadesInt() {
     } catch (error) {
       console.error('Erro ao carregar propriedades:', error);
       setErro(`Não foi possível carregar os dados: ${error.message}`);
-      // O fallback para dados mockados pode ser removido se não for mais necessário
-      // setPropriedades(dadosMockados); 
-      // setPropriedadesOriginais(dadosMockados);
     } finally {
       setCarregando(false);
     }
@@ -103,12 +100,6 @@ function PropriedadesInt() {
     carregarPropriedades();
   }, []);
 
-  // O restante do seu código (handleSearch, handleFiltroChange, etc.) permanece o mesmo.
-  // Apenas certifique-se de que os campos usados nos filtros e na busca
-  // correspondam aos nomes das propriedades do objeto mapeado (titulo, tipo, status, etc.).
-
-  // ... (Cole aqui o restante das suas funções: handleSearch, handleFiltroChange, getTipoClass, etc.)
-  // O código abaixo é uma cópia do que você enviou, sem alterações, pois já deve funcionar com os dados mapeados.
   
   const handleSearch = async (termo, campo) => {
     // ATENÇÃO: A URL de pesquisa está incorreta. Precisa ser ajustada para o endpoint correto do backend.
@@ -158,10 +149,9 @@ function PropriedadesInt() {
     if(!status) return '';
     // A lógica aqui deve ser ajustada para os status traduzidos
     switch (status) {
-      case 'concluído': return 'status-concluido';
-      case 'aprovado': return 'status-aprovado';
-      case 'andamento': return 'status-andamento';
-      case 'pendente': return 'status-pendente';
+      case 'ACTIVE': return 'status-concluido';
+      case 'IN_PROCESSING': return 'status-andamento';
+      case 'INACTIVE': return 'status-pendente';
       default: return '';
     }
   }
@@ -170,10 +160,59 @@ function PropriedadesInt() {
     setErro('');
   };
 
+  const atualizarPI = async (piEditada) => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      setErro('Você precisa estar logado para editar.');
+      return;
+    }
+
+    try {
+      setCarregando(true);
+
+      
+      const dto = {
+        id: piEditada.id,
+        title: piEditada.titulo,
+        description: piEditada.descricao,
+        type: piEditada.tipo.toUpperCase(),
+        status: piEditada.status.toUpperCase(),
+        requestDate: piEditada.dataCriacao,
+        expirationDate: piEditada.dataVencimento,
+        inventorName: piEditada.nomeInventor,
+        departamento: piEditada.departamento,
+        cpf: piEditada.cpf,
+        email: piEditada.email,
+        // Adicione outros campos conforme necessário
+      };
+
+      const response = await fetch(`${API_BASE_URL}/intellectual-properties/${piEditada.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(dto)
+      });
+
+      if (!response.ok) {
+        throw new Error('Erro ao atualizar propriedade.');
+      }
+
+      // Atualiza o estado local
+      setPropriedades(prev => prev.map(pi => pi.id === piEditada.id ? piEditada : pi));
+      setModalAberto(false);
+      setPiSelecionada(null);
+
+    } catch (error) {
+      setErro(error.message);
+    } finally {
+      setCarregando(false);
+    }
+  };
+
   const handleSavePI = (piEditada) => {
-    // ATENÇÃO: É preciso fazer o mapeamento reverso antes de enviar para o backend.
-    console.warn("A função de salvar ainda precisa implementar o mapeamento reverso para enviar os dados no formato do DTO.");
-    setPropriedades(prev => prev.map(pi => pi.id === piEditada.id ? piEditada : pi));
+    atualizarPI(piEditada);
   };
 
   const abrirModal = (pi) => {

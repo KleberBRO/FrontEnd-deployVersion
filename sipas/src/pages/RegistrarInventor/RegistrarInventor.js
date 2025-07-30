@@ -87,7 +87,7 @@ const RegistrarInventor = () => {
 
   return (
     <>
-        <Header />
+      <Header showHomeButton={false} />
       <div className="registrar-inventor-container">
         <div className="form-container">
           <form onSubmit={handleSubmit}>
