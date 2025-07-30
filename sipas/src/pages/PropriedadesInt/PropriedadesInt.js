@@ -211,9 +211,37 @@ function PropriedadesInt() {
     }
   };
 
+  const excluirPI = async (piId) => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      setErro('Você precisa estar logado para excluir.');
+      return;
+    }
+    try {
+      setCarregando(true);
+      const response = await fetch(`${API_BASE_URL}/intellectual-properties/${piId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      if (!response.ok) {
+        throw new Error('Erro ao excluir propriedade.');
+      }
+      setPropriedades(prev => prev.filter(pi => pi.id !== piId));
+      setModalAberto(false);
+      setPiSelecionada(null);
+    } catch (error) {
+      setErro(error.message);
+    } finally {
+      setCarregando(false);
+    }
+  };
+
   const handleSavePI = (piEditada) => {
     atualizarPI(piEditada);
   };
+
 
   const abrirModal = (pi) => {
     setPiSelecionada(pi);
@@ -252,6 +280,7 @@ function PropriedadesInt() {
             piSelecionada={piSelecionada} 
             onClose={fecharModal} 
             onSave={handleSavePI}
+            onDelete={excluirPI}
           />
         )}
         {carregando && (

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import '../styles/Modal.css'; 
 
-function Modal({ piSelecionada, onClose, onSave }) {
+function Modal({ piSelecionada, onClose, onSave, onDelete }) {
     const [editando, setEditando] = useState(false);
     // O estado inicial agora está mais simples e será preenchido pelo useEffect
     const [dadosEditados, setDadosEditados] = useState({});
@@ -8,48 +9,88 @@ function Modal({ piSelecionada, onClose, onSave }) {
     // MELHORIA: Usa useEffect para sincronizar o estado de edição com a PI selecionada.
     // Isso evita bugs se o usuário abrir um novo modal sem recarregar a página.
     useEffect(() => {
-        // Se uma PI for selecionada, atualiza o estado de edição.
         if (piSelecionada) {
-            setDadosEditados({
-                titulo: piSelecionada.titulo || '',
-                descricao: piSelecionada.descricao || '',
-                tipo: piSelecionada.tipo || '',
-                departamento: piSelecionada.departamento || '',
-                status: piSelecionada.status || '',
-                dataCriacao: piSelecionada.dataCriacao || '',
-                dataVencimento: piSelecionada.dataVencimento || '',
-                nomeInventor: piSelecionada.nomeInventor || '',
-                email: piSelecionada.email || '', // CORRIGIDO: de 'emailInventor' para 'email'
-                cpf: piSelecionada.cpf || ''      // CORRIGIDO: de 'cpfInventor' para 'cpf'
+            // Campos gerais
+        const novosDados = {
+            title: piSelecionada.title || '',
+            description: piSelecionada.description || '',
+            type: piSelecionada.type || '',
+            departamento: piSelecionada.departamento || '',
+            status: piSelecionada.status || '',
+            requestDate: piSelecionada.requestDate || '',
+            expirationDate: piSelecionada.expirationDate || '',
+            inventorName: piSelecionada.inventorName || '',
+            email: piSelecionada.email || '',
+            cpf: piSelecionada.cpf || ''
+        };
+
+            // Campos específicos
+            const camposEspecificos = {
+                patente: [
+                    'patentType',
+                    'internationalClassification',
+                    'technicalApplicationField',
+                    'filingDate',
+                    'priorityDate',
+                    'priorityCountry',
+                    'priorityNumber',
+                    'previousRequestRelated'
+                ],
+                // Adicione outros tipos aqui...
+            };
+            const tipo = piSelecionada.tipo;
+            const campos = camposEspecificos[tipo] || [];
+            campos.forEach((campo) => {
+                novosDados[campo] = piSelecionada[campo] || '';
             });
+
+            setDadosEditados(novosDados);
         }
-    }, [piSelecionada]); // Este efeito roda sempre que 'piSelecionada' mudar
+    }, [piSelecionada]);
 
     if (!piSelecionada) return null;
 
     const renderDadosEspecificos = () => {
-        // Lista dos tipos possíveis
-        const tipos = [
-            'software',
-            'patent',
-            'marca',
-            'cultivar',
-            'desenho_industrial',
-            'indicacao_geografica'
-        ];
-        // Encontra o tipo específico presente
-        const tipoEncontrado = tipos.find(type => piSelecionada[type] && Object.keys(piSelecionada[type]).length > 0);
-        console.log(`Tipo encontrado: ${tipoEncontrado}`);
-        if (!tipoEncontrado) return null;
+        const camposEspecificos = {
+            patente: [
+                'patentType',
+                'internationalClassification',
+                'technicalApplicationField',
+                'filingDate',
+                'priorityDate',
+                'priorityCountry',
+                'priorityNumber',
+                'previousRequestRelated'
+            ],
+            // Adicione os campos dos outros tipos aqui...
+        };
 
-        const dados = piSelecionada[tipoEncontrado];
-        console.log(`Dados específicos para o tipo ${tipoEncontrado}:`, dados);
+        
+        const tipo = piSelecionada.tipo;
+        const campos = camposEspecificos[tipo] || [];
+        const dadosEspecificos = Object.entries(piSelecionada)
+            .filter(([key]) => campos.includes(key))
+            .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {});
+        
+        if (!Object.keys(dadosEspecificos).length) return null;
+
         return (
             <div className="dados-especificos">
-                <h3>Dados Específicos ({tipoEncontrado.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}):</h3>
+                <h3>Dados Específicos ({tipo.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}):</h3>
                 <ul>
-                    {Object.entries(dados).map(([key, value]) => (
-                        <li key={key}><strong>{key}:</strong> {String(value)}</li>
+                    {campos.map((key) => (
+                        <li key={key}>
+                            <strong>{key}:</strong>
+                            {editando ? (
+                                <input
+                                    type="text"
+                                    value={dadosEditados[key] || ''}
+                                    onChange={(e) => handleInputChange(key, e.target.value)}
+                                />
+                            ) : (
+                                ` ${piSelecionada[key]}`
+                            )}
+                        </li>
                     ))}
                 </ul>
             </div>
@@ -66,27 +107,58 @@ function Modal({ piSelecionada, onClose, onSave }) {
 
     const handleCancelar = () => {
         setEditando(false);
-        // Reseta os dados para os originais da 'piSelecionada'
-        // A lógica de reset já está no useEffect, mas podemos forçar aqui para resposta imediata
-        setDadosEditados({
-            titulo: piSelecionada.titulo,
-            descricao: piSelecionada.descricao,
-            tipo: piSelecionada.tipo,
-            departamento: piSelecionada.departamento,
-            status: piSelecionada.status,
-            dataCriacao: piSelecionada.dataCriacao,
-            dataVencimento: piSelecionada.dataVencimento,
-            nomeInventor: piSelecionada.nomeInventor,
-            email: piSelecionada.email, // CORRIGIDO
-            cpf: piSelecionada.cpf,     // CORRIGIDO
+
+        // Campos gerais
+        const novosDados = {
+            title: piSelecionada.title || '',
+            description: piSelecionada.description || '',
+            type: piSelecionada.type || '',
+            departamento: piSelecionada.departamento || '',
+            status: piSelecionada.status || '',
+            requestDate: piSelecionada.requestDate || '',
+            expirationDate: piSelecionada.expirationDate || '',
+            inventorName: piSelecionada.inventorName || '',
+            email: piSelecionada.email || '',
+            cpf: piSelecionada.cpf || ''
+        };
+
+        // Campos específicos
+        const camposEspecificos = {
+            patente: [
+                'patentType',
+                'internationalClassification',
+                'technicalApplicationField',
+                'filingDate',
+                'priorityDate',
+                'priorityCountry',
+                'priorityNumber',
+                'previousRequestRelated'
+            ],
+            // Adicione outros tipos aqui...
+        };
+        const tipo = piSelecionada.tipo;
+        const campos = camposEspecificos[tipo] || [];
+        campos.forEach((campo) => {
+            novosDados[campo] = piSelecionada[campo] || '';
         });
+
+        setDadosEditados(novosDados);
     };
 
     const handleSalvar = () => {
+        console.log('Dados enviados:', { ...piSelecionada, ...dadosEditados }); // Debug
         if (onSave) {
             onSave({ ...piSelecionada, ...dadosEditados });
         }
         setEditando(false);
+    };
+
+    const handleExcluir = () => {
+        if (window.confirm('Tem certeza que deseja excluir esta propriedade intelectual?')) {
+            if (onDelete) {
+                onDelete(piSelecionada.id);
+            }
+        }
     };
 
     return (
@@ -97,26 +169,27 @@ function Modal({ piSelecionada, onClose, onSave }) {
                 {editando ? (
                     <input 
                         type="text" 
-                        value={dadosEditados.titulo}
-                        onChange={(e) => handleInputChange('titulo', e.target.value)}
+                        value={dadosEditados.title}
+                        onChange={(e) => handleInputChange('title', e.target.value)}
                         className="input-titulo"
                     />
                 ) : (
-                    <h2>{piSelecionada.titulo}</h2>
+                    <h2>{piSelecionada.title}</h2>
                 )}
                 
                 <div className="modal-flex-row">
+                    
                     <div className="descricao">
                         <h3>Descrição:</h3>
                         {editando ? (
                             <textarea 
-                                value={dadosEditados.descricao}
-                                onChange={(e) => handleInputChange('descricao', e.target.value)}
+                                value={dadosEditados.description}
+                                onChange={(e) => handleInputChange('description', e.target.value)}
                                 className="input-descricao"
                                 rows="4"
                             />
                         ) : (
-                            <p>{piSelecionada.descricao}</p>
+                            <p>{piSelecionada.description}</p>
                         )}
                     </div>
                     <div className="lista-documentos">
@@ -135,73 +208,76 @@ function Modal({ piSelecionada, onClose, onSave }) {
                     </div>
                 </div>
                 
-                <div className="dados-gerais">
-                    <h3>Dados Gerais:</h3>
-                    
-                    <p><strong>Tipo:</strong> 
-                        {editando ? (
-                            <select value={dadosEditados.tipo} onChange={(e) => handleInputChange('tipo', e.target.value)}>
-                                <option value="software">Software</option>
-                                <option value="patente">Patente</option>
-                                <option value="marca">Marca</option>
-                                <option value="cultivar">Cultivar</option>
-                                <option value="desenho industrial">Desenho Industrial</option>
-                                <option value="indicação geográfica">Indicação Geográfica</option>
-                            </select>
-                        ) : ` ${piSelecionada.tipo}`}
-                    </p>
-                    
-                    <p><strong>Departamento:</strong> 
-                        {editando ? (
-                            <input type="text" value={dadosEditados.departamento} onChange={(e) => handleInputChange('departamento', e.target.value)} />
-                        ) : ` ${piSelecionada.departamento}`}
-                    </p>
-                    
-                    <p><strong>Status:</strong> 
-                        {editando ? (
-                            <select value={dadosEditados.status} onChange={(e) => handleInputChange('status', e.target.value)}>
-                                <option value="pendente">Pendente</option>
-                                <option value="andamento">Em Andamento</option>
-                                <option value="aprovado">Aprovado</option>
-                                <option value="concluído">Concluído</option>
-                            </select>
-                        ) : ` ${piSelecionada.status}`}
-                    </p>
-                    
-                    <p><strong>Data de Criação:</strong> 
-                        {editando ? (
-                            <input type="date" value={dadosEditados.dataCriacao} onChange={(e) => handleInputChange('dataCriacao', e.target.value)} />
-                        ) : ` ${piSelecionada.dataCriacao}`}
-                    </p>
-                    
-                    <p><strong>Data de Vencimento:</strong> 
-                        {editando ? (
-                            <input type="date" value={dadosEditados.dataVencimento} onChange={(e) => handleInputChange('dataVencimento', e.target.value)} />
-                        ) : ` ${piSelecionada.dataVencimento}`}
-                    </p>
-                    
-                    <p><strong>Inventor:</strong> 
-                        {editando ? (
-                            <input type="text" value={dadosEditados.nomeInventor} onChange={(e) => handleInputChange('nomeInventor', e.target.value)} />
-                        ) : ` ${piSelecionada.nomeInventor}`}
-                    </p>
-                    
-                    {/* --- SEÇÃO CORRIGIDA --- */}
-                    <p><strong>Email do Inventor:</strong> 
-                        {editando ? (
-                            <input type="email" value={dadosEditados.email} onChange={(e) => handleInputChange('email', e.target.value)} />
-                        ) : ` ${piSelecionada.email}`}
-                    </p>
-                    
-                    <p><strong>CPF do Inventor:</strong> 
-                        {editando ? (
-                            <input type="text" value={dadosEditados.cpf} onChange={(e) => handleInputChange('cpf', e.target.value)} />
-                        ) : ` ${piSelecionada.cpf}`}
-                    </p>
-                </div>
+                <div className="modal-flex-row">
+                    <div className="dados-gerais">
+                        <h3>Dados Gerais:</h3>
+                        
+                        <p><strong>Tipo:</strong> 
+                            {editando ? (
+                                <select value={dadosEditados.type} onChange={(e) => handleInputChange('type', e.target.value)}>
+                                    <option value="software">Software</option>
+                                    <option value="patente">Patente</option>
+                                    <option value="marca">Marca</option>
+                                    <option value="cultivar">Cultivar</option>
+                                    <option value="desenho industrial">Desenho Industrial</option>
+                                    <option value="indicação geográfica">Indicação Geográfica</option>
+                                </select>
+                            ) : ` ${piSelecionada.tipo}`}
+                        </p>
+                        
+                        <p><strong>Departamento:</strong> 
+                            {editando ? (
+                                <input type="text" value={dadosEditados.departamento} onChange={(e) => handleInputChange('departamento', e.target.value)} />
+                            ) : ` ${piSelecionada.departamento}`}
+                        </p>
+                        
+                        <p><strong>Status:</strong> 
+                            {editando ? (
+                                <select value={dadosEditados.status} onChange={(e) => handleInputChange('status', e.target.value)}>
+                                    <option value="pendente">Pendente</option>
+                                    <option value="andamento">Em Andamento</option>
+                                    <option value="aprovado">Aprovado</option>
+                                    <option value="concluído">Concluído</option>
+                                </select>
+                            ) : ` ${piSelecionada.status}`}
+                        </p>
+                        
+                        <p><strong>Data de Criação:</strong> 
+                            {editando ? (
+                                <input type="date" value={dadosEditados.requestDate} onChange={(e) => handleInputChange('requestDate', e.target.value)} />
+                            ) : ` ${piSelecionada.requestDate}`}
+                        </p>
+                        
+                        <p><strong>Data de Vencimento:</strong> 
+                            {editando ? (
+                                <input type="date" value={dadosEditados.expirationDate} onChange={(e) => handleInputChange('expirationDate', e.target.value)} />
+                            ) : ` ${piSelecionada.expirationDate}`}
+                        </p>
+                        
+                        <p><strong>Inventor:</strong> 
+                            {editando ? (
+                                <input type="text" value={dadosEditados.inventorName} onChange={(e) => handleInputChange('inventorName', e.target.value)} />
+                            ) : ` ${piSelecionada.inventorName}`}
+                        </p>
+                        
+                        {/* --- SEÇÃO CORRIGIDA --- */}
+                        <p><strong>Email do Inventor:</strong> 
+                            {editando ? (
+                                <input type="email" value={dadosEditados.email} onChange={(e) => handleInputChange('email', e.target.value)} />
+                            ) : ` ${piSelecionada.email}`}
+                        </p>
+                        
+                        <p><strong>CPF do Inventor:</strong> 
+                            {editando ? (
+                                <input type="text" value={dadosEditados.cpf} onChange={(e) => handleInputChange('cpf', e.target.value)} />
+                            ) : ` ${piSelecionada.cpf}`}
+                        </p>
+                    </div>
 
-                {renderDadosEspecificos()}
-                
+                    {renderDadosEspecificos()}
+
+              </div>
+             
                 <div className="modal-botoes">
                     {editando ? (
                         <>
@@ -211,7 +287,7 @@ function Modal({ piSelecionada, onClose, onSave }) {
                     ) : (
                         <>
                             <button className="btn-editar" onClick={handleEditar}>Editar</button>
-                            <button className="btn-excluir">Excluir</button>
+                            <button className="btn-excluir" onClick ={handleExcluir}>Excluir</button>
                             <button className="btn-download">Download</button>
                         </>
                     )}
