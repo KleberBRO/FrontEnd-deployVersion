@@ -49,20 +49,6 @@ function StepDadosGerais({ formData, handleChange }) {
             </div>
 
             <div className="form-group">
-                <label htmlFor="requestDate">Data de Requisição</label>
-                <input
-                    type="date"
-                    id="requestDate"
-                    name="requestDate"
-                    value={formData.requestDate}
-                    onChange={handleChange}
-                    required
-                    min="1900-01-01"
-                    max="2100-12-31"
-                />
-            </div>
-
-            <div className="form-group">
                 <label htmlFor="grantDate">Data de Concessão</label>
                 <input
                     type="date"

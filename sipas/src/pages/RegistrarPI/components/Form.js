@@ -19,11 +19,12 @@ function Form({ onSubmit, onBack, tipo}) {
     });
 
 
+    const hoje = new Date().toISOString().split('T')[0];
     const [formData, setFormData] = React.useState({
         title: '',
         description: '',
         startupName: '',
-        requestDate: '',
+        requestDate: hoje,
         grantDate: '',
         expirationDate: '',
         processingStage: '',

@@ -61,6 +61,7 @@ function StepInventor({ formData, handleChange }) {
                     placeholder="Digite o nome completo do inventor"
                     value={formData.inventorName}
                     onChange={handleChange}
+                    required
                 />
             </div>
 
@@ -74,6 +75,7 @@ function StepInventor({ formData, handleChange }) {
                     placeholder="Digite o e-mail do inventor"
                     value={formData.email}
                     onChange={handleChange}
+                    required
                 />
             </div>
 
@@ -89,6 +91,7 @@ function StepInventor({ formData, handleChange }) {
                     value={maskedCpf} // O valor exibido é o CPF com a máscara
                     onChange={handleCpfChange}
                     maxLength="14" // 11 números + 2 pontos + 1 traço
+                    required
                 />
                 {/* Exibe a mensagem de erro, se houver */}
                 {cpfError && <span style={{ color: 'red' }}>{cpfError}</span>}
