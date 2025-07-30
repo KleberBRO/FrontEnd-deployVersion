@@ -30,42 +30,47 @@
 .escolher-content h1 {
     font-size: 1.5rem;
     font-weight: bold;
-    color: #333;
+    color: black;
     margin-bottom: 20px;
 }
 
 .registrar-patente {
-    background-color: rgb(250, 255, 120);
+    background-color: rgb(255, 153, 153);
+    color: rgb(110, 0, 0);
     font-weight: bold;
     cursor: pointer;
 }
 
 .registrar-marca {
-    background-color: rgb(255, 120, 120);
+    background-color: #78e6fa;
     font-weight: bold;
     cursor: pointer;
 }
 
 .registrar-software {
-    background-color: rgb(120, 255, 120);
+    background-color: #727bff;
+    color: rgb(21, 15, 53);
     font-weight: bold;
     cursor: pointer;
 }
 
 .registrar-desenho-industrial {
-    background-color: rgb(120, 120, 255);
+    background-color: #bb73ff;
+    color: #441570;
     font-weight: bold;
     cursor: pointer;
 }
 
 .registrar-indicacao-geografica {
-    background-color: rgb(255, 120, 255);
+    background-color: #ffe692;
+    color: #534800;
     font-weight: bold;
     cursor: pointer;
 }
 
 .registrar-cultivar {
-    background-color: rgb(255, 200, 120);
+    background-color: #76ff6f;
+    color: #004d00;
     font-weight: bold;
     cursor: pointer;
 }

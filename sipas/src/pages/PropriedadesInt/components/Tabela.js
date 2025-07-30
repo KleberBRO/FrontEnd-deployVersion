@@ -6,12 +6,11 @@ function Tabela({ propriedades, getTipoClass, getStatusClass, onLupaClick }) {
       <table className="tabela-propriedades">
         <thead>
           <tr>
-            <th> </th> {/* Ações */}
+            <th> </th>{/* Ações */}
             <th>Tipo</th>
             <th>Título</th>
             <th>Inventor</th>
             <th>Departamento</th>
-            {/* --- NOVOS CABEÇALHOS --- */}
             <th>CPF</th>
             <th>Email</th>
             <th>Status</th>

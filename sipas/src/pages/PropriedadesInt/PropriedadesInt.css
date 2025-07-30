@@ -211,12 +211,12 @@ html, body {
     font-weight: bold;
 }
 .tipo-marca {
-    background-color: #D4D400;
+    background-color: #0ea5c0;
     color: white;
     font-weight: bold;
 }
 .tipo-patente {
-    background-color: #ff5b20;
+    background-color: rgb(255, 54, 54);
     color: white;
     font-weight: bold;
 }
@@ -226,7 +226,7 @@ html, body {
     font-weight: bold;
 }
 .tipo-indicacao-geografica {
-    background-color: #009999;
+    background-color: #997500;
     color: white;
     font-weight: bold;
 }
@@ -238,12 +238,12 @@ html, body {
 }
 
 .status-andamento {
-    color: orange;
+    color: rgb(192, 192, 0);
     font-weight: bold;
 }
 
 .status-pendente {
-    color: red;
+    color: orange;
     font-weight: bold;
 }
 

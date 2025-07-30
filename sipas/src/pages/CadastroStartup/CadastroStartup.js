@@ -106,7 +106,7 @@ function CadastroStartup() {
     localStorage.setItem("startups", JSON.stringify(startupsSalvas));
 
     alert("Startup cadastrada com sucesso!");
-    navigate("/startups");
+    navigate("/Home");
   };
 
   return (

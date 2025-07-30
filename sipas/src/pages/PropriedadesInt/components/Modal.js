@@ -27,6 +27,35 @@ function Modal({ piSelecionada, onClose, onSave }) {
 
     if (!piSelecionada) return null;
 
+    const renderDadosEspecificos = () => {
+        // Lista dos tipos possíveis
+        const tipos = [
+            'software',
+            'patent',
+            'marca',
+            'cultivar',
+            'desenho_industrial',
+            'indicacao_geografica'
+        ];
+        // Encontra o tipo específico presente
+        const tipoEncontrado = tipos.find(type => piSelecionada[type] && Object.keys(piSelecionada[type]).length > 0);
+        console.log(`Tipo encontrado: ${tipoEncontrado}`);
+        if (!tipoEncontrado) return null;
+
+        const dados = piSelecionada[tipoEncontrado];
+        console.log(`Dados específicos para o tipo ${tipoEncontrado}:`, dados);
+        return (
+            <div className="dados-especificos">
+                <h3>Dados Específicos ({tipoEncontrado.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}):</h3>
+                <ul>
+                    {Object.entries(dados).map(([key, value]) => (
+                        <li key={key}><strong>{key}:</strong> {String(value)}</li>
+                    ))}
+                </ul>
+            </div>
+        );
+    };
+
     const handleInputChange = (campo, valor) => {
         setDadosEditados(prev => ({ ...prev, [campo]: valor }));
     };
@@ -170,6 +199,8 @@ function Modal({ piSelecionada, onClose, onSave }) {
                         ) : ` ${piSelecionada.cpf}`}
                     </p>
                 </div>
+
+                {renderDadosEspecificos()}
                 
                 <div className="modal-botoes">
                     {editando ? (
