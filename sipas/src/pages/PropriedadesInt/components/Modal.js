@@ -1,6 +1,68 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/Modal.css'; 
 
+const camposEspecificos = {
+    patente: [
+        'patentType',
+        'internationalClassification',
+        'technicalApplicationField',
+        'filingDate',
+        'priorityDate',
+        'priorityCountry',
+        'priorityNumber',
+        'previousRequestRelated'
+    ],
+    cultivar: [
+        'cultivarName',
+        'botanicalSpecies',
+        'commercialDenomination',
+        'origin',
+        'distinctiveCharacteristics',
+        'purposeOfUse',
+        'countryOfOrigin',
+        'protectionType',
+        'creationDevelopmentDate',
+        'dheData',
+    ],
+    desenho_industrial: [
+        'locarnoClassification',
+        'numberOfVariations',
+        'designCreationDate',
+        'applicationField',
+        'unionistPriority'
+    ],
+    indicacao_geografica: [
+        'geographicName',
+        'product',
+        'areaDelimitation',
+        'igNature',
+        'visualRepresentationUrl',
+    ],
+    marca: [
+        'brandType',
+        'brandName',
+        'imageUrl',
+        'niceClassificationCode',
+        'activityDescription',
+        'requestNature',
+        'usageStatus',
+        'startUsageDate'
+
+    ],
+    software: [
+        'holderName',
+        'holderAddress',
+        'holderCpfCnpj',
+        'authorsData',
+        'creationDate',
+        'publicationDate',
+        'programmingLanguage',
+        'applicationField',
+        'programType',
+    ]
+    // Adicione outros tipos aqui...
+};
+
 function Modal({ piSelecionada, onClose, onSave, onDelete }) {
     const [editando, setEditando] = useState(false);
     // O estado inicial agora está mais simples e será preenchido pelo useEffect
@@ -24,20 +86,6 @@ function Modal({ piSelecionada, onClose, onSave, onDelete }) {
             cpf: piSelecionada.cpf || ''
         };
 
-            // Campos específicos
-            const camposEspecificos = {
-                patente: [
-                    'patentType',
-                    'internationalClassification',
-                    'technicalApplicationField',
-                    'filingDate',
-                    'priorityDate',
-                    'priorityCountry',
-                    'priorityNumber',
-                    'previousRequestRelated'
-                ],
-                // Adicione outros tipos aqui...
-            };
             const tipo = piSelecionada.tipo;
             const campos = camposEspecificos[tipo] || [];
             campos.forEach((campo) => {
@@ -50,20 +98,13 @@ function Modal({ piSelecionada, onClose, onSave, onDelete }) {
 
     if (!piSelecionada) return null;
 
+    const formatarCampo = (label) => {
+        return label
+            .replace(/([A-Z])/g, ' $1')
+            .replace(/^./, str => str.toUpperCase());
+    };
+
     const renderDadosEspecificos = () => {
-        const camposEspecificos = {
-            patente: [
-                'patentType',
-                'internationalClassification',
-                'technicalApplicationField',
-                'filingDate',
-                'priorityDate',
-                'priorityCountry',
-                'priorityNumber',
-                'previousRequestRelated'
-            ],
-            // Adicione os campos dos outros tipos aqui...
-        };
 
         
         const tipo = piSelecionada.tipo;
@@ -80,7 +121,7 @@ function Modal({ piSelecionada, onClose, onSave, onDelete }) {
                 <ul>
                     {campos.map((key) => (
                         <li key={key}>
-                            <strong>{key}:</strong>
+                            <strong>{formatarCampo(key)}:</strong>
                             {editando ? (
                                 <input
                                     type="text"
@@ -122,20 +163,6 @@ function Modal({ piSelecionada, onClose, onSave, onDelete }) {
             cpf: piSelecionada.cpf || ''
         };
 
-        // Campos específicos
-        const camposEspecificos = {
-            patente: [
-                'patentType',
-                'internationalClassification',
-                'technicalApplicationField',
-                'filingDate',
-                'priorityDate',
-                'priorityCountry',
-                'priorityNumber',
-                'previousRequestRelated'
-            ],
-            // Adicione outros tipos aqui...
-        };
         const tipo = piSelecionada.tipo;
         const campos = camposEspecificos[tipo] || [];
         campos.forEach((campo) => {
