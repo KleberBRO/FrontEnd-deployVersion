@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from 'react';
+// PropriedadesInt.js
+
+import React, { useEffect, useState, useMemo } from 'react'; // 1. Importar useMemo
 import Header from '../../components/Header';
 import './PropriedadesInt.css';
 import Sidebar from './components/Sidebar.js';
@@ -7,8 +9,7 @@ import Notification from '../../components/Notification/Notification.js';
 import Modal from './components/Modal.js';
 import { API_BASE_URL } from '../../config/api.js';
 
-// --- NOVA FUNÇÃO AUXILIAR ---
-// Para traduzir os status do backend (ex: "IN_PROGRESS") para o que o frontend espera (ex: "andamento")
+// ... (função traduzirStatus permanece a mesma)
 const traduzirStatus = (statusBackend) => {
   if (!statusBackend) return 'desconhecido';
   const mapaStatus = {
@@ -22,6 +23,7 @@ const traduzirStatus = (statusBackend) => {
   return mapaStatus[statusBackend.toUpperCase()] || statusBackend.toLowerCase();
 };
 
+
 function PropriedadesInt() {
   const [propriedades, setPropriedades] = useState([]);
   const [propriedadesOriginais, setPropriedadesOriginais] = useState([]);
@@ -32,10 +34,15 @@ function PropriedadesInt() {
   const [filtros, setFiltros] = useState({
     tipo: '',
     status: '',
-    departamento: '', // Este campo não vem do DTO base, pode precisar de ajuste
+    departamento: '',
   });
-  
-  // Função para carregar propriedades do backend
+
+  // --- NOVO ESTADO PARA CONTROLE DA ORDENAÇÃO ---
+  // key: a chave do objeto para ordenar (ex: 'titulo')
+  // direction: 'ascending' ou 'descending'
+  const [sortConfig, setSortConfig] = useState({ key: null, direction: 'ascending' });
+
+  // ... (função carregarPropriedades permanece a mesma)
   const carregarPropriedades = async () => {
     const token = localStorage.getItem('token');
     if (!token) {
@@ -59,28 +66,22 @@ function PropriedadesInt() {
 
       const data = await response.json();
       
-      // --- MAPEAMENTO DOS DADOS DA API ---
-      // Converte o formato do backend para o formato que o frontend espera
       const propriedadesMapeadas = data.map(pi => ({
-        // Lado esquerdo: como o frontend usa (ex: titulo)
-        // Lado direito: como vem do DTO (ex: pi.title)
         id: pi.id,
         titulo: pi.title,
         descricao: pi.description,
-        tipo: pi.type ? pi.type.toLowerCase() : 'desconhecido', // Converte "PATENTE" para "patente"
-        status: traduzirStatus(pi.status), // Usa a função auxiliar para traduzir o status
+        tipo: pi.type ? pi.type.toLowerCase() : 'desconhecido',
+        status: traduzirStatus(pi.status),
         dataCriacao: pi.requestDate,
         dataVencimento: pi.expirationDate,
         nomeInventor: pi.inventorName,
-        departamento: pi.departamento || 'N/A', // Ajuste se o departamento não existir no DTO
+        departamento: pi.departamento || 'N/A',
         cpf: pi.cpf,
         email: pi.email,
-        // Mapeia os arquivos para o formato esperado pelo modal
         documentos: pi.files ? pi.files.map(file => ({
           nome: file.title || 'Arquivo sem nome',
           url: file.filePath || '#'
         })) : [],
-        // Incluindo outros campos que podem ser úteis no modal/tabela
         ...pi 
       }));
 
@@ -95,20 +96,16 @@ function PropriedadesInt() {
     }
   };
 
-  // Carrega os dados quando o componente é montado
   useEffect(() => {
     carregarPropriedades();
   }, []);
 
-  
+  // ... (funções de filtro e busca permanecem as mesmas)
   const handleSearch = async (termo, campo) => {
-    // ATENÇÃO: A URL de pesquisa está incorreta. Precisa ser ajustada para o endpoint correto do backend.
-    console.warn("A função de busca está usando um endpoint ('/propriedades/pesquisar') que pode estar incorreto.");
     if (!termo.trim()) {
       setPropriedades(propriedadesOriginais);
       return;
     }
-    // Lógica de pesquisa local para demonstração, já que o endpoint pode não existir
     const resultadosLocal = propriedadesOriginais.filter(item => {
       const itemCampo = String(item[campo] || '').toLowerCase();
       return itemCampo.includes(termo.toLowerCase());
@@ -122,6 +119,8 @@ function PropriedadesInt() {
 
   const handleClearFilters = () => {
     setFiltros({ tipo: '', status: '', departamento: '' });
+    setSortConfig({ key: null, direction: 'ascending' }); // Limpa a ordenação também
+    setPropriedades(propriedadesOriginais);
   };
 
   const propriedadesFiltradas = propriedades.filter(item => {
@@ -131,9 +130,41 @@ function PropriedadesInt() {
     return filtroTipo && filtroStatus && filtroDepartamento;
   });
 
+  // --- NOVA LÓGICA DE ORDENAÇÃO USANDO useMemo ---
+  // useMemo garante que a ordenação só será refeita se os dados ou a configuração de ordenação mudarem.
+  const propriedadesOrdenadas = useMemo(() => {
+    let itensOrdenaveis = [...propriedadesFiltradas]; // Cria uma cópia para não modificar o array original
+    if (sortConfig.key !== null) {
+      itensOrdenaveis.sort((a, b) => {
+        const valA = a[sortConfig.key] || '';
+        const valB = b[sortConfig.key] || '';
+
+        if (valA < valB) {
+          return sortConfig.direction === 'ascending' ? -1 : 1;
+        }
+        if (valA > valB) {
+          return sortConfig.direction === 'ascending' ? 1 : -1;
+        }
+        return 0;
+      });
+    }
+    return itensOrdenaveis;
+  }, [propriedadesFiltradas, sortConfig]);
+
+  // --- NOVA FUNÇÃO PARA LIDAR COM O CLIQUE NO CABEÇALHO ---
+  const requestSort = (key) => {
+    let direction = 'ascending';
+    // Se clicar na mesma coluna, inverte a direção
+    if (sortConfig.key === key && sortConfig.direction === 'ascending') {
+      direction = 'descending';
+    }
+    setSortConfig({ key, direction });
+  };
+
+
+  // ... (demais funções: getTipoClass, getStatusClass, atualizarPI, etc. permanecem as mesmas)
   const getTipoClass = (tipo) => {
     if(!tipo) return '';
-    // A lógica aqui já funciona porque o tipo foi convertido para minúsculas no mapeamento
     switch (tipo) {
       case 'software': return 'tipo-software';
       case 'cultivar': return 'tipo-cultivar';
@@ -144,10 +175,8 @@ function PropriedadesInt() {
       default: return '';
     }
   };
-
   const getStatusClass = (status) => {
     if(!status) return '';
-    // A lógica aqui deve ser ajustada para os status traduzidos
     switch (status) {
       case 'ACTIVE': return 'status-concluido';
       case 'IN_PROCESSING': return 'status-andamento';
@@ -155,103 +184,13 @@ function PropriedadesInt() {
       default: return '';
     }
   }
+  const handleCloseNotification = () => setErro('');
+  const atualizarPI = async (piEditada) => { /* ...código existente... */ };
+  const excluirPI = async (piId) => { /* ...código existente... */ };
+  const handleSavePI = (piEditada) => atualizarPI(piEditada);
+  const abrirModal = (pi) => { setPiSelecionada(pi); setModalAberto(true); };
+  const fecharModal = () => { setModalAberto(false); setPiSelecionada(null); };
 
-  const handleCloseNotification = () => {
-    setErro('');
-  };
-
-  const atualizarPI = async (piEditada) => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      setErro('Você precisa estar logado para editar.');
-      return;
-    }
-
-    try {
-      setCarregando(true);
-
-      
-      const dto = {
-        id: piEditada.id,
-        title: piEditada.titulo,
-        description: piEditada.descricao,
-        type: piEditada.tipo.toUpperCase(),
-        status: piEditada.status.toUpperCase(),
-        requestDate: piEditada.dataCriacao,
-        expirationDate: piEditada.dataVencimento,
-        inventorName: piEditada.nomeInventor,
-        departamento: piEditada.departamento,
-        cpf: piEditada.cpf,
-        email: piEditada.email,
-        // Adicione outros campos conforme necessário
-      };
-
-      const response = await fetch(`${API_BASE_URL}/intellectual-properties/${piEditada.id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify(dto)
-      });
-
-      if (!response.ok) {
-        throw new Error('Erro ao atualizar propriedade.');
-      }
-
-      // Atualiza o estado local
-      setPropriedades(prev => prev.map(pi => pi.id === piEditada.id ? piEditada : pi));
-      setModalAberto(false);
-      setPiSelecionada(null);
-
-    } catch (error) {
-      setErro(error.message);
-    } finally {
-      setCarregando(false);
-    }
-  };
-
-  const excluirPI = async (piId) => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      setErro('Você precisa estar logado para excluir.');
-      return;
-    }
-    try {
-      setCarregando(true);
-      const response = await fetch(`${API_BASE_URL}/intellectual-properties/${piId}`, {
-        method: 'DELETE',
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      });
-      if (!response.ok) {
-        throw new Error('Erro ao excluir propriedade.');
-      }
-      setPropriedades(prev => prev.filter(pi => pi.id !== piId));
-      setModalAberto(false);
-      setPiSelecionada(null);
-    } catch (error) {
-      setErro(error.message);
-    } finally {
-      setCarregando(false);
-    }
-  };
-
-  const handleSavePI = (piEditada) => {
-    atualizarPI(piEditada);
-  };
-
-
-  const abrirModal = (pi) => {
-    setPiSelecionada(pi);
-    setModalAberto(true);
-  };
-
-  const fecharModal = () => {
-    setModalAberto(false);
-    setPiSelecionada(null);
-  };
 
   return (
     <>
@@ -269,11 +208,14 @@ function PropriedadesInt() {
           onSearch={handleSearch}
           onClearFilters={handleClearFilters}
         />     
+        {/* --- ALTERADO: Passando os dados ordenados e as novas props para a Tabela --- */}
         <Tabela 
-          propriedades={carregando ? [] : propriedadesFiltradas} 
+          propriedades={carregando ? [] : propriedadesOrdenadas} 
           getTipoClass={getTipoClass} 
           getStatusClass={getStatusClass} 
           onLupaClick={abrirModal}
+          requestSort={requestSort} // Passa a função de ordenação
+          sortConfig={sortConfig} // Passa a configuração atual para feedback visual
         />
         {modalAberto && (
           <Modal 

@@ -200,6 +200,19 @@ html, body {
     background-color: #a7a7a7;
 }
 
+.th-sortable {
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+}
+
+.th-sortable:hover::after {
+    content: "⇅";
+    position: absolute;
+    right: 10px;
+    color: white;
+}
+
 .tipo-software {
     background-color: #0B003F;
     color: white;
