@@ -182,7 +182,7 @@ function CadastroStartup() {
             <button
               type="button"
               className="btn-cancelar"
-              onClick={() => navigate("/")}
+              onClick={() => navigate("/listagem-startups")}
             >
               Cancelar
             </button>

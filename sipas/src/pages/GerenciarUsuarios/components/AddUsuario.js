@@ -5,11 +5,15 @@ import Notification from '../../../components/Notification/Notification';
 
 const AddUsuario = ({ isOpen, onClose, onAddUsuario }) => {
   const [formData, setFormData] = useState({
-    nome: '',
+    name: '',
     email: '',
-    senha: '',
+    password: '',
     cpf: '',
-    role: '',
+    dateBirth: '',
+    nationality: '',
+    address: '',
+    course: '',
+    department: '',
   });
 
   const [notification, setNotification] = useState({ message: '', type: '' });
@@ -24,43 +28,15 @@ const AddUsuario = ({ isOpen, onClose, onAddUsuario }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     try {
-      const token = localStorage.getItem('token');
-
-      if (!token) {
-        setNotification({
-          message: 'Token de autenticação não encontrado',
-          type: 'error'
-        });
-        return;
-      }
-
-      const registerData = {
-        username: formData.nome,
-        email: formData.email,
-        password: formData.senha,   
-        cpf: formData.cpf,
-        role: formData.role
-      };
-
-      let fetchOptions = {
+      const response = await fetch(`${API_BASE_URL}/auth/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(registerData),
-      };
-
-      let endpoint = '/auth/register';
-      if (formData.role === 'ADMIN') {
-        endpoint = '/admin/users/create-admin'; 
-        fetchOptions.headers['Authorization'] = `Bearer ${token}`;
-      } else if (formData.role === 'INVENTOR') {
-        endpoint = '/v1/users/register-inventor';
-      }
-
-      const response = await fetch(`${API_BASE_URL}${endpoint}`, fetchOptions);
+        body: JSON.stringify(formData),
+      });
 
       if (!response.ok) {
         const errorData = await response.text();
@@ -75,23 +51,22 @@ const AddUsuario = ({ isOpen, onClose, onAddUsuario }) => {
         message: 'Usuário criado com sucesso!',
         type: 'success'
       });
-      
+
       // Limpar o formulário após sucesso
       setFormData({
-        nome: '',
+        name: '',
         email: '',
-        senha: '',
+        password: '',
         cpf: '',
-        role: '',
+        dateBirth: '',
+        nationality: '',
+        address: '',
+        course: '',
+        department: '',
       });
 
-      onAddUsuario({ 
-        username: registerData.username, 
-        email: registerData.email, 
-        cpf: registerData.cpf, 
-        role: registerData.role 
-      });
-      
+      onAddUsuario({ ...formData });
+
       setTimeout(() => {
         onClose();
         setNotification({ message: '', type: '' });
@@ -122,12 +97,12 @@ const AddUsuario = ({ isOpen, onClose, onAddUsuario }) => {
         </div>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label htmlFor="nome">Nome</label>
+            <label htmlFor="name">Nome</label>
             <input
               type="text"
-              id="nome"
-              name="nome"
-              value={formData.nome}
+              id="name"
+              name="name"
+              value={formData.name}
               onChange={handleChange}
               required
             />
@@ -144,12 +119,12 @@ const AddUsuario = ({ isOpen, onClose, onAddUsuario }) => {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="senha">Senha</label>
+            <label htmlFor="password">Senha</label>
             <input
               type="password"
-              id="senha"
-              name="senha"
-              value={formData.senha}
+              id="password"
+              name="password"
+              value={formData.password}
               onChange={handleChange}
               required
             />
@@ -166,18 +141,59 @@ const AddUsuario = ({ isOpen, onClose, onAddUsuario }) => {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="role">Função</label>
-            <select
-              id="role"
-              name="role"
-              value={formData.role}
+            <label htmlFor="dateBirth">Data de Nascimento</label>
+            <input
+              type="date"
+              id="dateBirth"
+              name="dateBirth"
+              value={formData.dateBirth}
               onChange={handleChange}
               required
-            >
-              <option value="">Selecione uma função</option>
-              <option value="ADMIN">Administrador</option>
-              <option value="INVENTOR">INVENTOR</option>
-            </select>
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="nationality">Nacionalidade</label>
+            <input
+              type="text"
+              id="nationality"
+              name="nationality"
+              value={formData.nationality}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="address">Endereço</label>
+            <input
+              type="text"
+              id="address"
+              name="address"
+              value={formData.address}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="course">Curso</label>
+            <input
+              type="text"
+              id="course"
+              name="course"
+              value={formData.course}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="department">Departamento</label>
+            <input
+              type="text"
+              id="department"
+              name="department"
+              value={formData.department}
+              onChange={handleChange}
+              required
+            />
           </div>
           <div className="form-actions">
             <button type="button" className="cancel-button" onClick={onClose}>Cancelar</button>

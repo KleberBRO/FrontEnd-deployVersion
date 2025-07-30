@@ -39,7 +39,7 @@ function App() {
         </Route>
 
         {/* Rota padrão para redirecionar para o login */}
-        <Route path="*" element={<Login/>} />
+        <Route path="*" element={<h1>Página não encontrada</h1>} />
       </Routes>
     </Router>
   );

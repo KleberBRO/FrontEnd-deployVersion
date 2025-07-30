@@ -46,6 +46,7 @@ const styles = {
         display: 'flex',
         alignItems: 'center',
         gap: '15px',
+        height: '100%',
     },
 
     favicon: {

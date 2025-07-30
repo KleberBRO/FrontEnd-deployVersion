@@ -16,10 +16,12 @@ code {
   background-color: #2828FF;
   color: white;
   border: none;
+  height: 100%;
   padding: 10px 20px;
   cursor: pointer;
   font-size: 14px;
   margin-left: auto;
+  align-items: center;
 }
 
 .btn-home:hover {
