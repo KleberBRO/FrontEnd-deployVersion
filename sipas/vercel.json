@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "https://ec2-34-229-140-168.compute-1.amazonaws.com/api/$1"
+      "destination": "https://ec2-98-81-204-154.compute-1.amazonaws.com/api/$1"
     }
   ]
 }
